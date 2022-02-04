@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private PlayerControls controls;
     private PlayerInput playerInput;
     private AgentMoveToTarget move;
+    [SerializeField] LayerMask layermask;
     void Awake()
     {    
         playerInput = GetComponent<PlayerInput>();
