@@ -136,9 +136,9 @@ GameObject:
   - component: {fileID: 21405404}
   - component: {fileID: 21405403}
   - component: {fileID: 21405402}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -479,7 +479,7 @@ GameObject:
   - component: {fileID: 515998328}
   - component: {fileID: 515998330}
   - component: {fileID: 515998329}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -872,7 +872,7 @@ GameObject:
   - component: {fileID: 866806792}
   - component: {fileID: 866806794}
   - component: {fileID: 866806793}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1169,7 +1169,7 @@ GameObject:
   - component: {fileID: 931250793}
   - component: {fileID: 931250795}
   - component: {fileID: 931250794}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1555,9 +1555,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1523221097}
-  m_Layer: 0
+  - component: {fileID: 1523221098}
+  m_Layer: 6
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1577,6 +1578,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 138.88, z: 0}
+--- !u!136 &1523221098
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523221096}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1553109210
 GameObject:
   m_ObjectHideFlags: 0
@@ -1942,6 +1957,7 @@ GameObject:
   - component: {fileID: 1973179014}
   - component: {fileID: 1973179019}
   - component: {fileID: 1973179016}
+  - component: {fileID: 1973179020}
   - component: {fileID: 1973179015}
   - component: {fileID: 1973179017}
   - component: {fileID: 1973179018}
@@ -2056,5 +2072,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f400e18b92307814ba2bd31e4f2a9c2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1216
+--- !u!114 &1973179020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973179013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dbbdb52451d198429d894bfe2cf0fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
