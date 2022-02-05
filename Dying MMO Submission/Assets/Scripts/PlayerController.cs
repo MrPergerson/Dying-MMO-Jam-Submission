@@ -2,25 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
-[RequireComponent(typeof(PlayerInput), typeof(AgentMoveToTarget))]
-public class PlayerController : MonoBehaviour
+[RequireComponent(typeof(PlayerInput), typeof(AgentAttack))]
+public class PlayerController : Agent
 {
     private PlayerControls controls;
     private PlayerInput playerInput;
-    private AgentMoveToTarget move;
+    
     private AgentAttack attack;
     [SerializeField] LayerMask layerMask;
 
-    void Awake()
-    {    
+
+    protected override void Awake()
+    {
+        base.Awake();
         playerInput = GetComponent<PlayerInput>();
-        move = GetComponent<AgentMoveToTarget>();
         attack = GetComponent<AgentAttack>();
         controls = new PlayerControls();
     }
 
-    private void Start()
+    protected override void Start()
     {
         if(playerInput.actions == null) playerInput.actions = controls.asset;
         controls.Main.CursorPrimaryClick.performed += HandlePrimaryCursorInput;
@@ -53,11 +55,30 @@ public class PlayerController : MonoBehaviour
             } 
             else if(hit.collider.tag == "Enemy")
             {
-                AgentMoveToTarget.DestinationCompleted onDestinationCompleted = attack.Attack;
-                var destination = hit.collider.gameObject.transform.position;
-                move.SetDestination(destination, 2f, onDestinationCompleted);
+
+                if(hit.collider.gameObject.TryGetComponent<EnemyAIBrain>(out EnemyAIBrain enemy))
+                {
+                    AgentMoveToTarget.DestinationToAgentCompleted onDestinationToAgentCompleted = attack.StartAttack;
+                    move.SetDestination(enemy, attack.AttackDistance, onDestinationToAgentCompleted);
+
+                }
+                else
+                {
+                    Debug.LogError(gameObject.name + " -> PlayerController.cs -> HandlePrimaryCursorInput: Failed to get EnemyAIBrain");
+                }
+
             }
 
         }
+    }
+
+    protected override void Die()
+    {
+        print("player has died");
+    }
+
+    public override void TakeDamage(Agent threat, float damage)
+    {
+        Health -= damage;
     }
 }

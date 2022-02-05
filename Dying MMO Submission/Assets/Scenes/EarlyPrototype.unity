@@ -1555,7 +1555,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1523221097}
+  - component: {fileID: 1523221102}
+  - component: {fileID: 1523221101}
+  - component: {fileID: 1523221100}
   - component: {fileID: 1523221098}
+  - component: {fileID: 1523221099}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -1592,6 +1596,68 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!195 &1523221099
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523221096}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &1523221100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523221096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ad6f36055ae819468e9febcde2fadb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1523221101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523221096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dbbdb52451d198429d894bfe2cf0fb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackDistance: 2
+  combatAbilitySet: {fileID: 11400000, guid: 245f40a4115aa1e41957560727558c3c, type: 2}
+--- !u!114 &1523221102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523221096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55a5c82db2f597b4d86696d630aa6d2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 100
+  threat: {fileID: 0}
 --- !u!1 &1553109210
 GameObject:
   m_ObjectHideFlags: 0
@@ -2074,6 +2140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f400e18b92307814ba2bd31e4f2a9c2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _health: 100
   layerMask:
     serializedVersion: 2
     m_Bits: 1216
@@ -2089,3 +2156,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dbbdb52451d198429d894bfe2cf0fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _attackDistance: 2
+  combatAbilitySet: {fileID: 11400000, guid: 4df5336384351ca47915a18460521783, type: 2}

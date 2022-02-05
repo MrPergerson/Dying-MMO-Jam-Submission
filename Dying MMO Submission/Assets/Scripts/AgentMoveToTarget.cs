@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(NavMeshAgent), typeof(Agent))]
 public class AgentMoveToTarget : MonoBehaviour
 {
     NavMeshAgent navAgent;
 
-    public delegate void DestinationCompleted();
+    public delegate void DestinationToAgentCompleted(Agent agent);
 
     private void Awake()
     {
@@ -27,17 +27,15 @@ public class AgentMoveToTarget : MonoBehaviour
         navAgent.stoppingDistance = stoppingDistance;
     }
 
-    /// <param name="destination">Position on the floor.</param>
-    /// <param name="OnDestinationCompleted">Callback function when agent reaches the destination.</param>
-    public void SetDestination(Vector3 destination, float stoppingDistance, DestinationCompleted OnDestinationCompleted)
+    public void SetDestination(Agent agent, float stoppingDistance, DestinationToAgentCompleted OnDestinationCompleted)
     {
-        navAgent.destination = destination;
+        navAgent.destination = agent.transform.position;
         navAgent.stoppingDistance = stoppingDistance;
         StopAllCoroutines();
-        StartCoroutine(CheckForDestinationCompleted(OnDestinationCompleted));
+        StartCoroutine(CheckForDestinationCompleted(agent, OnDestinationCompleted));
     }
 
-    IEnumerator CheckForDestinationCompleted(DestinationCompleted OnDestinationCompleted)
+    IEnumerator CheckForDestinationCompleted(Agent agent, DestinationToAgentCompleted OnDestinationCompleted)
     {
         var destinationReached = false;
         var distanceCheckErrors = 0;
@@ -62,7 +60,7 @@ public class AgentMoveToTarget : MonoBehaviour
             if (remainingDistance <= navAgent.stoppingDistance && remainingDistance > 0)
             {
                 if (OnDestinationCompleted != null)
-                    OnDestinationCompleted();
+                    OnDestinationCompleted(agent);
                 else
                     Debug.LogError(gameObject.name + " in AgentMoveToTarget.cs -> CheckForDestinationCompleted(): Callback is null");
 
@@ -76,7 +74,7 @@ public class AgentMoveToTarget : MonoBehaviour
     }
 
     // from https://stackoverflow.com/a/61449518
-    public static float GetPathRemainingDistance(NavMeshAgent navMeshAgent)
+    public float GetPathRemainingDistance(NavMeshAgent navMeshAgent)
     {
         if (navMeshAgent.pathPending ||
             navMeshAgent.pathStatus == NavMeshPathStatus.PathInvalid ||
@@ -91,4 +89,6 @@ public class AgentMoveToTarget : MonoBehaviour
 
         return distance;
     }
+
+
 }
