@@ -9,14 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 870a5276bfae5034f84a2e98007fd607, type: 3}
-  m_Name: BasicAttack_d10
+  m_Script: {fileID: 11500000, guid: e1cc76e5fd5737e47843ed43c007cd2a, type: 3}
+  m_Name: DefaultAgentAudioData
   m_EditorClassIdentifier: 
-  _name: Basic Attack
-  _description: 
-  _damage: 10
-  _coolDown: 1
-  _canHitMultipleEnemies: 0
-  _attackRange: 1
-  _soundEffect: {fileID: 0}
-  _image: {fileID: 0}
+  footsteps:
+    defaultFootsteps: []
+    grassFootsteps: []
+    stoneFootsteps: []
+  attack: []
+  damaged: []
+  death: []

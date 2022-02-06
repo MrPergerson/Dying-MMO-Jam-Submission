@@ -14,6 +14,12 @@ public class EnemyAIBrain : Agent
         attack = GetComponent<AgentAttack>();
     }
 
+    protected override void Start()
+    {
+        base.Start();
+        attack.audioData = audioData;
+    }
+
     // only supports one threat atm
     void AddThreat(Agent threat)
     {

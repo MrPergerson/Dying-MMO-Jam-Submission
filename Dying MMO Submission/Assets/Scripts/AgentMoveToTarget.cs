@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent), typeof(Agent))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class AgentMoveToTarget : MonoBehaviour
 {
+    public AgentAudioData audioData;
+
     NavMeshAgent navAgent;
 
     public delegate void DestinationToAgentCompleted(Agent agent);

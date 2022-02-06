@@ -31,6 +31,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "CombatAbility1",
+                    "type": "Button",
+                    "id": "8cd2af41-5a2b-4c09-8c1d-a01f74b76161",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CombatAbility2",
+                    "type": "Button",
+                    "id": "ddef97e1-2b08-4e5f-9f97-00c3a92107ce",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CombatAbility3",
+                    "type": "Button",
+                    "id": "e09ed77c-5712-4ed7-9bb8-af56232f6a41",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CombatAbility4",
+                    "type": "Button",
+                    "id": "3edba0ef-91cf-4959-8119-1668149ca416",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -64,6 +100,50 @@
                     "processors": "",
                     "groups": "MouseAndKeyboard",
                     "action": "CursorSecondaryClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "600de596-9c71-4ff7-926a-dab345517b46",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "CombatAbility1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d10fd0e6-0b08-4c40-89e9-0b6cbe7bfaba",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "CombatAbility2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1b16f62f-2c49-414a-b190-ce2dbf6b75df",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "CombatAbility3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6e78949a-e4c7-40e3-a420-1755b23b85d7",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseAndKeyboard",
+                    "action": "CombatAbility4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

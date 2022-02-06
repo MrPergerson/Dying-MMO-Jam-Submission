@@ -5,9 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(AgentMoveToTarget))]
 public abstract class Agent : MonoBehaviour
 {
+    [SerializeField] protected float _health = 100;
+    [SerializeField] protected AgentAudioData audioData;
     protected AgentMoveToTarget move;
-    [SerializeField]
-    protected float _health = 100;
+
     public float Health { 
         get { return _health; } 
         protected set { 
@@ -34,7 +35,7 @@ public abstract class Agent : MonoBehaviour
 
     protected virtual void Start()
     {
-
+        move.audioData = audioData;
     }
 
     public abstract void TakeDamage(Agent origin, float damage);

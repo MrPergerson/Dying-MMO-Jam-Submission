@@ -24,8 +24,15 @@ public class PlayerController : Agent
 
     protected override void Start()
     {
-        if(playerInput.actions == null) playerInput.actions = controls.asset;
+        base.Start();
+        attack.audioData = audioData;
+
+        if (playerInput.actions == null) playerInput.actions = controls.asset;
         controls.Main.CursorPrimaryClick.performed += HandlePrimaryCursorInput;
+        controls.Main.CombatAbility1.performed += PerformCombatAbility;
+        controls.Main.CombatAbility2.performed += PerformCombatAbility;
+        controls.Main.CombatAbility3.performed += PerformCombatAbility;
+        controls.Main.CombatAbility4.performed += PerformCombatAbility;
     }
 
     private void OnEnable()
@@ -70,6 +77,31 @@ public class PlayerController : Agent
             }
 
         }
+    }
+
+    public void PerformCombatAbility(InputAction.CallbackContext context)
+    {
+        if(context.action.Equals(controls.Main.CombatAbility1))
+        {
+            attack.PerformCombat(0);
+        }
+        else if(context.action.Equals(controls.Main.CombatAbility2))
+        {
+            attack.PerformCombat(1);
+        }
+        else if (context.action.Equals(controls.Main.CombatAbility3))
+        {
+            attack.PerformCombat(2);
+        }
+        else if (context.action.Equals(controls.Main.CombatAbility4))
+        {
+            attack.PerformCombat(3);
+        }
+        else
+        {
+            Debug.LogError(gameObject.name + " -> " + this.ToString() + " -> PerformCombatAbility(): Function failed to match combat ability.");
+        }
+
     }
 
     protected override void Die()

@@ -12,5 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 870a5276bfae5034f84a2e98007fd607, type: 3}
   m_Name: BasicAttack_d20
   m_EditorClassIdentifier: 
+  _name: Basic Attack
+  _description: 
   _damage: 20
-  _attackCoolDown: 1
+  _coolDown: 1
+  _canHitMultipleEnemies: 0
+  _attackRange: 1
+  _soundEffect: {fileID: 0}
+  _image: {fileID: 0}

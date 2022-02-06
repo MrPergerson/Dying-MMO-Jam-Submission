@@ -2,21 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/* BUGs
- * Agents won't attack if they break off of an initial attack and then attack again
- * 
- * 
- * 
- */
-
-
-[RequireComponent(typeof(Agent))]
 public class AgentAttack : MonoBehaviour
 {
+    public AgentAudioData audioData;
     //public float simpleAttackCoolDown = 1;
     //[SerializeField] float _damage = 20;
     [SerializeField] float _attackDistance = 2;
     [SerializeField] CombatAbilitySet combatAbilitySet;
+
+    private List<CombatAbility> abilitiesInCoolDown;
 
     public Agent Target { set; private get; }
     //public float Damage { set { _damage = value; } get { return _damage; } }
@@ -40,17 +34,32 @@ public class AgentAttack : MonoBehaviour
             Debug.LogError(gameObject.name + " -> " + this.ToString() + " -> Start(): combatAbilitySet has no combat abilites.");
         }
 
+        abilitiesInCoolDown = new List<CombatAbility>();
+    }
 
+    private void Update()
+    {
+        ProcessCoolDowns();
+    }
 
-        cPerformSimpleAttack = PerformSimpleAttack(GetComponent<Agent>());
-
+    private void ProcessCoolDowns()
+    {
+        if(abilitiesInCoolDown.Count > 0)
+        {
+            abilitiesInCoolDown.ForEach(ability => ability.TimeUntilCoolDownEnds -= Time.deltaTime);
+            abilitiesInCoolDown.RemoveAll(ability => ability.TimeUntilCoolDownEnds <= 0);
+        }
     }
 
 
     public void StartAttack(Agent target)
     {
-        Target = target;
-        StartCoroutine(cPerformSimpleAttack);
+        if (!target.Equals(Target))
+        {
+            Target = target;
+            cPerformSimpleAttack = PerformSimpleAttack(GetComponent<Agent>());
+            StartCoroutine(cPerformSimpleAttack);
+        }
 
     }
 
@@ -61,10 +70,10 @@ public class AgentAttack : MonoBehaviour
         StopCoroutine(cPerformSimpleAttack);
     }
 
-
+    // need to pause the attack if doing movement within attackdistance 
     IEnumerator PerformSimpleAttack(Agent self)
     {
-        while(Target.Health > 0 && Target != null)
+        while (Target.Health > 0 && Target != null)
         {
             if(GetDistance(this.transform.position, Target.transform.position) > AttackDistance)
             {
@@ -80,8 +89,36 @@ public class AgentAttack : MonoBehaviour
             var targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
             transform.LookAt(targetPos, Vector3.up);
 
-            yield return new WaitForSeconds(simpleAttack.AttackCoolDown);
+            yield return new WaitForSeconds(simpleAttack.CoolDown);
         }            
+    }
+
+    public void PerformCombat(int index)
+    {
+        if(index >= combatAbilitySet.abilities.Count)
+        {
+            Debug.LogError(gameObject.name + " -> " + this.ToString() + " -> PerformCombat(): Ability index out of range. " +
+                "PerformCombat() is calling for an ability that is not in combatAbilitySet");
+            return;
+        }
+
+
+        CombatAbility combatAbility = combatAbilitySet.abilities[index];
+
+        if(combatAbility.TimeUntilCoolDownEnds <= 0)
+        {
+            combatAbility.TimeUntilCoolDownEnds = combatAbility.CoolDown;
+            abilitiesInCoolDown.Add(combatAbility);
+
+            // animation and sound effect
+            Debug.Log("Performed combat ability " + (index + 1));
+            
+        }
+        else
+        {
+            print("Combat ability " + (index + 1) + " is on cooldown until " + combatAbility.TimeUntilCoolDownEnds + " seconds.");
+        }
+
     }
 
     // include other attacks in here?

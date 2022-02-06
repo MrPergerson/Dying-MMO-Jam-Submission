@@ -9,14 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 870a5276bfae5034f84a2e98007fd607, type: 3}
-  m_Name: BasicAttack_d10
+  m_Script: {fileID: 11500000, guid: dddf9f05a180d5a4ca4b140f75ff7951, type: 3}
+  m_Name: DefaultUIAudioData
   m_EditorClassIdentifier: 
-  _name: Basic Attack
-  _description: 
-  _damage: 10
-  _coolDown: 1
-  _canHitMultipleEnemies: 0
-  _attackRange: 1
-  _soundEffect: {fileID: 0}
-  _image: {fileID: 0}
+  _alert: {fileID: 0}
+  _chatPing: {fileID: 0}
+  _buttonAudioSet: []
