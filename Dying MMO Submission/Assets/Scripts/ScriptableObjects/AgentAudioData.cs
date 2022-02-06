@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * TODO
+ * Add audiomixer support. Miles should be able to assign audio mixers to audioclips
+ * 
+ * 
+ */
+
+
 [CreateAssetMenu(fileName = "AgentAudioData", menuName = "Data/AgentAudioData")]
 public class AgentAudioData : ScriptableObject
 {
