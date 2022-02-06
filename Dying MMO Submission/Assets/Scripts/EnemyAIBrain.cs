@@ -7,6 +7,7 @@ public class EnemyAIBrain : Agent
 {
     public Agent threat;
     private AgentAttack attack;
+    [SerializeField] LayerMask layerMask;
 
     protected override void Awake()
     {
@@ -18,6 +19,7 @@ public class EnemyAIBrain : Agent
     {
         base.Start();
         attack.audioData = audioData;
+        layerMask = LayerMask.GetMask("Ground, NPC, Player");
     }
 
     // only supports one threat atm
