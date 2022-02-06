@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 870a5276bfae5034f84a2e98007fd607, type: 3}
+  m_Name: PlayerBlueAttack
+  m_EditorClassIdentifier: 
+  _name: Blue Attack
+  _description: 
+  _damage: 50
+  _coolDown: 3
+  _canHitMultipleEnemies: 0
+  _attackRange: 1
+  _VFX_Hit: {fileID: 8905827297373272175, guid: c6b4c63992e7f5e47a78a85659df0487, type: 3}
+  _AUDIO_Hit: {fileID: 0}
+  _IMG_Icon: {fileID: 0}

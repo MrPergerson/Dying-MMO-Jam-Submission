@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a14046d52baa45643b5afcd50c207780, type: 3}
+  m_Name: BasicPlayerCombatSet
+  m_EditorClassIdentifier: 
+  abilities:
+  - {fileID: 11400000, guid: 2272886913314d5478479c367be09bd0, type: 2}
+  - {fileID: 11400000, guid: 643c342f77b485f4e884ee5e96c55231, type: 2}
+  - {fileID: 11400000, guid: 90b16c62ecddeca408944b494657c235, type: 2}
+  - {fileID: 11400000, guid: 4238cb8899cd6e24a85cd81755a02ace, type: 2}
