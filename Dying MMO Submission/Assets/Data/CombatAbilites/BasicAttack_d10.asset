@@ -15,7 +15,7 @@ MonoBehaviour:
   _name: Basic Attack
   _description: 
   _damage: 10
-  _coolDown: 1
+  _coolDown: 1.6
   _canHitMultipleEnemies: 0
   _attackRange: 1
   _VFX_Hit: {fileID: 2923950367495716213, guid: 17b94d976d6022d48923d6f9c292f359, type: 3}

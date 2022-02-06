@@ -20,12 +20,12 @@ public class PlayerController : Agent
         playerInput = GetComponent<PlayerInput>();
         attack = GetComponent<AgentAttack>();
         controls = new PlayerControls();
+        attack.audioData = AudioData;
     }
 
     protected override void Start()
     {
         base.Start();
-        attack.audioData = audioData;
 
         if (playerInput.actions == null) playerInput.actions = controls.asset;
         controls.Main.CursorPrimaryClick.performed += HandlePrimaryCursorInput;

@@ -13,12 +13,12 @@ public class EnemyAIBrain : Agent
     {
         base.Awake();
         attack = GetComponent<AgentAttack>();
+        attack.audioData = AudioData;
     }
 
     protected override void Start()
     {
         base.Start();
-        attack.audioData = audioData;
         layerMask = LayerMask.GetMask("Ground, NPC, Player");
     }
 

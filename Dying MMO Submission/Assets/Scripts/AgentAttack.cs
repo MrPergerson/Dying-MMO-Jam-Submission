@@ -5,21 +5,23 @@ using UnityEngine.VFX;
 
 public class AgentAttack : MonoBehaviour
 {
-    public AgentAudioData audioData;
     //public float simpleAttackCoolDown = 1;
     //[SerializeField] float _damage = 20;
+    [Header("Settings")]
     [SerializeField] float _attackDistance = 2;
+    [Header("Combat Abilities")]
     [SerializeField] CombatAbilitySet combatAbilitySet;
-    [SerializeField] GameObject test_vfxAnchor;
+    [Header("Audio")]
+    [SerializeField] private bool playsAudio = true;
+    public AgentAudioData audioData;
 
     private List<CombatAbility> abilitiesInCoolDown;
     private Dictionary<int, VisualEffect> vfxPool;
 
     private GameObject vfxContainer;
-    private AudioSource audio;
+    private AudioSource audioSource;
 
     public Agent Target { set; private get; }
-    //public float Damage { set { _damage = value; } get { return _damage; } }
     public float AttackDistance { get { return _attackDistance; } set { _attackDistance = value; } }
 
     private IEnumerator cPerformSimpleAttack;
@@ -50,7 +52,13 @@ public class AgentAttack : MonoBehaviour
         var audioContainer = new GameObject("AgentAttack AudioSource");
         audioContainer.transform.parent = this.transform;
         audioContainer.transform.position = Vector3.zero + Vector3.up;
-        audio = audioContainer.AddComponent<AudioSource>();
+        audioSource = audioContainer.AddComponent<AudioSource>();
+
+        if(playsAudio)
+        {
+            if (audioData == null)
+                Debug.LogError(gameObject.name + " -> " + this.ToString() + ": This component is set to play audio but there is no audioData found");
+        }
     }
 
     private void Update()
@@ -132,9 +140,19 @@ public class AgentAttack : MonoBehaviour
             vfxPool[index].Play();
 
             //audio
-            if(audioData && audioData.AttackAudio.Count != 0 && index >= audioData.AttackAudio.Count)
+            if(playsAudio)
             {
-                audio.PlayOneShot(audioData.AttackAudio[index]);
+                if (audioData && audioData.AttackAudio.Count != 0 && index < audioData.AttackAudio.Count)
+                {
+                    //audioSource.PlayOneShot(audioData.AttackAudio[index]);
+                    //int randomIndex = Random.Range(0, footstepSounds.Count);
+                    audioSource.clip = audioData.AttackAudio[index];
+                    audioSource.Play();
+                }
+                else
+                {
+                    Debug.LogWarning(gameObject.name + " -> " + this.ToString() + " -> PerformSimpleAttack(): Audio not playing");
+                }    
             }
 
             var targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);

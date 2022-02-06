@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class Agent : MonoBehaviour
 {
     [SerializeField] protected float _health = 100;
-    [SerializeField] protected AgentAudioData audioData;
+    [SerializeField] protected AgentAudioData _audioData;
     protected AgentMoveToTarget move;
 
     public float Health { 
@@ -22,6 +22,11 @@ public abstract class Agent : MonoBehaviour
         } 
     }
 
+    public AgentAudioData AudioData
+    {
+        get { return _audioData; }
+    }
+
     public delegate void HealthChanged(float health);
     public event HealthChanged onHealthChanged;
 
@@ -31,11 +36,11 @@ public abstract class Agent : MonoBehaviour
     protected virtual void Awake()
     {
         move = GetComponent<AgentMoveToTarget>();
+        move.audioData = AudioData;
     }
 
     protected virtual void Start()
     {
-        move.audioData = audioData;
     }
 
     public abstract void TakeDamage(Agent origin, float damage);
