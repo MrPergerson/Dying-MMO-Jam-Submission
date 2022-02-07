@@ -53,6 +53,42 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CombatAbility1"",
+                    ""type"": ""Button"",
+                    ""id"": ""8cd2af41-5a2b-4c09-8c1d-a01f74b76161"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CombatAbility2"",
+                    ""type"": ""Button"",
+                    ""id"": ""ddef97e1-2b08-4e5f-9f97-00c3a92107ce"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CombatAbility3"",
+                    ""type"": ""Button"",
+                    ""id"": ""e09ed77c-5712-4ed7-9bb8-af56232f6a41"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CombatAbility4"",
+                    ""type"": ""Button"",
+                    ""id"": ""3edba0ef-91cf-4959-8119-1668149ca416"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -88,6 +124,50 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""CursorSecondaryClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""600de596-9c71-4ff7-926a-dab345517b46"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseAndKeyboard"",
+                    ""action"": ""CombatAbility1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d10fd0e6-0b08-4c40-89e9-0b6cbe7bfaba"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseAndKeyboard"",
+                    ""action"": ""CombatAbility2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1b16f62f-2c49-414a-b190-ce2dbf6b75df"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseAndKeyboard"",
+                    ""action"": ""CombatAbility3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6e78949a-e4c7-40e3-a420-1755b23b85d7"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseAndKeyboard"",
+                    ""action"": ""CombatAbility4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -116,6 +196,10 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Main_CursorPosition = m_Main.FindAction("CursorPosition", throwIfNotFound: true);
         m_Main_CursorPrimaryClick = m_Main.FindAction("CursorPrimaryClick", throwIfNotFound: true);
         m_Main_CursorSecondaryClick = m_Main.FindAction("CursorSecondaryClick", throwIfNotFound: true);
+        m_Main_CombatAbility1 = m_Main.FindAction("CombatAbility1", throwIfNotFound: true);
+        m_Main_CombatAbility2 = m_Main.FindAction("CombatAbility2", throwIfNotFound: true);
+        m_Main_CombatAbility3 = m_Main.FindAction("CombatAbility3", throwIfNotFound: true);
+        m_Main_CombatAbility4 = m_Main.FindAction("CombatAbility4", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -178,6 +262,10 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_CursorPosition;
     private readonly InputAction m_Main_CursorPrimaryClick;
     private readonly InputAction m_Main_CursorSecondaryClick;
+    private readonly InputAction m_Main_CombatAbility1;
+    private readonly InputAction m_Main_CombatAbility2;
+    private readonly InputAction m_Main_CombatAbility3;
+    private readonly InputAction m_Main_CombatAbility4;
     public struct MainActions
     {
         private @PlayerControls m_Wrapper;
@@ -185,6 +273,10 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @CursorPosition => m_Wrapper.m_Main_CursorPosition;
         public InputAction @CursorPrimaryClick => m_Wrapper.m_Main_CursorPrimaryClick;
         public InputAction @CursorSecondaryClick => m_Wrapper.m_Main_CursorSecondaryClick;
+        public InputAction @CombatAbility1 => m_Wrapper.m_Main_CombatAbility1;
+        public InputAction @CombatAbility2 => m_Wrapper.m_Main_CombatAbility2;
+        public InputAction @CombatAbility3 => m_Wrapper.m_Main_CombatAbility3;
+        public InputAction @CombatAbility4 => m_Wrapper.m_Main_CombatAbility4;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -203,6 +295,18 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @CursorSecondaryClick.started -= m_Wrapper.m_MainActionsCallbackInterface.OnCursorSecondaryClick;
                 @CursorSecondaryClick.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnCursorSecondaryClick;
                 @CursorSecondaryClick.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnCursorSecondaryClick;
+                @CombatAbility1.started -= m_Wrapper.m_MainActionsCallbackInterface.OnCombatAbility1;
+                @CombatAbility1.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnCombatAbility1;
+                @CombatAbility1.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnCombatAbility1;
+                @CombatAbility2.started -= m_Wrapper.m_MainActionsCallbackInterface.OnCombatAbility2;
+                @CombatAbility2.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnCombatAbility2;
+                @CombatAbility2.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnCombatAbility2;
+                @CombatAbility3.started -= m_Wrapper.m_MainActionsCallbackInterface.OnCombatAbility3;
+                @CombatAbility3.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnCombatAbility3;
+                @CombatAbility3.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnCombatAbility3;
+                @CombatAbility4.started -= m_Wrapper.m_MainActionsCallbackInterface.OnCombatAbility4;
+                @CombatAbility4.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnCombatAbility4;
+                @CombatAbility4.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnCombatAbility4;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -216,6 +320,18 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @CursorSecondaryClick.started += instance.OnCursorSecondaryClick;
                 @CursorSecondaryClick.performed += instance.OnCursorSecondaryClick;
                 @CursorSecondaryClick.canceled += instance.OnCursorSecondaryClick;
+                @CombatAbility1.started += instance.OnCombatAbility1;
+                @CombatAbility1.performed += instance.OnCombatAbility1;
+                @CombatAbility1.canceled += instance.OnCombatAbility1;
+                @CombatAbility2.started += instance.OnCombatAbility2;
+                @CombatAbility2.performed += instance.OnCombatAbility2;
+                @CombatAbility2.canceled += instance.OnCombatAbility2;
+                @CombatAbility3.started += instance.OnCombatAbility3;
+                @CombatAbility3.performed += instance.OnCombatAbility3;
+                @CombatAbility3.canceled += instance.OnCombatAbility3;
+                @CombatAbility4.started += instance.OnCombatAbility4;
+                @CombatAbility4.performed += instance.OnCombatAbility4;
+                @CombatAbility4.canceled += instance.OnCombatAbility4;
             }
         }
     }
@@ -234,5 +350,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnCursorPosition(InputAction.CallbackContext context);
         void OnCursorPrimaryClick(InputAction.CallbackContext context);
         void OnCursorSecondaryClick(InputAction.CallbackContext context);
+        void OnCombatAbility1(InputAction.CallbackContext context);
+        void OnCombatAbility2(InputAction.CallbackContext context);
+        void OnCombatAbility3(InputAction.CallbackContext context);
+        void OnCombatAbility4(InputAction.CallbackContext context);
     }
 }

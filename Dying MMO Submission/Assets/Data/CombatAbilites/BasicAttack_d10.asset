@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 870a5276bfae5034f84a2e98007fd607, type: 3}
+  m_Name: BasicAttack_d10
+  m_EditorClassIdentifier: 
+  _name: Basic Attack
+  _description: 
+  _damage: 10
+  _coolDown: 1.6
+  _canHitMultipleEnemies: 0
+  _attackRange: 1
+  _VFX_Hit: {fileID: 2923950367495716213, guid: 17b94d976d6022d48923d6f9c292f359, type: 3}
+  _AUDIO_Hit: {fileID: 0}
+  _IMG_Icon: {fileID: 0}
