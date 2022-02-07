@@ -21,6 +21,10 @@ public class DialogueManagerAs : MonoBehaviour
     private Story currentStory;
     public bool chatIsPlaying { get; private set; }
 
+    private float chatDelay;
+
+    public TextAsset inkJSON;
+
     private void Awake()
     {
         // Check that there is only one Dialogue Manager in scene
@@ -29,6 +33,8 @@ public class DialogueManagerAs : MonoBehaviour
             Debug.LogError(this.gameObject + " Awake: More than one Dialogue Manager detected");
         }
         instance = this;
+
+        chatDelay = 1f;
     }
 
     // Get Dialogue Manager Instance
@@ -50,6 +56,29 @@ public class DialogueManagerAs : MonoBehaviour
             choicesText[index] = choice.GetComponentInChildren<TextMeshProUGUI>();
             choice.SetActive(false);
             index++;
+        }
+
+        EnterDialogueMode(inkJSON);
+    }
+
+    private void Update()
+    {
+        if (!chatIsPlaying)
+        {
+            return;
+        }
+
+        // Check there are no choices left before continuing the story
+        if (currentStory.currentChoices.Count == 0)
+        {
+            if (chatDelay <= 0)
+            {
+                ContinueStory();
+            }
+            else
+            {
+                chatDelay -= Time.deltaTime;
+            }
         }
     }
 
@@ -73,12 +102,13 @@ public class DialogueManagerAs : MonoBehaviour
     {
         if (currentStory.canContinue)
         {
+            chatDelay = 1f;
             chatText.text = currentStory.Continue();
             DisplayChoices();
         }
         else
         {
-            StartCoroutine(ExitDialogueMode());
+            //StartCoroutine(ExitDialogueMode());
         }
     }
 

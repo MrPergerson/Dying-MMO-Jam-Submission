@@ -28,7 +28,7 @@ public class TestInputManagerAs : MonoBehaviour
     private void Start()
     {
         //playerControls.Main.CursorPrimaryClick.started += DialogueManagerAs.GetInstance().ContinueStory;
-        playerControls.Main.CursorPrimaryClick.performed += DialogueManagerAs.GetInstance().ContinueStory;
+        //playerControls.Main.CursorPrimaryClick.performed += DialogueManagerAs.GetInstance().ContinueStory;
         //playerControls.Main.CursorPrimaryClick.canceled += DialogueManagerAs.GetInstance().ContinueStory;
 
         canClick = true;
