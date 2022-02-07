@@ -114,6 +114,7 @@ public class AgentAttack : MonoBehaviour
         {
             Destroy(vfxPool[i].gameObject, .2f);
         }
+        vfxPool.Clear();
     }
 
     // need to pause the attack if doing movement within attackdistance 
@@ -121,10 +122,8 @@ public class AgentAttack : MonoBehaviour
     {
         while (Target.Health > 0 && Target != null)
         {
-            if(GetDistance(this.transform.position, Target.transform.position) > AttackDistance)
+            if(Target == null || GetDistance(this.transform.position, Target.transform.position) > AttackDistance)
             {
-                EndAttack();
-                // chase target??
                 break;
             }
 
@@ -142,24 +141,27 @@ public class AgentAttack : MonoBehaviour
             //audio
             if(playsAudio)
             {
-                if (audioData && audioData.AttackAudio.Count != 0 && index < audioData.AttackAudio.Count)
-                {
-                    //audioSource.PlayOneShot(audioData.AttackAudio[index]);
-                    //int randomIndex = Random.Range(0, footstepSounds.Count);
-                    audioSource.clip = audioData.AttackAudio[index];
-                    audioSource.Play();
-                }
-                else
-                {
-                    Debug.LogWarning(gameObject.name + " -> " + this.ToString() + " -> PerformSimpleAttack(): Audio not playing");
-                }    
+                //audioSource.PlayOneShot(audioData.AttackAudio[index]);
+                //int randomIndex = Random.Range(0, footstepSounds.Count);
+                audioSource.clip = combatAbilitySet.abilities[index].AUDIO_Hit;
+                audioSource.Play();
             }
 
             var targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
             transform.LookAt(targetPos, Vector3.up);
 
+            if(Target.Health < 0 || Target == null)
+            {
+                break;
+            }
+
             yield return new WaitForSeconds(simpleAttack.CoolDown);
-        }            
+
+
+        }
+
+        //print("end attack"); there is a delay before this is called
+        EndAttack();
     }
 
     public void PerformCombat(int index)

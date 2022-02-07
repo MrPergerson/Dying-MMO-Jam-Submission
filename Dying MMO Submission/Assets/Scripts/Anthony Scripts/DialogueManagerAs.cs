@@ -34,7 +34,7 @@ public class DialogueManagerAs : MonoBehaviour
         }
         instance = this;
 
-        chatDelay = 1f;
+        chatDelay = 3f;
     }
 
     // Get Dialogue Manager Instance
