@@ -22,7 +22,7 @@ public class AgentMoveToTarget : MonoBehaviour
     {
         navAgent = GetComponent<NavMeshAgent>();
 
-        var audioContainer = new GameObject("AgentAttack AudioSource");
+        var audioContainer = new GameObject("AgentMove AudioSource");
         audioContainer.transform.parent = this.transform;
         audioContainer.transform.position = Vector3.zero + Vector3.up;
         audioSource = audioContainer.AddComponent<AudioSource>();
