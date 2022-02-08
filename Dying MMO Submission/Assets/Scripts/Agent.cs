@@ -8,6 +8,7 @@ public abstract class Agent : MonoBehaviour
     [SerializeField] protected float _health = 100;
     [SerializeField] protected AgentAudioData _audioData;
     protected AgentMoveToTarget move;
+    protected Animator _animator;
 
     public float Health { 
         get { return _health; } 
@@ -27,6 +28,11 @@ public abstract class Agent : MonoBehaviour
         get { return _audioData; }
     }
 
+    public Animator Animator
+    {
+        get { return _animator; }
+    }
+
     public delegate void HealthChanged(float health);
     public event HealthChanged onHealthChanged;
 
@@ -37,6 +43,8 @@ public abstract class Agent : MonoBehaviour
     {
         move = GetComponent<AgentMoveToTarget>();
         move.audioData = AudioData;
+
+        _animator = GetComponentInChildren<Animator>();
     }
 
     protected virtual void Start()
