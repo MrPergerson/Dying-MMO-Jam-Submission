@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(NavMeshAgent), typeof(Agent))]
 public class AgentMoveToTarget : MonoBehaviour
 {
     [Header("Audio")]
@@ -16,10 +16,13 @@ public class AgentMoveToTarget : MonoBehaviour
     public bool isMoving;
     NavMeshAgent navAgent;
 
+    Agent agent;
+
     public delegate void DestinationToAgentCompleted(Agent agent);
 
     private void Awake()
     {
+        agent = GetComponent<Agent>();
         navAgent = GetComponent<NavMeshAgent>();
 
         var audioContainer = new GameObject("AgentMove AudioSource");
@@ -42,6 +45,7 @@ public class AgentMoveToTarget : MonoBehaviour
         navAgent.destination = destination;
         navAgent.stoppingDistance = 0;
         isMoving = true;
+        agent.Animator.SetFloat("Vertical", 1);
         StopAllCoroutines();
         StartCoroutine(PlayWalkingSound());
         StartCoroutine(CheckForDestinationCompleted());
@@ -52,6 +56,7 @@ public class AgentMoveToTarget : MonoBehaviour
         navAgent.destination = destination;
         navAgent.stoppingDistance = stoppingDistance;
         isMoving = true;
+        agent.Animator.SetFloat("Vertical", 1);
         StopAllCoroutines();
         StartCoroutine(PlayWalkingSound());
         StartCoroutine(CheckForDestinationCompleted());
@@ -62,6 +67,7 @@ public class AgentMoveToTarget : MonoBehaviour
         navAgent.destination = agent.transform.position;
         navAgent.stoppingDistance = stoppingDistance;
         isMoving = true;
+        agent.Animator.SetFloat("Vertical", 1);
         StopAllCoroutines();
         StartCoroutine(PlayWalkingSound());
         StartCoroutine(CheckForDestinationCompleted(agent, OnDestinationCompleted));
@@ -92,7 +98,7 @@ public class AgentMoveToTarget : MonoBehaviour
             if (remainingDistance <= navAgent.stoppingDistance && remainingDistance >= 0)
             {
                 destinationReached = true;
-                isMoving = false;
+                StopMoving();
             }
 
             yield return new WaitForSeconds(.1f);
@@ -131,7 +137,7 @@ public class AgentMoveToTarget : MonoBehaviour
                     Debug.LogError(gameObject.name + " in AgentMoveToTarget.cs -> CheckForDestinationCompleted(): Callback is null");
 
                 destinationReached = true;
-                isMoving = false;
+                StopMoving();
             }
 
             yield return new WaitForSeconds(.1f);
@@ -188,5 +194,10 @@ public class AgentMoveToTarget : MonoBehaviour
         // do coroutines stop automatically if they reac 
     }
 
+    public void StopMoving()
+    {
+        isMoving = false;
+        agent.Animator.SetFloat("Vertical", 0);
+    }
 
 }
