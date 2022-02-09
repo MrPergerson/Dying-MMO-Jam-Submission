@@ -132,8 +132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f400e18b92307814ba2bd31e4f2a9c2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 100
-  _audioData: {fileID: 0}
+  _health: 100000
+  _audioData: {fileID: 11400000, guid: 4d77c3e398b805c4185c5c75e4ac479e, type: 2}
   layerMask:
     serializedVersion: 2
     m_Bits: 1216
@@ -167,8 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackDistance: 2
   combatAbilitySet: {fileID: 11400000, guid: 4df5336384351ca47915a18460521783, type: 2}
-  playsAudio: 1
-  audioData: {fileID: 0}
+  _target: {fileID: 0}
 --- !u!136 &6803392250194869382
 CapsuleCollider:
   m_ObjectHideFlags: 0

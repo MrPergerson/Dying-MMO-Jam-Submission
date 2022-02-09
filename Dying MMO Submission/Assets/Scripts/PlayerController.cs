@@ -32,6 +32,7 @@ public class PlayerController : Agent
         controls.Main.CombatAbility2.performed += PerformCombatAbility;
         controls.Main.CombatAbility3.performed += PerformCombatAbility;
         controls.Main.CombatAbility4.performed += PerformCombatAbility;
+        controls.Main.Esc.performed += QuitApp;
     }
 
     private void OnEnable()
@@ -111,5 +112,10 @@ public class PlayerController : Agent
     public override void TakeDamage(Agent threat, float damage)
     {
         Health -= damage;
+    }
+
+    private void QuitApp(InputAction.CallbackContext Context)
+    {
+        Application.Quit();
     }
 }
