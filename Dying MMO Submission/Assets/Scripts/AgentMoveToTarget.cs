@@ -183,7 +183,7 @@ public class AgentMoveToTarget : MonoBehaviour
                     var footstepSounds = new List<AudioClip>(audioData.FootStepAudio.defaultFootsteps);
                     int randomIndex = Random.Range(0, footstepSounds.Count);
 
-                    if (audioData.FootstepAudioMixerOverride.Equals(null))
+                    if (audioData.FootstepAudioMixerOverride == null)
                     {
                         audioSource.outputAudioMixerGroup = audioData.AudioMixer;
                     }
