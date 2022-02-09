@@ -20,7 +20,6 @@ public class PlayerController : Agent
         playerInput = GetComponent<PlayerInput>();
         attack = GetComponent<AgentAttack>();
         controls = new PlayerControls();
-        attack.audioData = AudioData;
     }
 
     protected override void Start()

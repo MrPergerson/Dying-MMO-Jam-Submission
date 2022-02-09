@@ -19,3 +19,8 @@ MonoBehaviour:
   attack: []
   damaged: []
   death: []
+  audioMixer: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  footstepOverride: {fileID: 0}
+  attackOverride: {fileID: 0}
+  damagedOverride: {fileID: 0}
+  deathOverride: {fileID: 0}
