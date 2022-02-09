@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.VFX;
 
+[RequireComponent(typeof(Agent))]
 public class AgentAttack : MonoBehaviour
 {
     //public float simpleAttackCoolDown = 1;
@@ -14,20 +16,28 @@ public class AgentAttack : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private bool playsAudio = true;
     public AgentAudioData audioData;
+    [Header("Debug")]
+    [SerializeField, ReadOnly] private Agent _target;
 
     private List<CombatAbility> abilitiesInCoolDown;
     private Dictionary<int, VisualEffect> vfxPool;
 
     private GameObject vfxContainer;
     private AudioSource audioSource;
+    private Agent agent;
 
-    public Agent Target { set; private get; }
+    private Agent Target { get { return _target; } set { _target = value; } }
     public float AttackDistance { get { return _attackDistance; } set { _attackDistance = value; } }
 
     private IEnumerator cPerformSimpleAttack;
 
     public delegate void AttackEnded();
     public event AttackEnded onAttackEnded;
+
+    private void Awake()
+    {
+        agent = GetComponent<Agent>();
+    }
 
     private void Start()
     {
@@ -81,15 +91,16 @@ public class AgentAttack : MonoBehaviour
         if (!target.Equals(Target))
         {
             Target = target;
-           
 
-            for(int i = 0; i < combatAbilitySet.abilities.Count; i++)
+            agent.Animator.SetBool("InCombat", true);
+
+            for (int i = 0; i < combatAbilitySet.abilities.Count; i++)
             { 
                 if (combatAbilitySet.abilities[i].VFX_Hit == null) continue;
 
-                var vfxGameObjec = Instantiate(combatAbilitySet.abilities[i].VFX_Hit, vfxContainer.transform);
+                var vfxGameObject = Instantiate(combatAbilitySet.abilities[i].VFX_Hit, vfxContainer.transform);
 
-                if(vfxGameObjec.TryGetComponent<VisualEffect>(out VisualEffect visualEffectComponent))
+                if(vfxGameObject.TryGetComponent<VisualEffect>(out VisualEffect visualEffectComponent))
                 {
                     visualEffectComponent.Stop();
                     vfxPool.Add(i, visualEffectComponent);
@@ -110,10 +121,14 @@ public class AgentAttack : MonoBehaviour
         onAttackEnded?.Invoke();
         StopCoroutine(cPerformSimpleAttack);
 
+        agent.Animator.SetBool("InCombat", false);
+
         for(int i = 0; i < combatAbilitySet.abilities.Count; i++)
         {
             Destroy(vfxPool[i].gameObject, .2f);
         }
+
+        vfxPool.Clear();
     }
 
     // need to pause the attack if doing movement within attackdistance 
@@ -121,9 +136,9 @@ public class AgentAttack : MonoBehaviour
     {
         while (Target.Health > 0 && Target != null)
         {
-            if(GetDistance(this.transform.position, Target.transform.position) > AttackDistance)
+
+            if (GetDistance(this.transform.position, Target.transform.position) > AttackDistance)
             {
-                EndAttack();
                 // chase target??
                 break;
             }
@@ -159,7 +174,9 @@ public class AgentAttack : MonoBehaviour
             transform.LookAt(targetPos, Vector3.up);
 
             yield return new WaitForSeconds(simpleAttack.CoolDown);
-        }            
+        }
+
+        EndAttack();
     }
 
     public void PerformCombat(int index)
