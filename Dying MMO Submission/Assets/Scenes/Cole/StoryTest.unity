@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &224325505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +189,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &457990504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +266,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 487a657cde1c857499844286c5ca4dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  conditionMet: 0
+  isCurrentCondition: 0
 --- !u!1 &795614177
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,7 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentChapterName: 
-  CurrentStoryState: 0
+  CurrentStoryState: 3
   chapters:
   - {fileID: 871176481}
   - {fileID: 1508346567}
@@ -552,7 +554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &871176481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -565,7 +567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dbe1d59af07edc4990111bc538603ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playing: 0
+  playing: 1
   _name: chapter 1
   transitionsToNextChapter:
   - {fileID: 1980257368}
@@ -617,6 +619,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 487a657cde1c857499844286c5ca4dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  conditionMet: 0
+  isCurrentCondition: 0
 --- !u!4 &1110749443
 Transform:
   m_ObjectHideFlags: 0
@@ -674,6 +678,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 487a657cde1c857499844286c5ca4dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  conditionMet: 0
+  isCurrentCondition: 0
 --- !u!1 &1508346566
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,7 +696,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1508346567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -767,6 +773,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 487a657cde1c857499844286c5ca4dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  conditionMet: 0
+  isCurrentCondition: 0
 --- !u!1 &1737263076
 GameObject:
   m_ObjectHideFlags: 0
@@ -893,3 +901,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 487a657cde1c857499844286c5ca4dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  conditionMet: 0
+  isCurrentCondition: 0

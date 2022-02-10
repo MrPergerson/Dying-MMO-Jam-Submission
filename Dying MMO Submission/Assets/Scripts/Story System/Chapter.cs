@@ -33,10 +33,16 @@ public class Chapter : MonoBehaviour
         {
             Debug.LogError(this.gameObject + ": No ending transitions found");
         }
+
+        if(!playing)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public void StartChapter()
     {
+        playing = true;
         StopAllCoroutines();
         onChapterStarted?.Invoke();
         StartCoroutine(CheckForEndingTransition());
@@ -44,13 +50,29 @@ public class Chapter : MonoBehaviour
 
     public void EndChapter()
     {
+        playing = false;
         onChapterEnded?.Invoke();
         StopAllCoroutines();
     }
 
+    public void ResetChapter()
+    {
+        nextChapterTransitionPassed = false;
+
+        foreach(var condition in transitionsToNextChapter)
+        {
+            condition.ResetCondition();
+        }
+
+        
+    }
+
     IEnumerator CheckForEndingTransition()
     {
-        StartCoroutine(CheckForConditionsMet());
+        if(!nextChapterTransitionPassed)
+        {
+            StartCoroutine(CheckForConditionsMet());
+        }
 
         yield return new WaitUntil(() => nextChapterTransitionPassed);
 
@@ -66,8 +88,13 @@ public class Chapter : MonoBehaviour
             if (currentIndex >= transitionsToNextChapter.Count)
                 return true;
 
+            transitionsToNextChapter[currentIndex].SetAsCurrentCondition(true);
+
             if (transitionsToNextChapter[currentIndex].ConditionMet())
+            {
+                transitionsToNextChapter[currentIndex].SetAsCurrentCondition(false);
                 currentIndex++;
+            }
 
             return false;
         });

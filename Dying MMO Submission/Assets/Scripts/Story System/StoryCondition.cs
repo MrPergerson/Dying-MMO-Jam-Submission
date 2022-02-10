@@ -4,10 +4,11 @@ using UnityEngine;
 
 public abstract class StoryCondition : MonoBehaviour
 {
-
-    protected bool conditionMet = false;
-
     public abstract bool ConditionMet();
 
+    public abstract void ResetCondition();
 
+    public abstract bool IsCurrentCondition();
+
+    public abstract void SetAsCurrentCondition(bool value);
 }

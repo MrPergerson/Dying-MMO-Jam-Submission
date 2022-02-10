@@ -81,6 +81,8 @@ public class StorySystem : MonoBehaviour
         foreach (var chapter in chapters)
         {
             chapter.onChapterEnded -= TransitionToNextChapter;
+            chapter.ResetChapter();
+            chapter.gameObject.SetActive(false);
         }
 
         print("Story Ended");
