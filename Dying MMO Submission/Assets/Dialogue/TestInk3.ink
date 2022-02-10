@@ -1,4 +1,6 @@
 //This is meant to test if Knots could be completely separate and we could hold multiple conversations in a single ink file.
+ -> ConversationA
+ 
 === ConversationA ===
 #Character1
 I never really thought that this game would die.
