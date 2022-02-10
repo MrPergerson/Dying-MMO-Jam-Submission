@@ -11,7 +11,9 @@ public class DialogueManagerAs : MonoBehaviour
     private static DialogueManagerAs instance;
 
     [Header("Chat Line UI")]
-    [SerializeField] private GameObject chatPanel;
+    [SerializeField] private GameObject[] chatLineParent;
+    [SerializeField] private GameObject chatLineObj;
+    [SerializeField] private Transform chatLinePos; 
     [SerializeField] private TextMeshProUGUI chatText;
 
     [Header("Chat Choices UI")]
@@ -21,6 +23,7 @@ public class DialogueManagerAs : MonoBehaviour
     private Story currentStory;
     public bool chatIsPlaying { get; private set; }
 
+    public float chatDelayNum = 1f;
     private float chatDelay;
 
     public TextAsset inkJSON;
@@ -34,7 +37,7 @@ public class DialogueManagerAs : MonoBehaviour
         }
         instance = this;
 
-        chatDelay = 1f;
+        chatDelay = chatDelayNum;
     }
 
     // Get Dialogue Manager Instance
@@ -73,6 +76,7 @@ public class DialogueManagerAs : MonoBehaviour
         {
             if (chatDelay <= 0)
             {
+                chatDelay = chatDelayNum;
                 ContinueStory();
             }
             else
@@ -92,23 +96,28 @@ public class DialogueManagerAs : MonoBehaviour
 
     public IEnumerator ExitDialogueMode()
     {
+        //print("exiting");
         yield return new WaitForSeconds(0.2f);
-
         chatIsPlaying = false;
-        chatText.text = "";
     }
 
     private void ContinueStory()
     {
         if (currentStory.canContinue)
         {
-            chatDelay = 1f;
-            chatText.text = currentStory.Continue();
+            GameObject chatLine = Instantiate(chatLineObj, chatLinePos.position, Quaternion.identity);
+            chatLine.GetComponent<TextMeshProUGUI>().text = currentStory.Continue();
+            string chatLineText = chatLine.GetComponent<TextMeshProUGUI>().text;
+            if (chatLineText == "\n")
+            {
+                Destroy(chatLine);
+            }
+            chatLine.transform.SetParent(chatLineParent[0].transform);
             DisplayChoices();
         }
         else
         {
-            //StartCoroutine(ExitDialogueMode());
+            StartCoroutine(ExitDialogueMode());
         }
     }
 
