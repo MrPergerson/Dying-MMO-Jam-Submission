@@ -14,6 +14,23 @@ public class StorySystem : MonoBehaviour
     private int CurrentChapter { get; set; } 
     private enum storyState { NotStarted, TransitioningToNextChapter, Paused, Ended }
 
+    private void Start()
+    {
+        ResetStory();
+    }
+
+    private void ResetStory()
+    {
+        CurrentChapter = -1;
+        CurrentStoryState = storyState.NotStarted;
+
+        foreach (var chapter in chapters)
+        {
+            chapter.gameObject.SetActive(false);
+        }
+
+    }
+
     private void BeginChapter()
     {
         SetStoryDetails(storyState.TransitioningToNextChapter, chapters[CurrentChapter].Name);
@@ -55,14 +72,7 @@ public class StorySystem : MonoBehaviour
     {
         if(CurrentStoryState == storyState.NotStarted || CurrentStoryState == storyState.Ended)
         {
-            CurrentChapter = -1;
-            CurrentStoryState = storyState.NotStarted;
-
-            foreach(var chapter in chapters)
-            {
-                chapter.gameObject.SetActive(false);
-            }
-
+            ResetStory();
             TransitionToNextChapter();
         }
         else
@@ -71,6 +81,7 @@ public class StorySystem : MonoBehaviour
         }
 
     }
+
 
     [Button("End Story")]
     public void EndStory()
