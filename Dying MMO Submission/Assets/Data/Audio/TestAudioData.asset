@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1cc76e5fd5737e47843ed43c007cd2a, type: 3}
+  m_Name: TestAudioData
+  m_EditorClassIdentifier: 
+  footsteps:
+    defaultFootsteps:
+    - {fileID: 8300000, guid: b54f6bea17257254591524052586c1da, type: 3}
+    - {fileID: 8300000, guid: f3932fcd88ffbe84aa8c5d803fb5a8b9, type: 3}
+    - {fileID: 8300000, guid: d2cb88f326fa87e4eb3b3f76fd09d4db, type: 3}
+    grassFootsteps: []
+    stoneFootsteps: []
+  attack: []
+  damaged: []
+  death: []
+  audioMixer: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  footstepOverride: {fileID: -4450924106273490457, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  attackOverride: {fileID: 0}
+  damagedOverride: {fileID: 0}
+  deathOverride: {fileID: 0}

@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
+using UnityEngine.Audio;
 
 [CreateAssetMenu(fileName = "CombatAbility", menuName = "Data/CombatAbility")]
 public class CombatAbility : ScriptableObject
 {
+
     [SerializeField] private string _name;
-    [SerializeField, TextArea(1,10)] private string _description;
+    [SerializeField, TextArea(1, 10)] private string _description;
     [SerializeField] private float _damage;
     [SerializeField] private float _coolDown;
     [SerializeField] private bool _canHitMultipleEnemies;
     [SerializeField] private float _attackRange = 1;
     [SerializeField] private GameObject _VFX_Hit;
     [SerializeField] private AudioClip _AUDIO_Hit;
+    [SerializeField] private AudioMixerGroup _hitAudioMixer;
     [SerializeField] private Sprite _IMG_Icon;
 
 
@@ -27,6 +31,7 @@ public class CombatAbility : ScriptableObject
     public float AttackRange { get { return _attackRange; } }
     public GameObject VFX_Hit { get { return _VFX_Hit; } }
     public AudioClip AUDIO_Hit { get { return _AUDIO_Hit; } }
+    public AudioMixerGroup HitAudioMixer{ get {return _hitAudioMixer;}}
     public Sprite IMG_Icon { get { return _IMG_Icon; } }
 
 }

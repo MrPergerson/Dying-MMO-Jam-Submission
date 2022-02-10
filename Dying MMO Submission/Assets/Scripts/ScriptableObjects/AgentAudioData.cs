@@ -1,18 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-/*
- * TODO
- * Add audiomixer support. Miles should be able to assign audio mixers to audioclips
- * 
- * 
- */
-
+using UnityEngine.Audio;
+using Sirenix.OdinInspector;
 
 [CreateAssetMenu(fileName = "AgentAudioData", menuName = "Data/AgentAudioData")]
 public class AgentAudioData : ScriptableObject
 {
+    [Title("Audio", "Lists can support any number of sounds. The scripts will randomly choose sounds from the lists.", bold: true)]
     [System.Serializable]
     public struct FootstepSet
     {
@@ -24,11 +19,22 @@ public class AgentAudioData : ScriptableObject
     [SerializeField] private List<AudioClip> attack;
     [SerializeField] private List<AudioClip> damaged;
     [SerializeField] private List<AudioClip> death;
+    [Title("Audio Mixers", "Tie all sounds to one audio mixer. Use the overrides to target specific sounds.", bold: true)]
+    [SerializeField] private AudioMixerGroup audioMixer;
+    [SerializeField] private AudioMixerGroup footstepOverride;
+    [SerializeField] private AudioMixerGroup attackOverride;
+    [SerializeField] private AudioMixerGroup damagedOverride;
+    [SerializeField] private AudioMixerGroup deathOverride;
 
     public FootstepSet FootStepAudio { get { return footsteps; } }
     public List<AudioClip> AttackAudio { get { return attack; } }
     public List<AudioClip> DamagedAudio { get { return damaged; } }
     public List<AudioClip> DeathAudio { get { return death; } }
+    public AudioMixerGroup AudioMixer { get { return audioMixer; } }
+    public AudioMixerGroup FootstepAudioMixerOverride { get { return footstepOverride; } }
+    public AudioMixerGroup AttackAudioMixerOverride { get { return attackOverride; } }
+    public AudioMixerGroup DamagedAudioMixerOverride { get { return damagedOverride; } }
+    public AudioMixerGroup DeathAudioMixerOverride { get { return deathOverride; } }
 
 
 }
