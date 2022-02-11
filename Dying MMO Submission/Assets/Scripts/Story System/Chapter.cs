@@ -38,12 +38,15 @@ public class Chapter : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+
+        ResetAllTransitions();
     }
 
     public void StartChapter()
     {
         playing = true;
         StopAllCoroutines();
+        ResetAllTransitions();
         onChapterStarted?.Invoke();
         StartCoroutine(CheckForEndingTransition());
     }
@@ -59,12 +62,10 @@ public class Chapter : MonoBehaviour
     {
         nextChapterTransitionPassed = false;
 
-        foreach(var condition in transitionsToNextChapter)
-        {
-            condition.ResetCondition();
-        }
 
-        
+        ResetAllTransitions();
+
+
     }
 
     IEnumerator CheckForEndingTransition()
@@ -88,11 +89,13 @@ public class Chapter : MonoBehaviour
             if (currentIndex >= transitionsToNextChapter.Count)
                 return true;
 
+            transitionsToNextChapter[currentIndex].gameObject.SetActive(true);
             transitionsToNextChapter[currentIndex].SetAsCurrentCondition(true);
 
-            if (transitionsToNextChapter[currentIndex].ConditionMet())
+            if (transitionsToNextChapter[currentIndex].IsConditionMet())
             {
                 transitionsToNextChapter[currentIndex].SetAsCurrentCondition(false);
+                transitionsToNextChapter[currentIndex].gameObject.SetActive(false);
                 currentIndex++;
             }
 
@@ -101,6 +104,20 @@ public class Chapter : MonoBehaviour
 
         nextChapterTransitionPassed = true;
         
+    }
+
+    private void ResetAllTransitions()
+    {
+        foreach (var condition in transitionsToNextChapter)
+        {
+            condition.ResetCondition();
+            condition.gameObject.SetActive(false);
+        }
+    }
+
+    public TextAsset GetInkFile()
+    {
+        return InkFile;
     }
 
 

@@ -67,6 +67,19 @@ public class StorySystem : MonoBehaviour
         chapters[CurrentChapter-1].gameObject.SetActive(false);
     }
 
+    public TextAsset GetCurrentChapterInkFile()
+    {
+        if(CurrentStoryState != storyState.NotStarted && CurrentStoryState != storyState.Ended)
+        {
+            return chapters[CurrentChapter].GetInkFile();
+        }
+        else
+        {
+            Debug.LogError(this + ": Request was made to get the current chapter's ink file, but the story has either not started or has ended");
+            return null;
+        }
+    }
+
     [Button("Start Story")]
     public void StartStory()
     {
@@ -98,7 +111,4 @@ public class StorySystem : MonoBehaviour
 
         print("Story Ended");
     }
-
-
-
 }

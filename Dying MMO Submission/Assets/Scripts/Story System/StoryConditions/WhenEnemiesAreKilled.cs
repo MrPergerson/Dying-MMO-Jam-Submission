@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WhenEnemiesAreKilled : StoryCondition
 {
-    public override bool ConditionMet()
+    public override bool IsConditionMet()
     {
         throw new System.NotImplementedException();
     }

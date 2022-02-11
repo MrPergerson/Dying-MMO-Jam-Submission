@@ -6,7 +6,6 @@ using Sirenix.OdinInspector;
 public class TestCondition : StoryCondition
 {
     [SerializeField, ReadOnly] protected bool conditionMet = false;
-    [SerializeField, ReadOnly] private bool isCurrentCondition = false;
 
     [Button("Set Condition to Met")]
     private void SetConditionToTrue()
@@ -20,7 +19,7 @@ public class TestCondition : StoryCondition
     }
 
 
-    public override bool ConditionMet()
+    public override bool IsConditionMet()
     {
         return conditionMet;
     }
