@@ -11,13 +11,11 @@ public class StorySystem : MonoBehaviour
     [SerializeField]
     List<Chapter> chapters = new List<Chapter>();
 
+    public delegate void ChapterChanged();
+    public event ChapterChanged onChapterChanged;
+
     private int CurrentChapter { get; set; } 
     private enum storyState { NotStarted, TransitioningToNextChapter, Paused, Ended }
-
-    private void Start()
-    {
-        ResetStory();
-    }
 
     private void ResetStory()
     {
@@ -34,6 +32,8 @@ public class StorySystem : MonoBehaviour
     private void BeginChapter()
     {
         SetStoryDetails(storyState.TransitioningToNextChapter, chapters[CurrentChapter].Name);
+
+        onChapterChanged?.Invoke();
 
         chapters[CurrentChapter].onChapterEnded += TransitionToNextChapter;
         chapters[CurrentChapter].StartChapter();
@@ -80,7 +80,7 @@ public class StorySystem : MonoBehaviour
         }
     }
 
-    [Button("Start Story")]
+    //[Button("Start Story")]
     public void StartStory()
     {
         if(CurrentStoryState == storyState.NotStarted || CurrentStoryState == storyState.Ended)
@@ -96,7 +96,7 @@ public class StorySystem : MonoBehaviour
     }
 
 
-    [Button("End Story")]
+    //[Button("End Story")]
     public void EndStory()
     {
         currentChapterName = "";
