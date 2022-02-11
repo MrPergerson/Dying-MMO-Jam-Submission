@@ -1,0 +1,1 @@
+INCLUDE dummyGlobals.ink

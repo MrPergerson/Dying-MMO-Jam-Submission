@@ -89,6 +89,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EndGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""8bde68f3-0ab1-40a1-8a32-537c2465c814"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -168,6 +177,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""CombatAbility4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b85b081d-39e0-45ac-9b53-da9fbdca94fd"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""MouseAndKeyboard"",
+                    ""action"": ""EndGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -200,6 +220,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Main_CombatAbility2 = m_Main.FindAction("CombatAbility2", throwIfNotFound: true);
         m_Main_CombatAbility3 = m_Main.FindAction("CombatAbility3", throwIfNotFound: true);
         m_Main_CombatAbility4 = m_Main.FindAction("CombatAbility4", throwIfNotFound: true);
+        m_Main_EndGame = m_Main.FindAction("EndGame", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -266,6 +287,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_CombatAbility2;
     private readonly InputAction m_Main_CombatAbility3;
     private readonly InputAction m_Main_CombatAbility4;
+    private readonly InputAction m_Main_EndGame;
     public struct MainActions
     {
         private @PlayerControls m_Wrapper;
@@ -277,6 +299,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @CombatAbility2 => m_Wrapper.m_Main_CombatAbility2;
         public InputAction @CombatAbility3 => m_Wrapper.m_Main_CombatAbility3;
         public InputAction @CombatAbility4 => m_Wrapper.m_Main_CombatAbility4;
+        public InputAction @EndGame => m_Wrapper.m_Main_EndGame;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -307,6 +330,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @CombatAbility4.started -= m_Wrapper.m_MainActionsCallbackInterface.OnCombatAbility4;
                 @CombatAbility4.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnCombatAbility4;
                 @CombatAbility4.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnCombatAbility4;
+                @EndGame.started -= m_Wrapper.m_MainActionsCallbackInterface.OnEndGame;
+                @EndGame.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnEndGame;
+                @EndGame.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnEndGame;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -332,6 +358,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @CombatAbility4.started += instance.OnCombatAbility4;
                 @CombatAbility4.performed += instance.OnCombatAbility4;
                 @CombatAbility4.canceled += instance.OnCombatAbility4;
+                @EndGame.started += instance.OnEndGame;
+                @EndGame.performed += instance.OnEndGame;
+                @EndGame.canceled += instance.OnEndGame;
             }
         }
     }
@@ -354,5 +383,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnCombatAbility2(InputAction.CallbackContext context);
         void OnCombatAbility3(InputAction.CallbackContext context);
         void OnCombatAbility4(InputAction.CallbackContext context);
+        void OnEndGame(InputAction.CallbackContext context);
     }
 }

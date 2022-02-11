@@ -13,9 +13,6 @@ public class AgentAttack : MonoBehaviour
     [SerializeField] float _attackDistance = 2;
     [Header("Combat Abilities")]
     [SerializeField] CombatAbilitySet combatAbilitySet;
-    [Header("Audio")]
-    [SerializeField] private bool playsAudio = true;
-    public AgentAudioData audioData;
     [Header("Debug")]
     [SerializeField, ReadOnly] private Agent _target;
 
@@ -64,11 +61,6 @@ public class AgentAttack : MonoBehaviour
         audioContainer.transform.position = Vector3.zero + Vector3.up;
         audioSource = audioContainer.AddComponent<AudioSource>();
 
-        if(playsAudio)
-        {
-            if (audioData == null)
-                Debug.LogError(gameObject.name + " -> " + this.ToString() + ": This component is set to play audio but there is no audioData found");
-        }
     }
 
     private void Update()
@@ -155,6 +147,15 @@ public class AgentAttack : MonoBehaviour
             vfxPool[index].Play();
 
             //audio
+            var hitAudio = simpleAttack.AUDIO_Hit;
+            if (hitAudio != null)
+            {
+                if(simpleAttack.HitAudioMixer) audioSource.outputAudioMixerGroup = simpleAttack.HitAudioMixer;
+                audioSource.clip = hitAudio;
+                audioSource.Play();
+            }
+
+            /*
             if(playsAudio)
             {
                 if (audioData && audioData.AttackAudio.Count != 0 && index < audioData.AttackAudio.Count)
@@ -169,7 +170,7 @@ public class AgentAttack : MonoBehaviour
                     Debug.LogWarning(gameObject.name + " -> " + this.ToString() + " -> PerformSimpleAttack(): Audio not playing");
                 }    
             }
-
+            */
             var targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
             transform.LookAt(targetPos, Vector3.up);
 

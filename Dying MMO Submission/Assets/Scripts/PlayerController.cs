@@ -9,7 +9,7 @@ public class PlayerController : Agent
 {
     private PlayerControls controls;
     private PlayerInput playerInput;
-    
+
     private AgentAttack attack;
     [SerializeField] LayerMask layerMask;
 
@@ -20,7 +20,6 @@ public class PlayerController : Agent
         playerInput = GetComponent<PlayerInput>();
         attack = GetComponent<AgentAttack>();
         controls = new PlayerControls();
-        attack.audioData = AudioData;
     }
 
     protected override void Start()
@@ -33,6 +32,7 @@ public class PlayerController : Agent
         controls.Main.CombatAbility2.performed += PerformCombatAbility;
         controls.Main.CombatAbility3.performed += PerformCombatAbility;
         controls.Main.CombatAbility4.performed += PerformCombatAbility;
+        controls.Main.EndGame.performed += QuitApp;
     }
 
     private void OnEnable()
@@ -52,18 +52,18 @@ public class PlayerController : Agent
         var ray = Camera.main.ScreenPointToRay(mousePosition);
         RaycastHit hit;
 
-        if(Physics.Raycast(ray, out hit, layerMask))
+        if (Physics.Raycast(ray, out hit, layerMask))
         {
 
-            if(hit.collider.tag == "Ground")
+            if (hit.collider.tag == "Ground")
             {
                 move.SetDestination(hit.point, 0);
-                
-            } 
-            else if(hit.collider.tag == "Enemy")
+
+            }
+            else if (hit.collider.tag == "Enemy")
             {
 
-                if(hit.collider.gameObject.TryGetComponent<EnemyAIBrain>(out EnemyAIBrain enemy))
+                if (hit.collider.gameObject.TryGetComponent<EnemyAIBrain>(out EnemyAIBrain enemy))
                 {
                     AgentMoveToTarget.DestinationToAgentCompleted onDestinationToAgentCompleted = attack.StartAttack;
                     move.SetDestination(enemy, attack.AttackDistance, onDestinationToAgentCompleted);
@@ -81,11 +81,11 @@ public class PlayerController : Agent
 
     public void PerformCombatAbility(InputAction.CallbackContext context)
     {
-        if(context.action.Equals(controls.Main.CombatAbility1))
+        if (context.action.Equals(controls.Main.CombatAbility1))
         {
             attack.PerformCombat(0);
         }
-        else if(context.action.Equals(controls.Main.CombatAbility2))
+        else if (context.action.Equals(controls.Main.CombatAbility2))
         {
             attack.PerformCombat(1);
         }
@@ -112,5 +112,10 @@ public class PlayerController : Agent
     public override void TakeDamage(Agent threat, float damage)
     {
         Health -= damage;
+    }
+
+    private void QuitApp(InputAction.CallbackContext context)
+    {
+        Application.Quit();
     }
 }
