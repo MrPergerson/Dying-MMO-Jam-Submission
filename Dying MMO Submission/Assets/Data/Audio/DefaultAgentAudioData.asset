@@ -13,10 +13,34 @@ MonoBehaviour:
   m_Name: DefaultAgentAudioData
   m_EditorClassIdentifier: 
   footsteps:
-    defaultFootsteps: []
-    grassFootsteps: []
-    stoneFootsteps: []
-  attack: []
+    defaultFootsteps:
+    - {fileID: 8300000, guid: 28fc5f51f52fccd4db8e9d84ab1312a6, type: 3}
+    - {fileID: 8300000, guid: 1aaed2ce7e1ff4d44aa28031f7eb3f70, type: 3}
+    - {fileID: 8300000, guid: 32b28453ab7beea4b8ab9cc37d85e0ef, type: 3}
+    - {fileID: 8300000, guid: b44e41dfbc6975d43892740ab55da3bf, type: 3}
+    - {fileID: 8300000, guid: 0efae02381d01ab4abfae5582e84af76, type: 3}
+    - {fileID: 8300000, guid: 66ff67fcf45343c4fb92e7b521e96c5d, type: 3}
+    - {fileID: 8300000, guid: fc7f2241361aab943b97f2ee7c629ea6, type: 3}
+    grassFootsteps:
+    - {fileID: 8300000, guid: 28fc5f51f52fccd4db8e9d84ab1312a6, type: 3}
+    - {fileID: 8300000, guid: 1aaed2ce7e1ff4d44aa28031f7eb3f70, type: 3}
+    - {fileID: 8300000, guid: 32b28453ab7beea4b8ab9cc37d85e0ef, type: 3}
+    - {fileID: 8300000, guid: b44e41dfbc6975d43892740ab55da3bf, type: 3}
+    - {fileID: 8300000, guid: 0efae02381d01ab4abfae5582e84af76, type: 3}
+    - {fileID: 8300000, guid: 66ff67fcf45343c4fb92e7b521e96c5d, type: 3}
+    - {fileID: 8300000, guid: fc7f2241361aab943b97f2ee7c629ea6, type: 3}
+    stoneFootsteps:
+    - {fileID: 8300000, guid: b54f6bea17257254591524052586c1da, type: 3}
+    - {fileID: 8300000, guid: f3932fcd88ffbe84aa8c5d803fb5a8b9, type: 3}
+    - {fileID: 8300000, guid: d2cb88f326fa87e4eb3b3f76fd09d4db, type: 3}
+    - {fileID: 8300000, guid: 148b59fefab2c9e42aba5c0a9cdb074e, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+  attack:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   damaged: []
   death: []
   audioMixer: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
