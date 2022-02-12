@@ -55,16 +55,20 @@ public class TabGroup : MonoBehaviour
 
         if (tabArea == null) Debug.LogError(this + ": Could not find TabArea gameobject in children. Was the UI_MessageBox_TabArea tag assigned to it?");
         if (tabContent == null) Debug.LogError(this + ": Could not find TabContent gameobject in children. Was the UI_MessageBox_TabContent tag assigned to it?");
+
+        /* ADDED
+         * tabDictionary = new Dictionary
+         * Moved CreateTab()
+         */
+        tabDictionary = new Dictionary<string, TabSelectButton>();
+        CreateTab(DialogueManagerAS2.GetInstance().userName);
     }
 
     private void Start()
     {
         /* ADDED
-         * tabDictionary = new Dictionary
          * SetChoicesText()
          */
-        tabDictionary = new Dictionary<string, TabSelectButton>();
-        CreateTab(DialogueManagerAS2.GetInstance().userName);
         SetChoicesText();
     }
 
@@ -239,13 +243,24 @@ public class TabGroup : MonoBehaviour
     public void DisplayChatLine(Story story, string tabName)
     {
         GameObject chatLine = Instantiate(chatLineObj);
-        chatLine.GetComponent<TextMeshProUGUI>().text = story.Continue();
-        string chatLineText = chatLine.GetComponent<TextMeshProUGUI>().text;
+        List<string> tags = story.currentTags;
+        print(tags.Count);
+        if (tags.Count <= 0)
+        {
+            Debug.LogError(this + ": no tags in ink JSON file");
+        }
+        
+        string chatLineText = story.Continue();
         
         // If chatLineText is empty/new line, destroy it
         if (chatLineText == "\n")
+        {
             Destroy(chatLine);
-
-        chatLine.transform.SetParent(GetTabContentTransform(tabName));
+        }
+        else
+        {
+            chatLine.GetComponent<TextMeshProUGUI>().text = chatLineText;
+            chatLine.transform.SetParent(GetTabContentTransform(tabName));
+        }
     }
 }
