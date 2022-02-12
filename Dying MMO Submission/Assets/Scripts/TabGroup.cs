@@ -61,11 +61,12 @@ public class TabGroup : MonoBehaviour
          * Moved CreateTab()
          */
         tabDictionary = new Dictionary<string, TabSelectButton>();
-        CreateTab(DialogueManagerAS2.GetInstance().userName);
+        
     }
 
     private void Start()
     {
+        CreateTab(DialogueManagerAS2.GetInstance().userName);
         /* ADDED
          * SetChoicesText()
          */
