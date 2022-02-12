@@ -5,8 +5,6 @@ using Sirenix.OdinInspector;
 
 public class TestCondition : StoryCondition
 {
-    [SerializeField, ReadOnly] protected bool conditionMet = false;
-
     [Button("Set Condition to Met")]
     private void SetConditionToTrue()
     {
