@@ -34,6 +34,11 @@ public class Chapter : MonoBehaviour
             Debug.LogError(this.gameObject + ": No ending transitions found");
         }
 
+        foreach(var transition in transitionsToNextChapter)
+        {
+            if (transition == null) Debug.LogError(this + ": There is a null transition in " + gameObject.name + "'s transition list");
+        }
+
         if (inkFile == null) Debug.LogError(this + ": No inkfile has been assigned to this chapter");
 
         if(!playing)

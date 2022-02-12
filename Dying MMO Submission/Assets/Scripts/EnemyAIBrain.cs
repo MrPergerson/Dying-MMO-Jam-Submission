@@ -9,6 +9,8 @@ public class EnemyAIBrain : Agent
     private AgentAttack attack;
     [SerializeField] LayerMask layerMask;
 
+
+
     protected override void Awake()
     {
         base.Awake();
@@ -39,18 +41,21 @@ public class EnemyAIBrain : Agent
     }
 
 
-    protected override void Die()
-    {
-        // maybe later add delay 
-        // there could be a death animation or partical effect
-        Destroy(this.gameObject);
-    }
-
     public override void TakeDamage(Agent threat, float damage)
     {
         AddThreat(threat);
         Health -= damage;
     }
 
+    public override void Die()
+    {
+        base.Die();
+        this.gameObject.SetActive(false);
+    }
 
+    public override void Respawn()
+    {
+        base.Respawn();
+        this.gameObject.SetActive(true);
+    }
 }

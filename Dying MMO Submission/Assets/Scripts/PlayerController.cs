@@ -104,9 +104,15 @@ public class PlayerController : Agent
 
     }
 
-    protected override void Die()
+    public override void Die()
     {
+        base.Die();
         print("player has died");
+    }
+
+    public override void Respawn()
+    {
+        base.Respawn();
     }
 
     public override void TakeDamage(Agent threat, float damage)
