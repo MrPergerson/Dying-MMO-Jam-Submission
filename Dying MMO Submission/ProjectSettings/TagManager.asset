@@ -7,6 +7,10 @@ TagManager:
   - NPC
   - Enemy
   - Ground
+  - UI_MessageBox_TabContent
+  - UI_MessageBox
+  - UI_MessageBox_TabArea
+  - UI_TabPage_Content
   layers:
   - Default
   - TransparentFX
