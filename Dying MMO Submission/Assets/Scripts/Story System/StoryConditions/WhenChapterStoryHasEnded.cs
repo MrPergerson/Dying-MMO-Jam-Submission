@@ -6,8 +6,6 @@ using Ink.Runtime;
 
 public class WhenChapterStoryHasEnded : StoryCondition
 {
-    [SerializeField, ReadOnly] protected bool conditionMet = false;
-
     [SerializeField] string globalVarName;
     //[SerializeField] TextAsset globalVarJSONFile;
     private string chapterEndedVarName;

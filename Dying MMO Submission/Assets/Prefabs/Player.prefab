@@ -96,9 +96,10 @@ GameObject:
   - component: {fileID: 6803392250194869382}
   - component: {fileID: 6803392250194869384}
   - component: {fileID: 6803392250194869387}
+  - component: {fileID: 664436815}
   m_Layer: 11
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,7 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 100
-  _audioData: {fileID: 0}
+  _audioData: {fileID: 11400000, guid: 4d77c3e398b805c4185c5c75e4ac479e, type: 2}
   layerMask:
     serializedVersion: 2
     m_Bits: 1216
@@ -167,8 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackDistance: 2
   combatAbilitySet: {fileID: 11400000, guid: 4df5336384351ca47915a18460521783, type: 2}
-  playsAudio: 1
-  audioData: {fileID: 0}
+  _target: {fileID: 0}
 --- !u!136 &6803392250194869382
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -235,6 +235,22 @@ MonoBehaviour:
   m_DefaultActionMap: Main
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!54 &664436815
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6803392250194869380}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!1 &6803392250430091271
 GameObject:
   m_ObjectHideFlags: 0

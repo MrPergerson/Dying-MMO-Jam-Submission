@@ -11,6 +11,7 @@ public class WhenEnemiesAreKilled : StoryCondition
 
     public override bool IsCurrentCondition()
     {
+        if (conditionMet) onConditionMet.Invoke();
         throw new System.NotImplementedException();
     }
 
