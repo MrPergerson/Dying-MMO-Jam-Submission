@@ -238,6 +238,11 @@ public class DSInkGetVar : MonoBehaviour
      * Button: Switch Tab
      * Button: Change Ink JSON
      */
+    public void GetTabIndex()
+    {
+        currentTab = 0;
+    }
+
     public void SetCurrentTab(int tabNum)
     {
         if (tabNum > 0 && tabNum <= numberOfTabs)
