@@ -1,9 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using Ink.Runtime;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Sirenix.OdinInspector;
 
 public class DialogueManagerAS2 : MonoBehaviour
