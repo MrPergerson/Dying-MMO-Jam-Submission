@@ -80,7 +80,7 @@ public class StorySystem : MonoBehaviour
         }
     }
 
-    //[Button("Start Story")]
+    [Button("Start Story")]
     public void StartStory()
     {
         if(CurrentStoryState == storyState.NotStarted || CurrentStoryState == storyState.Ended)
@@ -96,7 +96,7 @@ public class StorySystem : MonoBehaviour
     }
 
 
-    //[Button("End Story")]
+    [Button("End Story")]
     public void EndStory()
     {
         currentChapterName = "";
