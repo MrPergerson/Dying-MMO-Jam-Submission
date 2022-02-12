@@ -11,7 +11,7 @@ public class Chapter : MonoBehaviour
     [TableColumnWidth(150, Resizable = false),SerializeField]
     private string _name;
     [SerializeField] private List<StoryCondition> transitionsToNextChapter;
-    [SerializeField] private TextAsset InkFile;
+    [SerializeField] private TextAsset inkFile;
 
     public delegate void ChapterStarted();
     public delegate void ChapterEnded();
@@ -33,6 +33,8 @@ public class Chapter : MonoBehaviour
         {
             Debug.LogError(this.gameObject + ": No ending transitions found");
         }
+
+        if (inkFile == null) Debug.LogError(this + ": No inkfile has been assigned to this chapter");
 
         if(!playing)
         {
@@ -117,7 +119,7 @@ public class Chapter : MonoBehaviour
 
     public TextAsset GetInkFile()
     {
-        return InkFile;
+        return inkFile;
     }
 
 
