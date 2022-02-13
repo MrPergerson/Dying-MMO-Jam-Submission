@@ -5,7 +5,8 @@ using Sirenix.OdinInspector;
 
 public class WhenPlayerEntersZone : StoryCondition
 {
-    [Title("Trigger Zone", "Attach a trigger zone in the scene here")]
+    [Title("Trigger Zone", "Attach a trigger zone in the scene here and" +
+        " this condition will automatically listen to it.")]
     [SerializeField] TriggerZone zone;
 
 
