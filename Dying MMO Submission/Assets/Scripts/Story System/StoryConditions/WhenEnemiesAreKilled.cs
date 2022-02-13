@@ -27,7 +27,6 @@ public class WhenEnemiesAreKilled : StoryCondition
             }
         }
 
-        print("updated list");
         conditionIsReady = false;
         enemies.Clear();
         for(int i = 0; i < groupOfEnemies.childCount; i++)
@@ -68,7 +67,6 @@ public class WhenEnemiesAreKilled : StoryCondition
 
     private void SubstractFromEnemiesAlive(Agent agent)
     {
-        print("subtract");
         if(enemies.Contains((EnemyAIBrain)agent))
             enemiesAlive--;
     }
