@@ -1179,10 +1179,10 @@ PrefabInstance:
     - target: {fileID: 6803392250194869386, guid: bda3c32a04494af48b261ba8b2ccc4d0, type: 3}
       propertyPath: _audioData
       value: 
-      objectReference: {fileID: 11400000, guid: 6556564920e2a184b9ca90558946443f, type: 2}
+      objectReference: {fileID: 11400000, guid: 4d77c3e398b805c4185c5c75e4ac479e, type: 2}
     - target: {fileID: 6803392250194869389, guid: bda3c32a04494af48b261ba8b2ccc4d0, type: 3}
       propertyPath: playsAudio
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9117483405951437254, guid: bda3c32a04494af48b261ba8b2ccc4d0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1190,6 +1190,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bda3c32a04494af48b261ba8b2ccc4d0, type: 3}
+--- !u!1 &6803392250943303170 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6803392250194869380, guid: bda3c32a04494af48b261ba8b2ccc4d0, type: 3}
+  m_PrefabInstance: {fileID: 6803392250943303169}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6803392250943303171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6803392250943303170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c4421942760a524982d422023bfc9c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentAudioData: {fileID: 11400000, guid: 4d77c3e398b805c4185c5c75e4ac479e, type: 2}
+  audioSourceCount: 0
 --- !u!1001 &7717744118176683227
 PrefabInstance:
   m_ObjectHideFlags: 0

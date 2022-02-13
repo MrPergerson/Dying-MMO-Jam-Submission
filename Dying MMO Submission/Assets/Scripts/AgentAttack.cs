@@ -15,12 +15,14 @@ public class AgentAttack : MonoBehaviour
     [SerializeField] CombatAbilitySet combatAbilitySet;
     [Header("Debug")]
     [SerializeField, ReadOnly] private Agent _target;
+    [SerializeField] bool playsAudio = true;
 
     private List<CombatAbility> abilitiesInCoolDown;
     private Dictionary<int, VisualEffect> vfxPool;
+    
 
+    private AgentAudioPlayer audioPlayer;
     private GameObject vfxContainer;
-    private AudioSource audioSource;
     private Agent agent;
 
     private Agent Target { get { return _target; } set { _target = value; } }
@@ -34,6 +36,14 @@ public class AgentAttack : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<Agent>();
+
+        audioPlayer = GetComponent<AgentAudioPlayer>();
+
+        if (playsAudio && audioPlayer == null)
+        {
+            Debug.LogWarning(this + " is set to play audio but no AgentAudioComponent was found");
+            playsAudio = false;
+        }
     }
 
     private void Start()
@@ -56,10 +66,7 @@ public class AgentAttack : MonoBehaviour
         vfxContainer.transform.parent = this.transform;
         vfxContainer.transform.position = Vector3.zero;
 
-        var audioContainer = new GameObject("AgentAttack AudioSource");
-        audioContainer.transform.parent = this.transform;
-        audioContainer.transform.position = Vector3.zero + Vector3.up;
-        audioSource = audioContainer.AddComponent<AudioSource>();
+
 
     }
 
@@ -147,30 +154,13 @@ public class AgentAttack : MonoBehaviour
             vfxPool[index].Play();
 
             //audio
-            var hitAudio = simpleAttack.AUDIO_Hit;
-            if (hitAudio != null)
+            if (playsAudio)
             {
-                if(simpleAttack.HitAudioMixer) audioSource.outputAudioMixerGroup = simpleAttack.HitAudioMixer;
-                audioSource.clip = hitAudio;
-                audioSource.Play();
+                var hitAudio = simpleAttack.AUDIO_Hit;
+                var hitMixer = simpleAttack.HitAudioMixer;
+                audioPlayer.PlayAudioClip(hitAudio, hitMixer);
             }
 
-            /*
-            if(playsAudio)
-            {
-                if (audioData && audioData.AttackAudio.Count != 0 && index < audioData.AttackAudio.Count)
-                {
-                    //audioSource.PlayOneShot(audioData.AttackAudio[index]);
-                    //int randomIndex = Random.Range(0, footstepSounds.Count);
-                    audioSource.clip = audioData.AttackAudio[index];
-                    audioSource.Play();
-                }
-                else
-                {
-                    Debug.LogWarning(gameObject.name + " -> " + this.ToString() + " -> PerformSimpleAttack(): Audio not playing");
-                }    
-            }
-            */
             var targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
             transform.LookAt(targetPos, Vector3.up);
 
