@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Ink.Runtime;
 
 public class TabGroup : MonoBehaviour
 {
@@ -15,10 +16,27 @@ public class TabGroup : MonoBehaviour
 
     public GameObject tabButton;
     public GameObject tabPage;
+
     private Transform tabArea;
     private Transform tabContent;
 
     private TabSelectButton selectedTab;
+
+    /* ADDED
+    * tabDictionary
+    * chatLineObj
+    * choiceButtons
+    * choiceButtonText
+    * 
+    */
+    public Dictionary<string, TabSelectButton> tabDictionary { get; private set; }
+
+    [Header("Chat Line UI")]
+    [SerializeField] private GameObject chatLineObj;
+
+    [Header("Chat Choices UI")]
+    [SerializeField] private Button[] choiceButtons;
+    private TextMeshProUGUI[] choiceButtonText;
 
     private void Awake()
     {
@@ -37,11 +55,75 @@ public class TabGroup : MonoBehaviour
 
         if (tabArea == null) Debug.LogError(this + ": Could not find TabArea gameobject in children. Was the UI_MessageBox_TabArea tag assigned to it?");
         if (tabContent == null) Debug.LogError(this + ": Could not find TabContent gameobject in children. Was the UI_MessageBox_TabContent tag assigned to it?");
+
+        /* ADDED
+         * tabDictionary = new Dictionary
+         * Moved CreateTab()
+         */
+        tabDictionary = new Dictionary<string, TabSelectButton>();
+        
     }
 
     private void Start()
     {
-        CreateTab("test");
+        CreateTab(DialogueManagerAS2.GetInstance().userName);
+        /* ADDED
+         * SetChoicesText()
+         */
+        SetChoicesText();
+    }
+
+    /* ADDED
+    * SetChoicesText
+    * DisplayChoices
+    * 
+    */
+    private void SetChoicesText()
+    {
+        /* Create Choice text array of TMPro GUI with equal to number of Chat Choices that can seen on screen
+         * This array will hold indiviaual choice text ("Yes", "No", etc.)
+         */
+
+        // Make choiceButtonText array length equal to number of buttons
+        choiceButtonText = new TextMeshProUGUI[choiceButtons.Length];
+        int index = 0;
+        foreach (Button choice in choiceButtons)
+        {
+            // Get each TextMeshProUGUI component and save in choiceButtonText array
+            choiceButtonText[index] = choice.GetComponentInChildren<TextMeshProUGUI>();
+            // Make buttons invisible
+            choice.gameObject.SetActive(false);
+            index++;
+        }
+    }
+
+    public void DisplayChoices(Story story)
+    {
+        List<Choice> currentChoices = story.currentChoices;
+
+        if (currentChoices.Count > choiceButtons.Length)
+        {
+            Debug.LogError(this + " DisplayChoices: too many choices for UI, add more Choice button UI");
+        }
+
+        int index = 0;
+        //enable and initialize the choices up to amount of choices for this line of dialogue
+        foreach (Choice choice in currentChoices)
+        {
+            choiceButtons[index].gameObject.SetActive(true);
+            choiceButtonText[index].text = choice.text;
+            index++;
+        }
+        // go through remaining choices the UI supports and make sure they're hidden
+        for (int i = index; i < choiceButtons.Length; i++)
+        {
+            choiceButtons[i].gameObject.SetActive(false);
+        }
+    }
+
+    public void OnClickChoice(int buttonIndex)
+    {
+        DialogueManagerAS2.GetInstance().MakeChoice(buttonIndex);
     }
 
     private void ResetTabs()
@@ -78,10 +160,10 @@ public class TabGroup : MonoBehaviour
         }
     }
 
-
     public TabSelectButton CreateTab(string name)
     {
         var newTabPage = Instantiate(tabPage,tabContent);
+        newTabPage.gameObject.name = name + " Tab Content";
         pages.Add(newTabPage.gameObject);
 
         var newTabButton = Instantiate(tabButton, tabArea);
@@ -99,18 +181,21 @@ public class TabGroup : MonoBehaviour
             SelectTab(tabSelectButton);
 
             //this is bad, if this is a problem, then TabPage should have a class that does this. 
-            var content = newTabPage.transform.GetChild(0).GetChild(0);
-            if (content.tag == "UI_TabPage_Content")
+            //var content = newTabPage.transform.GetChild(0).GetChild(0);
+            VerticalLayoutGroup content = newTabPage.GetComponentInChildren<VerticalLayoutGroup>();
+            if (content.transform.tag == "UI_TabPage_Content")
             {
-                tabSelectButton.Content = content;
+                tabSelectButton.Content = content.transform;
+                /* ADDED
+                 * tabDictionary.Add
+                 */
+                tabDictionary.Add(name, tabSelectButton);
             }
             else
             {
                 Debug.LogError(this + ": Could not assign a content gameObject to tabSelectButton. Was the UI_TabPage_Content tag assigned to it?" +
                     " if the problem persists, see code for details");
             }
-
-            
         }
 
         return tabSelectButton;
@@ -140,7 +225,43 @@ public class TabGroup : MonoBehaviour
         SelectTab(tabButton);
     }
 
+    /* ADDED
+    * GetTabContentTransform
+    * DisplayChatLine
+    * 
+    */
+    public Transform GetTabContentTransform(string keyName)
+    {
+        if (tabDictionary.ContainsKey(keyName))
+        {
+            return tabDictionary[keyName].Content;
+        }
 
+        Debug.LogError(this + ": Could not find " + keyName + " among Tabs. Check spelling.");
+        return null;
+    }
 
-    
+    public void DisplayChatLine(Story story, string tabName)
+    {
+        GameObject chatLine = Instantiate(chatLineObj);
+        /*List<string> tags = story.currentTags;
+        print(tags.Count);
+        if (tags.Count <= 0)
+        {
+            Debug.LogError(this + ": no tags in ink JSON file");
+        }*/
+        
+        string chatLineText = story.Continue();
+        
+        // If chatLineText is empty/new line, destroy it
+        if (chatLineText == "\n")
+        {
+            Destroy(chatLine);
+        }
+        else
+        {
+            chatLine.GetComponent<TextMeshProUGUI>().text = chatLineText;
+            chatLine.transform.SetParent(GetTabContentTransform(tabName));
+        }
+    }
 }

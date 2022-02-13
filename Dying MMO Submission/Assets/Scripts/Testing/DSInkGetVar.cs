@@ -4,16 +4,21 @@ using TMPro;
 using Ink.Runtime;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Sirenix.OdinInspector;
 
 public class DSInkGetVar : MonoBehaviour
 {
     private static DSInkGetVar instance;
 
+    [Header("Tab info")]
+    [SerializeField, ReadOnly] private int currentTab = 0;
+    [SerializeField] private int numberOfTabs = 4;
+
     [Header("Chat Line UI")]
-    [SerializeField] private GameObject[] chatLineParent;
+    [SerializeField] private GameObject[] chatLineParents;
     [SerializeField] private GameObject chatLineObj;
-    [SerializeField] private Transform chatLinePos;
-    [SerializeField] private TextMeshProUGUI chatText;
+    //[SerializeField] private Transform chatLinePos;
+    [SerializeField] private TextMeshProUGUI chatText; //ignore this one, will be depricated later, kept for reference for now
 
     [Header("Globals Ink File")]
     [SerializeField] private TextAsset globalVarInkFile;
@@ -73,6 +78,19 @@ public class DSInkGetVar : MonoBehaviour
             index++;
         }
 
+        if (chatLineParents.Length <= 0)
+        {
+            Debug.LogError(this + "Chat Line Parents array is empty!");
+        }
+
+        foreach (GameObject parent in chatLineParents)
+        {
+            if (parent == null)
+            {
+                Debug.LogError(this + "An index of Chat Line Parents array is null.");
+            }
+        }
+
         EnterDialogueMode(inkJSON);
     }
 
@@ -127,14 +145,14 @@ public class DSInkGetVar : MonoBehaviour
     {
         if (currentStory.canContinue)
         {
-            GameObject chatLine = Instantiate(chatLineObj, chatLinePos.position, Quaternion.identity);
+            GameObject chatLine = Instantiate(chatLineObj, transform.position, Quaternion.identity);
             chatLine.GetComponent<TextMeshProUGUI>().text = currentStory.Continue();
             string chatLineText = chatLine.GetComponent<TextMeshProUGUI>().text;
             if (chatLineText == "\n")
             {
                 Destroy(chatLine);
             }
-            chatLine.transform.SetParent(chatLineParent[0].transform);
+            chatLine.transform.SetParent(chatLineParents[currentTab].transform);
             DisplayChoices();
         }
         else
@@ -164,7 +182,7 @@ public class DSInkGetVar : MonoBehaviour
 
         if (currentChoices.Count > chatChoices.Length)
         {
-            Debug.LogError(this.gameObject + " DisplayChoices: too many choices for UI, add more Choice button UI");
+            Debug.LogError(this + " DisplayChoices: too many choices for UI, add more Choice button UI");
         }
 
         int index = 0;
@@ -213,5 +231,43 @@ public class DSInkGetVar : MonoBehaviour
             Debug.LogError(this + ": Could not get the variable, " + variableName + ", from the globalVariable list.");
         }
         return variableValue;
+    }
+
+    /* ADDED
+     * Set Current Tab
+     * Button: Switch Tab
+     * Button: Change Ink JSON
+     */
+    public void GetTabIndex()
+    {
+        currentTab = 0;
+    }
+
+    public void SetCurrentTab(int tabNum)
+    {
+        if (tabNum > 0 && tabNum <= numberOfTabs)
+        {
+            currentTab = tabNum - 1;
+        }
+        else
+        {
+            Debug.LogError(this + "Tab " + tabNum + " does not exsist between Tabs 1-" + numberOfTabs + ". " + "Change tab number or change number of Tab Objects.");
+        }
+    }
+
+    [Button("Switch Tab")]
+    public void SwitchTab()
+    {
+        if (currentTab >= numberOfTabs)
+        {
+            currentTab = 0;
+        }
+        SetCurrentTab(currentTab + 2);
+    }
+
+    [Button("Change Ink JSON")]
+    public void ChangeInkJSON(TextAsset inkJSONFile)
+    {
+        EnterDialogueMode(inkJSONFile);
     }
 }

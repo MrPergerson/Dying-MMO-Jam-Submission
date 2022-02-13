@@ -7,10 +7,12 @@ VAR willowSuspicion = 0
     //Max = 2
     //Min = 0
 VAR sceneFinished = false
+
 -> Start
 
 ===Start===
-#willow
+#Willow
+~ currentTab = 2
 Yoooooo, is that you Sunny?
 I haven't seen you online in ages! How have you been?
 +   [Play it off]
