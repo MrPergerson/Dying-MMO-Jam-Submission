@@ -15,11 +15,14 @@ public class AgentAudioPlayer : MonoBehaviour, IAudioPlayer
     private Dictionary<AudioMixerGroup, AudioSource> audioSources = new Dictionary<AudioMixerGroup, AudioSource>();
     private GameObject audioSourceContainer;
 
+    private LayerMask groundMask;
+
     private void Awake()
     {
         audioSourceContainer = new GameObject("Agent AudioSource");
         audioSourceContainer.transform.parent = this.transform;
         audioSourceContainer.transform.position = Vector3.zero + Vector3.up;
+        groundMask = LayerMask.GetMask("Ground");
     }
 
     private void CreateNewAudioSource(AudioMixerGroup mixer)
@@ -37,7 +40,6 @@ public class AgentAudioPlayer : MonoBehaviour, IAudioPlayer
 
     public void PlayAudioClip(AudioClip clip, AudioMixerGroup mixer)
     {
-        if (clip == null) Debug.LogError(this + " -> PlayAudio(): Audio clip recieved was null");
         if (mixer == null) Debug.LogError(this + " -> PlayAudio(): Audio Mixer recieved was null");
 
         if(!audioSources.ContainsKey(mixer))
@@ -50,37 +52,40 @@ public class AgentAudioPlayer : MonoBehaviour, IAudioPlayer
 
     void PlayStepSound()
     {
-        // WIP
-
-        /*
-        if (agentAudioData.FootStepAudio.defaultFootsteps == null || agentAudioData.FootStepAudio.defaultFootsteps.Count == 0)
+        List<AudioClip> footstepSounds = new List<AudioClip>();
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.up * -1, out hit, 2, groundMask))
         {
-            Debug.LogWarning("There are no footstep sounds to play in defaultFootSteps.");
-
-        }
-        else
-        {
-            while (isMoving)
+            var tag = hit.collider.tag;
+            if (tag == "Ground_Grass")
             {
-                var footstepSounds = new List<AudioClip>(agentAudioData.FootStepAudio.defaultFootsteps);
-                int randomIndex = Random.Range(0, footstepSounds.Count);
-
-                if (audioData.FootstepAudioMixerOverride == null)
-                {
-                    audioSource.outputAudioMixerGroup = audioData.AudioMixer;
-                }
-                else
-                {
-                    audioSource.outputAudioMixerGroup = audioData.FootstepAudioMixerOverride;
-                }
-                audioSource.clip = footstepSounds[randomIndex];
-                audioSource.Play();
-
-                yield return new WaitForSeconds(footstepSpeed);
+                var grassSounds = agentAudioData.FootStepAudio.grassFootsteps;
+                if (grassSounds == null) Debug.LogWarning("GrassFootSteps in " + agentAudioData.name + " is unassigned.");
+                footstepSounds = new List<AudioClip>(grassSounds);
+            }
+            else if (tag == "Ground_Stone")
+            {
+                var stoneSounds = agentAudioData.FootStepAudio.stoneFootsteps;
+                if (stoneSounds == null) Debug.LogWarning("StoneFootSteps in " + agentAudioData.name + " is unassigned.");
+                footstepSounds = new List<AudioClip>(stoneSounds);
             }
         }
-        */
-        // do coroutines stop automatically if they reac 
+
+        // should default to default footstep sounds if no other sounds were found
+        if(footstepSounds.Count == 0)
+        {
+            var defaultSounds = agentAudioData.FootStepAudio.defaultFootsteps;
+            if (defaultSounds == null) Debug.LogWarning("defaultFootSteps in " + agentAudioData.name + " is unassigned.");
+            footstepSounds = new List<AudioClip>(defaultSounds);
+        }
+
+
+        int randomIndex = Random.Range(0, footstepSounds.Count);
+
+        var clip = footstepSounds[randomIndex];
+        var mixer = agentAudioData.FootstepAudioMixerOverride == null ? agentAudioData.AudioMixer : agentAudioData.FootstepAudioMixerOverride;
+
+        PlayAudioClip(clip, mixer);
     }
 
     [TitleGroup("Debug")]
