@@ -99,6 +99,7 @@ public class AgentMoveToTarget : MonoBehaviour
             {
                 destinationReached = true;
                 StopMoving();
+                lookAroundAndStartAttack();
             }
 
             yield return new WaitForSeconds(.1f);
@@ -127,7 +128,6 @@ public class AgentMoveToTarget : MonoBehaviour
             {
                 distanceCheckErrors++;
             }
-
 
             if (remainingDistance <= navAgent.stoppingDistance && remainingDistance >= 0)
             {
@@ -207,6 +207,22 @@ public class AgentMoveToTarget : MonoBehaviour
     {
         isMoving = false;
         agent.Animator.SetFloat("Vertical", 0);
+    }
+
+    public void lookAroundAndStartAttack()
+    {
+        if (GetComponent<PlayerController>() != null)
+        {
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            for(int i = 0; i < enemies.Length; i++)
+            {
+                if(Vector3.Distance( transform.position, enemies[i].transform.position)<5.0f)
+                {
+                    GetComponent<PlayerController>().attackEnemy(enemies[i].GetComponent<EnemyAIBrain>());
+                    break;
+                }
+            }
+        }
     }
 
 }

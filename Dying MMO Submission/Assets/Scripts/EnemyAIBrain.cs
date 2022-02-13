@@ -9,6 +9,8 @@ public class EnemyAIBrain : Agent
     private AgentAttack attack;
     [SerializeField] LayerMask layerMask;
 
+    public static PlayerController playerController;
+
     protected override void Awake()
     {
         base.Awake();
@@ -18,6 +20,8 @@ public class EnemyAIBrain : Agent
     protected override void Start()
     {
         base.Start();
+        if(playerController==null)
+            playerController=FindObjectOfType<PlayerController>();
         layerMask = LayerMask.GetMask("Ground, NPC, Player");
     }
 
@@ -50,6 +54,18 @@ public class EnemyAIBrain : Agent
     {
         AddThreat(threat);
         Health -= damage;
+    }
+
+    private void Update()
+    {
+        //check if player is around
+        if (playerController != null && GetComponent<AgentAttack>()!=null)
+        {
+            if(Vector3.Distance(playerController.gameObject.transform.position, transform.position) < GetComponent<AgentAttack>().AttackDistance)
+            {
+                AddThreat(playerController);
+            }
+        }
     }
 
 

@@ -57,6 +57,7 @@ public class PlayerController : Agent
 
             if (hit.collider.tag == "Ground")
             {
+                Debug.Log("looking");
                 move.SetDestination(hit.point, 0);
 
             }
@@ -118,4 +119,10 @@ public class PlayerController : Agent
     {
         Application.Quit();
     }
+
+    public void attackEnemy(Agent target)
+    {
+        attack.StartAttack(target);
+    }
+
 }
