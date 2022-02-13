@@ -12,9 +12,15 @@ public class WhenChapterStoryHasEnded : StoryCondition
 
     public override bool IsConditionMet()
     {
-        // does this code continue after the parent chapter object is deactive?
- 
-        conditionMet = ((Ink.Runtime.BoolValue)DSInkGetVar.GetInstance().GetVariable(globalVarName)).value;
+        if (DSInkGetVar.GetInstance() != null)
+        {
+            // does this code continue after the parent chapter object is deactive?
+            conditionMet = ((Ink.Runtime.BoolValue)DSInkGetVar.GetInstance().GetVariable(globalVarName)).value;
+        }
+        else
+        {
+            conditionMet = ((Ink.Runtime.BoolValue)DialogueManagerAS2.GetInstance().GetVariable(globalVarName)).value;
+        }
 
         return conditionMet == true;
     }

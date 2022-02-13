@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Ink.Runtime;
+using UnityEngine.EventSystems;
 
 public class TabGroup : MonoBehaviour
 {
@@ -119,6 +120,17 @@ public class TabGroup : MonoBehaviour
         {
             choiceButtons[i].gameObject.SetActive(false);
         }
+
+        //StartCoroutine(ClearEventSystemChoices());
+    }
+
+    private IEnumerator ClearEventSystemChoices()
+    {
+        // event system requires we clear it first, then wait
+        // for at least one frame before we set current selected objects    
+        EventSystem.current.SetSelectedGameObject(null);
+        yield return new WaitForEndOfFrame();
+        EventSystem.current.SetSelectedGameObject(choiceButtons[0].gameObject);
     }
 
     public void OnClickChoice(int buttonIndex)
@@ -181,8 +193,7 @@ public class TabGroup : MonoBehaviour
             SelectTab(tabSelectButton);
 
             //this is bad, if this is a problem, then TabPage should have a class that does this. 
-            //var content = newTabPage.transform.GetChild(0).GetChild(0);
-            VerticalLayoutGroup content = newTabPage.GetComponentInChildren<VerticalLayoutGroup>();
+            var content = newTabPage.transform.GetChild(0).GetChild(0);
             if (content.transform.tag == "UI_TabPage_Content")
             {
                 tabSelectButton.Content = content.transform;
@@ -237,19 +248,16 @@ public class TabGroup : MonoBehaviour
             return tabDictionary[keyName].Content;
         }
 
-        Debug.LogError(this + ": Could not find " + keyName + " among Tabs. Check spelling.");
+        //Debug.LogError(this + ": Could not find " + keyName + " among Tabs. Check spelling.");
         return null;
     }
 
     public void DisplayChatLine(Story story, string tabName)
     {
+        if (!GetTabContentTransform(tabName))
+            CreateTab(tabName);
+
         GameObject chatLine = Instantiate(chatLineObj);
-        /*List<string> tags = story.currentTags;
-        print(tags.Count);
-        if (tags.Count <= 0)
-        {
-            Debug.LogError(this + ": no tags in ink JSON file");
-        }*/
         
         string chatLineText = story.Continue();
         

@@ -2,6 +2,7 @@ using System.Collections;
 using Ink.Runtime;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UnityEngine.EventSystems;
 
 public class DialogueManagerAS2 : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class DialogueManagerAS2 : MonoBehaviour
     public float chatDelayNum = 1f;
     private float chatDelay;
 
-    public TextAsset inkJSON;
+    [SerializeField, ReadOnly] private TextAsset inkJSON;
 
     private DialogueVariables dialogueVariables;
 
@@ -50,8 +51,6 @@ public class DialogueManagerAS2 : MonoBehaviour
             Debug.LogError(this + ": TabGroup component could not found in Scene.");
         }
         chatIsPlaying = false;
-
-        //EnterDialogueMode(inkJSON);
     }
 
     private void Update()
@@ -76,23 +75,21 @@ public class DialogueManagerAS2 : MonoBehaviour
         }
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON)
-    {
-        currentStory = new Story(inkJSON.text);
-        chatIsPlaying = true;
-        dialogueVariables.StartListening(currentStory);
-
-        ContinueStory();
-    }
-
     [Button("Enter Dialogue Mode")]
     private void EnterDialogueMode()
     {
-        currentStory = new Story(inkJSON.text);
-        chatIsPlaying = true;
-        dialogueVariables.StartListening(currentStory);
+        if (inkJSON == null)
+        {
+            Debug.LogError(this + ": no ink file to read. Did not recieve ink from Game Manager.");
+        }
+        else
+        {
+            currentStory = new Story(inkJSON.text);
+            chatIsPlaying = true;
+            dialogueVariables.StartListening(currentStory);
 
-        ContinueStory();
+            ContinueStory();
+        }
     }
 
     public IEnumerator ExitDialogueMode()
@@ -133,9 +130,14 @@ public class DialogueManagerAS2 : MonoBehaviour
         return variableValue;
     }
 
-    [Button("Change Ink JSON")]
     public void ChangeInkJSON(TextAsset inkJSONFile)
     {
-        EnterDialogueMode(inkJSONFile);
+        inkJSON = inkJSONFile;
+    }
+
+    [Button("Change Username")]
+    public void ChangeUserName()
+    {
+        userName = Random.Range(0, 100).ToString();
     }
 }
