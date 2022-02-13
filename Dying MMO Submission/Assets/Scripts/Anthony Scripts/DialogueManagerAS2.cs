@@ -3,6 +3,7 @@ using Ink.Runtime;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class DialogueManagerAS2 : MonoBehaviour
 {
@@ -22,7 +23,6 @@ public class DialogueManagerAS2 : MonoBehaviour
     private DialogueVariables dialogueVariables;
 
     private TabGroup tabGroup;
-    [ReadOnly] public string userName = "Public";
 
     private void Awake()
     {
@@ -104,7 +104,7 @@ public class DialogueManagerAS2 : MonoBehaviour
     {
         if (currentStory.canContinue)
         {
-            tabGroup.DisplayChatLine(currentStory, userName);
+            tabGroup.DisplayChatLine(currentStory);
             tabGroup.DisplayChoices(currentStory);
         }
         else
@@ -133,11 +133,6 @@ public class DialogueManagerAS2 : MonoBehaviour
     public void ChangeInkJSON(TextAsset inkJSONFile)
     {
         inkJSON = inkJSONFile;
-    }
-
-    [Button("Change Username")]
-    public void ChangeUserName()
-    {
-        userName = Random.Range(0, 100).ToString();
+        EnterDialogueMode();
     }
 }

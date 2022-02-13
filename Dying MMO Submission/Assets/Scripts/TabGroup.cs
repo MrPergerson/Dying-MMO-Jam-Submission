@@ -31,6 +31,8 @@ public class TabGroup : MonoBehaviour
     * 
     */
     public Dictionary<string, TabSelectButton> tabDictionary { get; private set; }
+    private string currentTab = "Public";
+    private string currentUserName;
 
     [Header("Chat Line UI")]
     [SerializeField] private GameObject chatLineObj;
@@ -67,7 +69,7 @@ public class TabGroup : MonoBehaviour
 
     private void Start()
     {
-        CreateTab(DialogueManagerAS2.GetInstance().userName);
+        CreateTab(currentTab);
         /* ADDED
          * SetChoicesText()
          */
@@ -252,24 +254,39 @@ public class TabGroup : MonoBehaviour
         return null;
     }
 
-    public void DisplayChatLine(Story story, string tabName)
+    public void DisplayChatLine(Story story)
     {
-        if (!GetTabContentTransform(tabName))
-            CreateTab(tabName);
-
         GameObject chatLine = Instantiate(chatLineObj);
         
         string chatLineText = story.Continue();
         
         // If chatLineText is empty/new line, destroy it
-        if (chatLineText == "\n")
+        if (chatLineText == "\n" || chatLineText == null)
         {
             Destroy(chatLine);
         }
         else
         {
-            chatLine.GetComponent<TextMeshProUGUI>().text = chatLineText;
-            chatLine.transform.SetParent(GetTabContentTransform(tabName));
+            HandleTags(story.currentTags);
+            if (!GetTabContentTransform(currentTab))
+                CreateTab(currentTab);
+
+            chatLine.GetComponent<TextMeshProUGUI>().text = currentUserName + ": " + chatLineText;
+            chatLine.transform.SetParent(GetTabContentTransform(currentTab));
+            print(currentTab);
+        }
+    }
+
+    public void HandleTags(List<string> currentTags)
+    {
+        foreach (string tag in currentTags)
+        {
+            if (tag.Contains(":"))
+            {
+                string[] splitTag = tag.Split(':');
+                currentTab = splitTag[1].Trim();
+            }
+            currentUserName = tag;
         }
     }
 }
