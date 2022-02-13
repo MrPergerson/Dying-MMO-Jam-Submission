@@ -51,7 +51,7 @@ public class DialogueManagerAS2 : MonoBehaviour
         }
         chatIsPlaying = false;
 
-        EnterDialogueMode(inkJSON);
+        //EnterDialogueMode(inkJSON);
     }
 
     private void Update()
@@ -77,6 +77,16 @@ public class DialogueManagerAS2 : MonoBehaviour
     }
 
     public void EnterDialogueMode(TextAsset inkJSON)
+    {
+        currentStory = new Story(inkJSON.text);
+        chatIsPlaying = true;
+        dialogueVariables.StartListening(currentStory);
+
+        ContinueStory();
+    }
+
+    [Button("Enter Dialogue Mode")]
+    private void EnterDialogueMode()
     {
         currentStory = new Story(inkJSON.text);
         chatIsPlaying = true;

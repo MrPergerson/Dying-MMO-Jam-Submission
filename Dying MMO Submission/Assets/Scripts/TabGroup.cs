@@ -244,12 +244,12 @@ public class TabGroup : MonoBehaviour
     public void DisplayChatLine(Story story, string tabName)
     {
         GameObject chatLine = Instantiate(chatLineObj);
-        List<string> tags = story.currentTags;
+        /*List<string> tags = story.currentTags;
         print(tags.Count);
         if (tags.Count <= 0)
         {
             Debug.LogError(this + ": no tags in ink JSON file");
-        }
+        }*/
         
         string chatLineText = story.Continue();
         
