@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AgentAudioPlayer : MonoBehaviour
+public class AgentAudioPlayer : MonoBehaviour, IAudioPlayer
 {
     [Title("Audio Data")]
     [SerializeField] private AgentAudioData agentAudioData;
