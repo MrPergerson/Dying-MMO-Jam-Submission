@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     [SerializeField] StorySystem storySystem;
 
-    [SerializeField] private TextAsset inkfile;
+    [SerializeField, ReadOnly] private TextAsset inkfile;
 
     private void Awake()
     {

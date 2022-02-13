@@ -273,7 +273,7 @@ public class TabGroup : MonoBehaviour
 
             chatLine.GetComponent<TextMeshProUGUI>().text = currentUserName + ": " + chatLineText;
             chatLine.transform.SetParent(GetTabContentTransform(currentTab));
-            print(currentTab);
+            //print(currentTab);
         }
     }
 

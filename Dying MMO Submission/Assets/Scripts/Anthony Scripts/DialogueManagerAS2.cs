@@ -4,6 +4,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using TMPro;
 
 public class DialogueManagerAS2 : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class DialogueManagerAS2 : MonoBehaviour
     private Story currentStory;
     public bool chatIsPlaying { get; private set; }
 
-    public float chatDelayNum = 1f;
+    public float chatDelayNum = 2f;
     private float chatDelay;
 
     [SerializeField, ReadOnly] private TextAsset inkJSON;
@@ -23,6 +24,10 @@ public class DialogueManagerAS2 : MonoBehaviour
     private DialogueVariables dialogueVariables;
 
     private TabGroup tabGroup;
+
+    private bool playInGameDialogue = false;
+    public TextMeshProUGUI inGameDialogueText;
+    private TextAsset inGameDialogueInkJSON;
 
     private void Awake()
     {
@@ -50,6 +55,7 @@ public class DialogueManagerAS2 : MonoBehaviour
         {
             Debug.LogError(this + ": TabGroup component could not found in Scene.");
         }
+        inGameDialogueText.gameObject.SetActive(false);
         chatIsPlaying = false;
     }
 
@@ -87,7 +93,7 @@ public class DialogueManagerAS2 : MonoBehaviour
             currentStory = new Story(inkJSON.text);
             chatIsPlaying = true;
             dialogueVariables.StartListening(currentStory);
-
+            CheckWhatToPlay();
             ContinueStory();
         }
     }
@@ -97,20 +103,51 @@ public class DialogueManagerAS2 : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         dialogueVariables.StopListening(currentStory);
+        inGameDialogueText.gameObject.SetActive(false);
         chatIsPlaying = false;
+    }
+
+    private void CheckWhatToPlay()
+    {
+        if (!inGameDialogueInkJSON)
+        {
+            playInGameDialogue = true;
+        }
     }
 
     private void ContinueStory()
     {
         if (currentStory.canContinue)
         {
-            tabGroup.DisplayChatLine(currentStory);
-            tabGroup.DisplayChoices(currentStory);
+            if (playInGameDialogue)
+            {
+                //Display text to In-Game Dialogue
+                PlayInGameDialogue();
+            }
+            else
+            {
+                //Display text to Message Box chat
+                tabGroup.DisplayChatLine(currentStory);
+                tabGroup.DisplayChoices(currentStory);
+            }
         }
         else
         {
             StartCoroutine(ExitDialogueMode());
         }
+    }
+
+    private void PlayInGameDialogue()
+    {
+        string storyText = currentStory.Continue();
+
+        // If chatLineText is empty/new line, destroy it
+        if (storyText != "\n" && storyText != null)
+        {
+            inGameDialogueText.text = storyText;
+            inGameDialogueText.gameObject.SetActive(true);
+        }
+        
     }
 
     public void MakeChoice(int choiceIndex)
@@ -133,6 +170,18 @@ public class DialogueManagerAS2 : MonoBehaviour
     public void ChangeInkJSON(TextAsset inkJSONFile)
     {
         inkJSON = inkJSONFile;
-        EnterDialogueMode();
+        //EnterDialogueMode();
+    }
+
+    public void ChangeInGameDialogueInk(TextAsset inkJSONFile)
+    {
+        if (!inkJSONFile)
+        {
+            inGameDialogueInkJSON = inkJSONFile;
+        }
+        else
+        {
+            inGameDialogueInkJSON = null;
+        }
     }
 }
