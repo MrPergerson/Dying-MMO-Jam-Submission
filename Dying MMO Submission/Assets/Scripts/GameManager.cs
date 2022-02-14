@@ -48,6 +48,9 @@ public class GameManager : MonoBehaviour
 
     private void SendInkToDialogueManager()
     {
+        if (!DialogueManagerAS2.GetInstance())
+            Debug.LogError(this + ": GameManager cannot find Dialogue Manager. Dialogue Manager might not be in scene.");
+
         DialogueManagerAS2.GetInstance().ChangeInkJSON(inkfile);
     }
 }

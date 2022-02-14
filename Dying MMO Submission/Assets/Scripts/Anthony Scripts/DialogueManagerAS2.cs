@@ -80,7 +80,7 @@ public class DialogueManagerAS2 : MonoBehaviour
     }
 
     [Button("Enter Dialogue Mode")]
-    private void EnterDialogueMode()
+    public void EnterDialogueMode()
     {
         if (inkJSON == null)
         {

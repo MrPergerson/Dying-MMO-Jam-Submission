@@ -11,6 +11,7 @@ TagManager:
   - UI_MessageBox
   - UI_MessageBox_TabArea
   - UI_TabPage_Content
+  - UI_OnScreen_Text
   layers:
   - Default
   - TransparentFX
