@@ -57,7 +57,6 @@ public class PlayerController : Agent
 
             if (hit.collider.tag == "Ground")
             {
-                Debug.Log("looking");
                 move.SetDestination(hit.point, 0);
 
             }

@@ -214,6 +214,7 @@ public class AgentMoveToTarget : MonoBehaviour
     public void StopMoving()
     {
         isMoving = false;
+        Debug.Log("stopping");
         agent.Animator.SetFloat("Vertical", 0);
     }
 
