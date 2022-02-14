@@ -17,7 +17,7 @@ public class StorySystem : MonoBehaviour
     private int CurrentChapter { get; set; } 
     private enum storyState { NotStarted, TransitioningToNextChapter, Paused, Ended }
 
-    private void ResetStory()
+    private void InitializeStory()
     {
         CurrentChapter = -1;
         CurrentStoryState = storyState.NotStarted;
@@ -85,7 +85,7 @@ public class StorySystem : MonoBehaviour
     {
         if(CurrentStoryState == storyState.NotStarted || CurrentStoryState == storyState.Ended)
         {
-            ResetStory();
+            InitializeStory();
             TransitionToNextChapter();
         }
         else
