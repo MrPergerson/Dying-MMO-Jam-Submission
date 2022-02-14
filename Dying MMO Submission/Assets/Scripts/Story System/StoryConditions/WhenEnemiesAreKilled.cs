@@ -15,7 +15,8 @@ public class WhenEnemiesAreKilled : StoryCondition
     [SerializeField, ReadOnly] private int enemiesAlive = 0;
 
     private bool conditionIsReady = false;
-    
+
+
     [Button("Update Enemies list")]
     private void UpdateEnemyList()
     {
@@ -80,7 +81,7 @@ public class WhenEnemiesAreKilled : StoryCondition
 
     // not clear as when this is called
     // does this act as a setup condition as well?
-    public override void ResetCondition()
+    public override void InitializeCondition()
     {
         UpdateEnemyList();
         //RespawnEnemies();

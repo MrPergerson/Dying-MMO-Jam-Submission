@@ -13,11 +13,10 @@ public abstract class StoryCondition : MonoBehaviour
     [Title("Events")]
     public UnityEvent onSelectedAsCurrentCondition;
     public UnityEvent onConditionMet;
-    
 
     public abstract bool IsConditionMet();
 
-    public abstract void ResetCondition();
+    public abstract void InitializeCondition();
 
     public virtual bool IsCurrentCondition()
     {

@@ -54,8 +54,8 @@ public class PlayerController : Agent
 
         if (Physics.Raycast(ray, out hit, layerMask))
         {
-
-            if (hit.collider.tag == "Ground")
+            var tag = hit.collider.tag;
+            if (tag == "Ground" || tag == "Ground_Grass" || tag == "Ground_Stone")
             {
                 move.SetDestination(hit.point, 0);
 

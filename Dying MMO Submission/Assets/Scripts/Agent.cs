@@ -47,7 +47,7 @@ public abstract class Agent : MonoBehaviour
         move = GetComponent<AgentMoveToTarget>();
         move.audioData = AudioData;
 
-        _animator = GetComponentInChildren<Animator>();
+        _animator = GetComponent<Animator>();
     }
 
     protected virtual void Start()

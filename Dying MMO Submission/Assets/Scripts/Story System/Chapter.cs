@@ -46,14 +46,14 @@ public class Chapter : MonoBehaviour
             gameObject.SetActive(false);
         }
 
-        ResetAllTransitions();
+        //InitializeAllTransitions();
     }
 
     public void StartChapter()
     {
         playing = true;
         StopAllCoroutines();
-        ResetAllTransitions();
+        //InitializeAllTransitions();
         onChapterStarted?.Invoke();
         StartCoroutine(CheckForEndingTransition());
     }
@@ -70,7 +70,7 @@ public class Chapter : MonoBehaviour
         nextChapterTransitionPassed = false;
 
 
-        ResetAllTransitions();
+        //InitializeAllTransitions();
 
 
     }
@@ -96,8 +96,15 @@ public class Chapter : MonoBehaviour
             if (currentIndex >= transitionsToNextChapter.Count)
                 return true;
 
-            transitionsToNextChapter[currentIndex].gameObject.SetActive(true);
-            transitionsToNextChapter[currentIndex].SetAsCurrentCondition(true);
+            var currentTransition = transitionsToNextChapter[currentIndex];
+
+            if (!currentTransition.IsCurrentCondition())
+            {
+                currentTransition.gameObject.SetActive(true);
+                currentTransition.SetAsCurrentCondition(true);
+                currentTransition.InitializeCondition();
+
+            }
 
             if (transitionsToNextChapter[currentIndex].IsConditionMet())
             {
@@ -113,14 +120,16 @@ public class Chapter : MonoBehaviour
         
     }
 
-    private void ResetAllTransitions()
+    /*
+    private void InitializeAllTransitions()
     {
         foreach (var condition in transitionsToNextChapter)
         {
-            condition.ResetCondition();
+            condition.InitializeCondition();
             condition.gameObject.SetActive(false);
         }
     }
+    */
 
     public TextAsset GetInkFile()
     {
