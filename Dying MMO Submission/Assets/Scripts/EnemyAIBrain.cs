@@ -12,6 +12,9 @@ public class EnemyAIBrain : Agent
     public static PlayerController playerController;
     float cooldownTimeRemaining = 0.0f;
 
+    public float followRadius;
+    public Vector3 guardPosition;
+
     protected override void Awake()
     {
         base.Awake();
@@ -24,6 +27,7 @@ public class EnemyAIBrain : Agent
         if(playerController==null)
             playerController=FindObjectOfType<PlayerController>();
         layerMask = LayerMask.GetMask("Ground, NPC, Player");
+        guardPosition = transform.position;
     }
 
     // only supports one threat atm
@@ -62,15 +66,30 @@ public class EnemyAIBrain : Agent
         //check if player is around
         if (playerController != null && GetComponent<AgentAttack>()!= null && cooldownTimeRemaining <= 0.0f)
         {
+            
             if(Vector3.Distance(playerController.gameObject.transform.position, transform.position) < GetComponent<AgentAttack>().AttackDistance)
             {
                 AddThreat(playerController);
                 cooldownTimeRemaining = 2.0f;
+            }
+            else if (Vector3.Distance(guardPosition, playerController.gameObject.transform.position) < followRadius)
+            {
+                move.SetDestination(playerController.gameObject.transform.position, 0);
+            }
+            else
+            {
+                move.SetDestination(guardPosition, 0);
             }
         }
         if(cooldownTimeRemaining>0.0f)
             cooldownTimeRemaining -= Time.deltaTime;
     }
 
+    void OnDrawGizmosSelected()
+    {
+        // Display the explosion radius when selected
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, followRadius);
+    }
 
 }
