@@ -34,9 +34,6 @@ MonoBehaviour:
     - {fileID: 8300000, guid: f3932fcd88ffbe84aa8c5d803fb5a8b9, type: 3}
     - {fileID: 8300000, guid: d2cb88f326fa87e4eb3b3f76fd09d4db, type: 3}
     - {fileID: 8300000, guid: 148b59fefab2c9e42aba5c0a9cdb074e, type: 3}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
   attack:
   - {fileID: 0}
   - {fileID: 0}

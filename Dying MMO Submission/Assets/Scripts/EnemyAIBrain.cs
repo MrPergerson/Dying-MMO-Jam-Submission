@@ -49,13 +49,6 @@ public class EnemyAIBrain : Agent
     }
 
 
-    protected override void Die()
-    {
-        // maybe later add delay 
-        // there could be a death animation or partical effect
-        Destroy(this.gameObject);
-    }
-
     public override void TakeDamage(Agent threat, float damage)
     {
         AddThreat(threat);
@@ -91,6 +84,18 @@ public class EnemyAIBrain : Agent
         // Display the explosion radius when selected
         Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, followRadius);
+
+    }
+    
+    public override void Die()
+    {
+        base.Die();
+        this.gameObject.SetActive(false);
     }
 
+    public override void Respawn()
+    {
+        base.Respawn();
+        this.gameObject.SetActive(true);
+    }
 }

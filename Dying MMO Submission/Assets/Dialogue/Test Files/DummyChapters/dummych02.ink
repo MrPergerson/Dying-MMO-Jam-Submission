@@ -8,7 +8,8 @@ VAR sceneFinished = false
 -> Start
 
 ===Start===
-#silk
+#tab: Silk #silk
+~ currentTab = 3
 Who are you?
 +   [Respond]
     ~ silkRelationship--

@@ -823,6 +823,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 185612136}
   m_CullTransparentMesh: 1
+--- !u!1 &191445001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 191445003}
+  - component: {fileID: 191445002}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &191445002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191445001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a279606a39896734da951c962972ff3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storySystem: {fileID: 2810124748569290476}
+--- !u!4 &191445003
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 191445001}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 754.8902, y: 493.0287, z: -625.5161}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &228112315
 GameObject:
   m_ObjectHideFlags: 0
@@ -4990,7 +5034,7 @@ MonoBehaviour:
   _name: chapter 4
   transitionsToNextChapter:
   - {fileID: 0}
-  InkFile: {fileID: 0}
+  inkFile: {fileID: 0}
   nextChapterTransitionPassed: 0
 --- !u!1 &1558735384896055217
 GameObject:
@@ -5070,7 +5114,7 @@ MonoBehaviour:
   _name: chapter 2
   transitionsToNextChapter:
   - {fileID: 126555145}
-  InkFile: {fileID: 0}
+  inkFile: {fileID: 4900000, guid: d804cb8a9f3404747a99f8530a9ad442, type: 3}
   nextChapterTransitionPassed: 0
 --- !u!1 &2810124746879927636
 GameObject:
@@ -5181,7 +5225,7 @@ MonoBehaviour:
   _name: chapter 3
   transitionsToNextChapter:
   - {fileID: 288160554}
-  InkFile: {fileID: 0}
+  inkFile: {fileID: 4900000, guid: 058d4b57cd1baed48a41a8d95f64662d, type: 3}
   nextChapterTransitionPassed: 0
 --- !u!4 &2810124747698986087
 Transform:
@@ -5263,7 +5307,7 @@ MonoBehaviour:
   _name: chapter 4
   transitionsToNextChapter:
   - {fileID: 0}
-  InkFile: {fileID: 0}
+  inkFile: {fileID: 0}
   nextChapterTransitionPassed: 0
 --- !u!4 &2810124748376286252
 Transform:
@@ -5313,7 +5357,7 @@ MonoBehaviour:
   _name: chapter 1
   transitionsToNextChapter:
   - {fileID: 663394980}
-  InkFile: {fileID: 0}
+  inkFile: {fileID: 4900000, guid: 4b3b9ae8ac4a9224a83e0348be5e43e3, type: 3}
   nextChapterTransitionPassed: 0
 --- !u!114 &2810124748569290476
 MonoBehaviour:
@@ -5561,7 +5605,7 @@ MonoBehaviour:
   _name: chapter 4
   transitionsToNextChapter:
   - {fileID: 0}
-  InkFile: {fileID: 0}
+  inkFile: {fileID: 0}
   nextChapterTransitionPassed: 0
 --- !u!1 &6976002619809516131
 GameObject:

@@ -8,7 +8,7 @@ public class AgentMoveToTarget : MonoBehaviour
 {
     [Header("Audio")]
     [SerializeField] private bool playsAudio = true;
-    [SerializeField] public AgentAudioData audioData;
+    [HideInInspector] public AgentAudioData audioData;
     [SerializeField] private float footstepSpeed = .2f;
     private AudioSource audioSource;
 
@@ -19,6 +19,7 @@ public class AgentMoveToTarget : MonoBehaviour
 
 
     Agent agent;
+    AgentAudioPlayer audioPlayer;
 
     public delegate void DestinationToAgentCompleted(Agent agent);
 
@@ -26,19 +27,12 @@ public class AgentMoveToTarget : MonoBehaviour
     {
         agent = GetComponent<Agent>();
         navAgent = GetComponent<NavMeshAgent>();
+        audioPlayer = GetComponent<AgentAudioPlayer>();
 
-        var audioContainer = new GameObject("AgentMove AudioSource");
-        audioContainer.transform.parent = this.transform;
-        audioContainer.transform.position = Vector3.zero + Vector3.up;
-        audioSource = audioContainer.AddComponent<AudioSource>();
-    }
-
-    private void Start()
-    {
-        if (playsAudio)
+        if(playsAudio && audioPlayer == null)
         {
-            if (audioData == null)
-                Debug.LogError(gameObject.name + " -> " + this.ToString() + ": This component is set to play audio but there is no audioData found");
+            Debug.LogWarning(this + " is set to play audio but no AgentAudioComponent was found");
+            playsAudio = false;
         }
     }
 
@@ -50,7 +44,7 @@ public class AgentMoveToTarget : MonoBehaviour
         isMoving = true;
         agent.Animator.SetFloat("Vertical", 1);
         StopAllCoroutines();
-        StartCoroutine(PlayWalkingSound());
+        //StartCoroutine(PlayWalkingSound());
         StartCoroutine(CheckForDestinationCompleted());
     }
 
@@ -63,7 +57,7 @@ public class AgentMoveToTarget : MonoBehaviour
         isMoving = true;
         agent.Animator.SetFloat("Vertical", 1);
         StopAllCoroutines();
-        StartCoroutine(PlayWalkingSound());
+        //StartCoroutine(PlayWalkingSound());
         StartCoroutine(CheckForDestinationCompleted());
     }
 
@@ -76,7 +70,7 @@ public class AgentMoveToTarget : MonoBehaviour
         isMoving = true;
         agent.Animator.SetFloat("Vertical", 1);
         StopAllCoroutines();
-        StartCoroutine(PlayWalkingSound());
+        //StartCoroutine(PlayWalkingSound());
         StartCoroutine(CheckForDestinationCompleted(agent, OnDestinationCompleted));
     }
 
@@ -171,45 +165,7 @@ public class AgentMoveToTarget : MonoBehaviour
         return distance;
     }
 
-    IEnumerator PlayWalkingSound()
-    {
-        if(playsAudio)
-        {
-            if(audioData == null)
-            {
-                Debug.LogWarning("There are no audioData file.");
-            }
-            else if (audioData.FootStepAudio.defaultFootsteps == null || audioData.FootStepAudio.defaultFootsteps.Count == 0)
-            {
-                Debug.LogWarning("There are no footstep sounds to play in defaultFootSteps.");
 
-            }
-            else
-            {
-                while (isMoving)
-                {
-                    var footstepSounds = new List<AudioClip>(audioData.FootStepAudio.defaultFootsteps);
-                    int randomIndex = Random.Range(0, footstepSounds.Count);
-
-                    if (audioData.FootstepAudioMixerOverride == null)
-                    {
-                        audioSource.outputAudioMixerGroup = audioData.AudioMixer;
-                    }
-                    else
-                    {
-                        audioSource.outputAudioMixerGroup = audioData.FootstepAudioMixerOverride;
-                    }
-                    audioSource.clip = footstepSounds[randomIndex];
-                    audioSource.Play();
-
-                    yield return new WaitForSeconds(footstepSpeed);
-                }
-            }
-        }
-
-
-        // do coroutines stop automatically if they reac 
-    }
 
     public void StopMoving()
     {

@@ -9,7 +9,8 @@ VAR sceneFinished = false
 -> Start
 
 ===Start===
-#willow
+#tab: Willow #willow
+~ currentTab = 2
 There you are, accept my invite.
 Are you familiar with the idea of a bucket list?
 +   [Yeah]

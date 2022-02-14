@@ -10,10 +10,14 @@ public class TabSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerClic
 
     public Image background;
 
+    private Transform _content;
+
     public delegate void TabSelected(TabSelectButton tab);
     public delegate void TabDeselected(TabSelectButton tab);
     public event TabSelected onTabSelected;
     public event TabDeselected onTabDeselected;
+
+    public Transform Content { get { return _content; } set { _content = value; } }
 
     private void Awake()
     {

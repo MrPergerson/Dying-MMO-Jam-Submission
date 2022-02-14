@@ -10,6 +10,16 @@ public abstract class Agent : MonoBehaviour
     protected AgentMoveToTarget move;
     protected Animator _animator;
 
+
+    public delegate void HealthChanged(float health);
+    public event HealthChanged onHealthChanged;
+
+    public delegate  void Death(Agent agent);
+    public event Death onDeath;
+
+    public delegate void Respawned(Agent agent);
+    public event Respawned onRespawned;
+
     public float Health { 
         get { return _health; } 
         protected set { 
@@ -17,7 +27,6 @@ public abstract class Agent : MonoBehaviour
             onHealthChanged?.Invoke(Health);
             if (_health <= 0)
             {
-                onDeath?.Invoke(this);
                 Die();
             }
         } 
@@ -33,18 +42,12 @@ public abstract class Agent : MonoBehaviour
         get { return _animator; }
     }
 
-    public delegate void HealthChanged(float health);
-    public event HealthChanged onHealthChanged;
-
-    public delegate void Death(Agent agent);
-    public event Death onDeath;
-
     protected virtual void Awake()
     {
         move = GetComponent<AgentMoveToTarget>();
         move.audioData = AudioData;
 
-        _animator = GetComponentInChildren<Animator>();
+        _animator = GetComponent<Animator>();
     }
 
     protected virtual void Start()
@@ -53,6 +56,13 @@ public abstract class Agent : MonoBehaviour
 
     public abstract void TakeDamage(Agent origin, float damage);
 
-    protected abstract void Die();
+    public virtual void Die()
+    {
+        onDeath?.Invoke(this);
+    }
 
+    public virtual void Respawn()
+    {
+        onRespawned?.Invoke(this);
+    }
 }
