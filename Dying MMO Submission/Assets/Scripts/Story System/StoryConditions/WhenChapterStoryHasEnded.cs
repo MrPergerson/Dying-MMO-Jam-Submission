@@ -25,7 +25,7 @@ public class WhenChapterStoryHasEnded : StoryCondition
         return conditionMet == true;
     }
 
-    public override void ResetCondition()
+    public override void InitializeCondition()
     {
         conditionMet = false;
     }

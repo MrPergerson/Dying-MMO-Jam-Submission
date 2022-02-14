@@ -9,12 +9,6 @@ public class WhenPlayerEntersZone : StoryCondition
         " this condition will automatically listen to it.")]
     [SerializeField] TriggerZone zone;
 
-
-    private void OnEnable()
-    {
-        zone.onTriggerZoneEnter += CheckIfPlayerEnteredZone;
-    }
-
     private void OnDisable()
     {
         zone.onTriggerZoneEnter -= CheckIfPlayerEnteredZone;
@@ -35,9 +29,10 @@ public class WhenPlayerEntersZone : StoryCondition
         return conditionMet;
     }
 
-    public override void ResetCondition()
+    public override void InitializeCondition()
     {
         conditionMet = false;
+        zone.onTriggerZoneEnter += CheckIfPlayerEnteredZone;
     }
 
 }
