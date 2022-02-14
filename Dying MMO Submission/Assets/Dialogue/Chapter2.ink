@@ -1,3 +1,5 @@
+INCLUDE GlobalVariables.ink
+
 //Silk Messages Silver
 //Draft 1 | Text Updated 2/7 | Ink File Updated 2/13
 VAR silkRelationship = 0
@@ -98,4 +100,5 @@ LIKE YOU CAN TALK!
     I'll check in later.
 -
 ~ sceneFinished = true
+~ scene02Finished = true
 -> END

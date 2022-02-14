@@ -1,3 +1,5 @@
+INCLUDE GlobalVariables.ink
+
 //Meeting with Willow
 //Draft 1.1 | Text Updated 2/9 | Ink File Updated 2/13
 VAR dungeonDifficulty = 0
@@ -89,4 +91,5 @@ Oh my god you did not.
 #w1ll0w_w1sp
 Alright, now that the puns are out of our system, let's get to it!
 ~sceneFinished = true
+~ scene03Finished = true
 -> END

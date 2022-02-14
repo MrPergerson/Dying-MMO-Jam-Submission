@@ -1,3 +1,5 @@
+INCLUDE GlobalVariables.ink
+
 //Last Day with Willow
 //Draft 1.1 | Text Updated 2/9 | Ink File Updated 2/13
 VAR willowRelationship = 0
@@ -188,4 +190,5 @@ w1ll0w_w1sp IS NOW OFFLINE
 
 
 ~ sceneFinished = true
+~ scene06Finished = true
 -> END
