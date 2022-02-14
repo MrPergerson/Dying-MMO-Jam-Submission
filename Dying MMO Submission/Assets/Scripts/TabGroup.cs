@@ -33,6 +33,7 @@ public class TabGroup : MonoBehaviour
     public Dictionary<string, TabSelectButton> tabDictionary { get; private set; }
     private string currentTab = "Public";
     private string currentUserName;
+    private bool playInGameDialogue;
 
     [Header("Chat Line UI")]
     [SerializeField] private GameObject chatLineObj;
@@ -268,12 +269,7 @@ public class TabGroup : MonoBehaviour
         else
         {
             HandleTags(story.currentTags);
-            if (!GetTabContentTransform(currentTab))
-                CreateTab(currentTab);
-
-            chatLine.GetComponent<TextMeshProUGUI>().text = currentUserName + ": " + chatLineText;
-            chatLine.transform.SetParent(GetTabContentTransform(currentTab));
-            print(currentTab);
+            InsertChatLine(chatLine, chatLineText);
         }
     }
 
@@ -284,9 +280,43 @@ public class TabGroup : MonoBehaviour
             if (tag.Contains(":"))
             {
                 string[] splitTag = tag.Split(':');
-                currentTab = splitTag[1].Trim();
+                if (splitTag.Length != 2)
+                {
+                    Debug.LogError(this + ": could not parse tag correctly. Please check tags in Ink.");
+                }
+                string key = splitTag[0].Trim();
+                string value = splitTag[1].Trim();
+
+                if (key == "ingame")
+                {
+                    playInGameDialogue = true;
+                }
+                else
+                {
+                    currentTab = value;
+                }
             }
             currentUserName = tag;
+        }
+    }
+
+    public void InsertChatLine(GameObject chatObject, string chatText)
+    {
+        if (playInGameDialogue)
+        {
+            print(playInGameDialogue);
+            //ignore Tabs and play single dialogue to in-game in dialogue
+            DialogueManagerAS2.GetInstance().PlayInGameDialogue(currentUserName, chatText);
+            playInGameDialogue = false;
+        }
+        else
+        {
+            if (!GetTabContentTransform(currentTab))
+                CreateTab(currentTab);
+
+            chatObject.GetComponent<TextMeshProUGUI>().text = "["+ currentUserName +"]" + ": " + chatText;
+            chatObject.transform.SetParent(GetTabContentTransform(currentTab));
+            //print(currentTab);
         }
     }
 }
