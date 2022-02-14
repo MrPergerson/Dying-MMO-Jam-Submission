@@ -17,6 +17,7 @@ public class AgentAttack : MonoBehaviour
     [SerializeField, ReadOnly] private Agent _target;
 
     private List<CombatAbility> abilitiesInCoolDown;
+    private List<int> abilitiesIndexInCoolDown;
     private Dictionary<int, VisualEffect> vfxPool;
 
     private GameObject vfxContainer;
@@ -49,7 +50,14 @@ public class AgentAttack : MonoBehaviour
             Debug.LogError(gameObject.name + " -> " + this.ToString() + " -> Start(): combatAbilitySet has no combat abilites.");
         }
 
+        for(int i=0;i< combatAbilitySet.abilities.Count; i++)
+        {
+            //Debug.Log(i+", "+ combatAbilitySet.abilities[i].TimeUntilCoolDownEnds);
+            combatAbilitySet.abilities[i].TimeUntilCoolDownEnds = 0;
+        }
+
         abilitiesInCoolDown = new List<CombatAbility>();
+        abilitiesIndexInCoolDown=new List<int> { };
         vfxPool = new Dictionary<int, VisualEffect>();
 
         vfxContainer = new GameObject("vfxContainer");
@@ -72,8 +80,21 @@ public class AgentAttack : MonoBehaviour
     {
         if(abilitiesInCoolDown.Count > 0)
         {
-            abilitiesInCoolDown.ForEach(ability => ability.TimeUntilCoolDownEnds -= Time.deltaTime);
-            abilitiesInCoolDown.RemoveAll(ability => ability.TimeUntilCoolDownEnds <= 0);
+            //abilitiesInCoolDown.ForEach(ability => ability.TimeUntilCoolDownEnds -= Time.deltaTime);
+            //abilitiesInCoolDown.RemoveAll(ability => ability.TimeUntilCoolDownEnds <= 0);
+
+            for(int i = 0; i < abilitiesInCoolDown.Count; i++)
+            {
+                abilitiesInCoolDown[i].TimeUntilCoolDownEnds -= Time.deltaTime;
+                if(abilitiesInCoolDown[i].TimeUntilCoolDownEnds <= 0)
+                {
+                    abilitiesInCoolDown.RemoveAt(i);
+                    abilitiesIndexInCoolDown.RemoveAt((int)i);
+                    Debug.Log("removing from abilitiesInCoolDown " + (i + 1));
+                    i--;
+                }
+            }
+
         }
     }
 
@@ -83,8 +104,20 @@ public class AgentAttack : MonoBehaviour
         if (!target.Equals(Target))
         {
             Target = target;
+            
+            int attackMode = 0;
+            Debug.Log("abilitiesInCoolDown.Count- " + abilitiesInCoolDown.Count);
+            if (abilitiesInCoolDown.Count > 0)
+            {
+                attackMode = abilitiesIndexInCoolDown[0];
+                abilitiesIndexInCoolDown.RemoveAt(0);
+                abilitiesInCoolDown.RemoveAt(0);
+            }
 
-            agent.Animator.SetBool("InCombat", true);
+            Debug.Log("attack with mode - " + attackMode);
+
+            //agent.Animator.SetBool("InCombat", true);
+            agent.Animator.SetInteger("AttackMode", attackMode);
 
             for (int i = 0; i < combatAbilitySet.abilities.Count; i++)
             { 
@@ -100,7 +133,7 @@ public class AgentAttack : MonoBehaviour
                 
             }
 
-            cPerformSimpleAttack = PerformSimpleAttack(GetComponent<Agent>());
+            cPerformSimpleAttack = PerformSimpleAttack(GetComponent<Agent>(), attackMode);
             StartCoroutine(cPerformSimpleAttack);
 
         }
@@ -113,9 +146,10 @@ public class AgentAttack : MonoBehaviour
         onAttackEnded?.Invoke();
         StopCoroutine(cPerformSimpleAttack);
 
-        agent.Animator.SetBool("InCombat", false);
+        //agent.Animator.SetBool("InCombat", false);
+        agent.Animator.SetInteger("AttackMode", -1);
 
-        for(int i = 0; i < combatAbilitySet.abilities.Count; i++)
+        for (int i = 0; i < combatAbilitySet.abilities.Count; i++)
         {
             Destroy(vfxPool[i].gameObject, .2f);
         }
@@ -124,7 +158,7 @@ public class AgentAttack : MonoBehaviour
     }
 
     // need to pause the attack if doing movement within attackdistance 
-    IEnumerator PerformSimpleAttack(Agent self)
+    IEnumerator PerformSimpleAttack(Agent self, int attackMode)
     {
         while (Target.Health > 0 && Target != null)
         {
@@ -136,15 +170,20 @@ public class AgentAttack : MonoBehaviour
             }
 
             // TODO: add support for different combat abilites
-            int index = 0;
-            CombatAbility simpleAttack = combatAbilitySet.abilities[index];
+            //int index = 0;
+            if (attackMode >= combatAbilitySet.abilities.Count)
+            {
+                Debug.LogError("Invalid attack mode");
+                break;
+            }
+            CombatAbility simpleAttack = combatAbilitySet.abilities[attackMode];
             Target.TakeDamage(self, simpleAttack.Damage);
 
             //vfx
             var origin = transform.position + Vector3.up;
             var to = Target.transform.position + Vector3.up;
-            vfxPool[index].gameObject.transform.position = (transform.forward * .6f) + Vector3.up + transform.position;
-            vfxPool[index].Play();
+            vfxPool[0].gameObject.transform.position = (transform.forward * .6f) + Vector3.up + transform.position;
+            vfxPool[0].Play();
 
             //audio
             var hitAudio = simpleAttack.AUDIO_Hit;
@@ -196,11 +235,10 @@ public class AgentAttack : MonoBehaviour
         {
             combatAbility.TimeUntilCoolDownEnds = combatAbility.CoolDown;
             abilitiesInCoolDown.Add(combatAbility);
-
-
+            abilitiesIndexInCoolDown.Add(index);
+            Debug.Log("Adding to abilitiesInCoolDown " + (index + 1));
             // animation and sound effect
             Debug.Log("Performed combat ability " + (index + 1));
-            
         }
         else
         {
