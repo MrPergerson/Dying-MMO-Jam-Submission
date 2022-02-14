@@ -20,14 +20,13 @@ public abstract class StoryCondition : MonoBehaviour
 
     public virtual bool IsCurrentCondition()
     {
-        
         return isCurrentCondition;
     }
 
 
     public virtual void SetAsCurrentCondition(bool value)
     {
-        if (isCurrentCondition) onSelectedAsCurrentCondition.Invoke();
+        onSelectedAsCurrentCondition.Invoke();
         isCurrentCondition = value;
     }
 }

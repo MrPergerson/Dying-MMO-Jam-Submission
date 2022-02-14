@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
     [SerializeField] StorySystem storySystem;
 
-    [SerializeField] private TextAsset inkfile;
+    [SerializeField, ReadOnly] private TextAsset inkfile;
 
     private void Awake()
     {
@@ -47,6 +48,9 @@ public class GameManager : MonoBehaviour
 
     private void SendInkToDialogueManager()
     {
+        if (!DialogueManagerAS2.GetInstance())
+            Debug.LogError(this + ": GameManager cannot find Dialogue Manager. Dialogue Manager might not be in scene.");
+
         DialogueManagerAS2.GetInstance().ChangeInkJSON(inkfile);
     }
 }
