@@ -25,9 +25,7 @@ public class DialogueManagerAS2 : MonoBehaviour
 
     private TabGroup tabGroup;
 
-    private bool playInGameDialogue = false;
     public TextMeshProUGUI inGameDialogueText;
-    private TextAsset inGameDialogueInkJSON;
 
     private void Awake()
     {
@@ -93,7 +91,6 @@ public class DialogueManagerAS2 : MonoBehaviour
             currentStory = new Story(inkJSON.text);
             chatIsPlaying = true;
             dialogueVariables.StartListening(currentStory);
-            CheckWhatToPlay();
             ContinueStory();
         }
     }
@@ -107,29 +104,13 @@ public class DialogueManagerAS2 : MonoBehaviour
         chatIsPlaying = false;
     }
 
-    private void CheckWhatToPlay()
-    {
-        if (!inGameDialogueInkJSON)
-        {
-            playInGameDialogue = true;
-        }
-    }
-
     private void ContinueStory()
     {
         if (currentStory.canContinue)
         {
-            if (playInGameDialogue)
-            {
-                //Display text to In-Game Dialogue
-                PlayInGameDialogue();
-            }
-            else
-            {
-                //Display text to Message Box chat
-                tabGroup.DisplayChatLine(currentStory);
-                tabGroup.DisplayChoices(currentStory);
-            }
+            inGameDialogueText.gameObject.SetActive(false);
+            tabGroup.DisplayChatLine(currentStory);
+            tabGroup.DisplayChoices(currentStory);
         }
         else
         {
@@ -137,17 +118,10 @@ public class DialogueManagerAS2 : MonoBehaviour
         }
     }
 
-    private void PlayInGameDialogue()
+    public void PlayInGameDialogue(string speaker, string inGameText)
     {
-        string storyText = currentStory.Continue();
-
-        // If chatLineText is empty/new line, destroy it
-        if (storyText != "\n" && storyText != null)
-        {
-            inGameDialogueText.text = storyText;
-            inGameDialogueText.gameObject.SetActive(true);
-        }
-        
+        inGameDialogueText.text = speaker + ": " + inGameText;
+        inGameDialogueText.gameObject.SetActive(true);
     }
 
     public void MakeChoice(int choiceIndex)
@@ -171,17 +145,5 @@ public class DialogueManagerAS2 : MonoBehaviour
     {
         inkJSON = inkJSONFile;
         //EnterDialogueMode();
-    }
-
-    public void ChangeInGameDialogueInk(TextAsset inkJSONFile)
-    {
-        if (!inkJSONFile)
-        {
-            inGameDialogueInkJSON = inkJSONFile;
-        }
-        else
-        {
-            inGameDialogueInkJSON = null;
-        }
     }
 }
