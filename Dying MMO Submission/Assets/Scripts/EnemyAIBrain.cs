@@ -37,7 +37,6 @@ public class EnemyAIBrain : Agent
         {
             this.threat = threat;
             attack.StartAttack(threat);
-            Debug.Log(gameObject.name + " attacking " + threat.gameObject.name);
             attack.onAttackEnded += RemoveThreat;
 
         }
