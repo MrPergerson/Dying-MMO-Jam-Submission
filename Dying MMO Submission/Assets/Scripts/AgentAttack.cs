@@ -122,9 +122,18 @@ public class AgentAttack : MonoBehaviour
             }
 
             Debug.Log("attack with mode - " + attackMode);
-
+            resetAnimatorParams();
             //agent.Animator.SetBool("InCombat", true);
-            agent.Animator.SetInteger("AttackMode", attackMode);
+            if(attackMode>=0)
+                agent.Animator.SetBool("Ability1", true);
+            if (attackMode == 1)
+                agent.Animator.SetBool("Ability2", true);
+            else if (attackMode == 2)
+                agent.Animator.SetBool("Ability3", true);
+            else if (attackMode == 3)
+                agent.Animator.SetBool("Ability4", true);
+
+
 
             for (int i = 0; i < combatAbilitySet.abilities.Count; i++)
             { 
@@ -153,8 +162,10 @@ public class AgentAttack : MonoBehaviour
         onAttackEnded?.Invoke();
         StopCoroutine(cPerformSimpleAttack);
 
+        resetAnimatorParams();
         //agent.Animator.SetBool("InCombat", false);
-        agent.Animator.SetInteger("AttackMode", -1);
+        //agent.Animator.SetInteger("AttackMode", -1);
+        agent.Animator.SetBool("Ability1", false);
 
         for (int i = 0; i < combatAbilitySet.abilities.Count; i++)
         {
@@ -256,5 +267,13 @@ public class AgentAttack : MonoBehaviour
         {
             Gizmos.DrawLine(transform.position + Vector3.up, Target.transform.position + Vector3.up);
         }
+    }
+
+    private void resetAnimatorParams()
+    {
+        //agent.Animator.SetBool("Ability1", false);
+        agent.Animator.SetBool("Ability2", false);
+        agent.Animator.SetBool("Ability3", false);
+        agent.Animator.SetBool("Ability4", false);
     }
 }
