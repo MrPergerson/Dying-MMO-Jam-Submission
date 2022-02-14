@@ -25,7 +25,7 @@ public class DialogueManagerAS2 : MonoBehaviour
 
     private TabGroup tabGroup;
 
-    public TextMeshProUGUI inGameDialogueText;
+    //public TextMeshProUGUI inGameDialogueText;
 
     private void Awake()
     {
@@ -33,9 +33,10 @@ public class DialogueManagerAS2 : MonoBehaviour
         if (instance != null)
         {
             Debug.LogError(this.gameObject + " Awake: More than one Dialogue Manager detected");
+            
         }
         instance = this;
-
+        SceneManager.Instance.onLevelLoaded += SetupManger;
         chatDelay = chatDelayNum;
 
         dialogueVariables = new DialogueVariables(globalVarInkFile);
@@ -48,12 +49,21 @@ public class DialogueManagerAS2 : MonoBehaviour
 
     private void Start()
     {
-        tabGroup = GameObject.FindGameObjectWithTag("UI_MessageBox").GetComponent<TabGroup>();
+
+    }
+
+    private void SetupManger()
+    {
+
+        //tabGroup = GameObject.FindGameObjectWithTag("UI_MessageBox").GetComponent<TabGroup>();
+        tabGroup = FindObjectOfType<TabGroup>();
+        tabGroup.gameObject.SetActive(true);
+        print(tabGroup);
         if (!tabGroup)
         {
             Debug.LogError(this + ": TabGroup component could not found in Scene.");
         }
-        inGameDialogueText.gameObject.SetActive(false);
+        //inGameDialogueText.gameObject.SetActive(false);
         chatIsPlaying = false;
     }
 
@@ -100,7 +110,7 @@ public class DialogueManagerAS2 : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         dialogueVariables.StopListening(currentStory);
-        inGameDialogueText.gameObject.SetActive(false);
+        //inGameDialogueText.gameObject.SetActive(false);
         chatIsPlaying = false;
     }
 
@@ -108,7 +118,7 @@ public class DialogueManagerAS2 : MonoBehaviour
     {
         if (currentStory.canContinue)
         {
-            inGameDialogueText.gameObject.SetActive(false);
+            //inGameDialogueText.gameObject.SetActive(false);
             tabGroup.DisplayChatLine(currentStory);
             tabGroup.DisplayChoices(currentStory);
         }
@@ -120,8 +130,8 @@ public class DialogueManagerAS2 : MonoBehaviour
 
     public void PlayInGameDialogue(string speaker, string inGameText)
     {
-        inGameDialogueText.text = speaker + ": " + inGameText;
-        inGameDialogueText.gameObject.SetActive(true);
+        //inGameDialogueText.text = speaker + ": " + inGameText;
+        //inGameDialogueText.gameObject.SetActive(true);
     }
 
     public void MakeChoice(int choiceIndex)

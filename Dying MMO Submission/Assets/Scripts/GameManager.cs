@@ -2,42 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance;
+    private static GameManager Instance;
     [SerializeField] StorySystem storySystem;
+    [SerializeField] DialogueManagerAS2 dialogueManager;
 
     [SerializeField, ReadOnly] private TextAsset inkfile;
 
+
+
+
     private void Awake()
     {
-        // Check that there is only one Dialogue Manager in scene
-        if (instance != null)
+        if (Instance == null)
         {
-            Debug.LogError(this.gameObject + " Awake: More than one Dialogue Manager detected");
-        }
-        instance = this;
-    }
+            Instance = this;
 
-    public static GameManager GetInstance()
-    {
-        return instance;
+            dialogueManager = FindObjectOfType<DialogueManagerAS2>();
+
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
     {
-        if (storySystem == null) Debug.LogError(this + ": Story system is null");
-
-        storySystem.onChapterChanged += PrintSuccess;
-        storySystem.StartStory();
-        inkfile = storySystem.GetCurrentChapterInkFile();
-        SendInkToDialogueManager();
+        SceneManager.Instance.onLevelLoaded += SetupLevel;
     }
 
     private void PrintSuccess()
     {
-        print("The chapter has changed!");
+        //print("The chapter has changed!");
         if (inkfile != storySystem.GetCurrentChapterInkFile())
         {
             inkfile = storySystem.GetCurrentChapterInkFile();
@@ -52,5 +52,18 @@ public class GameManager : MonoBehaviour
             Debug.LogError(this + ": GameManager cannot find Dialogue Manager. Dialogue Manager might not be in scene.");
 
         DialogueManagerAS2.GetInstance().ChangeInkJSON(inkfile);
+    }
+
+    private void SetupLevel()
+    {
+        storySystem = FindObjectOfType<StorySystem>();
+        if (storySystem == null) Debug.LogError(this + ": Story system is null");
+
+        storySystem.onChapterChanged += PrintSuccess;
+        storySystem.StartStory();
+        inkfile = storySystem.GetCurrentChapterInkFile();
+        SendInkToDialogueManager();
+
+
     }
 }

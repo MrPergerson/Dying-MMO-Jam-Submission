@@ -10,12 +10,23 @@ public class WhenChapterStoryHasEnded : StoryCondition
     //[SerializeField] TextAsset globalVarJSONFile;
     private string chapterEndedVarName;
 
+    public override void SetAsCurrentCondition(bool value)
+    {
+        base.SetAsCurrentCondition(value);
+        if(value == true)
+        {
+            DialogueManagerAS2.GetInstance().EnterDialogueMode();
+        }
+
+    }
+
     public override bool IsConditionMet()
     {
-        if (DSInkGetVar.GetInstance() != null)
+
+        if (DialogueManagerAS2.GetInstance() != null)
         {
             // does this code continue after the parent chapter object is deactive?
-            conditionMet = ((Ink.Runtime.BoolValue)DSInkGetVar.GetInstance().GetVariable(globalVarName)).value;
+            conditionMet = ((Ink.Runtime.BoolValue)DialogueManagerAS2.GetInstance().GetVariable(globalVarName)).value;
         }
         else
         {
