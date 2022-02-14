@@ -10,6 +10,7 @@ public class EnemyAIBrain : Agent
     [SerializeField] LayerMask layerMask;
 
     public static PlayerController playerController;
+    float cooldownTimeRemaining = 0.0f;
 
     protected override void Awake()
     {
@@ -56,16 +57,19 @@ public class EnemyAIBrain : Agent
         Health -= damage;
     }
 
-    private void Update()
+    void Update()
     {
         //check if player is around
-        if (playerController != null && GetComponent<AgentAttack>()!=null)
+        if (playerController != null && GetComponent<AgentAttack>()!= null && cooldownTimeRemaining <= 0.0f)
         {
             if(Vector3.Distance(playerController.gameObject.transform.position, transform.position) < GetComponent<AgentAttack>().AttackDistance)
             {
                 AddThreat(playerController);
+                cooldownTimeRemaining = 2.0f;
             }
         }
+        if(cooldownTimeRemaining>0.0f)
+            cooldownTimeRemaining -= Time.deltaTime;
     }
 
 

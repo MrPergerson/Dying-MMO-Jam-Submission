@@ -15,6 +15,8 @@ public class AgentMoveToTarget : MonoBehaviour
     [Header("Debug")]
     public bool isMoving;
     NavMeshAgent navAgent;
+    Vector3 targetLocation;
+
 
     Agent agent;
 
@@ -43,6 +45,7 @@ public class AgentMoveToTarget : MonoBehaviour
     public void SetDestination(Vector3 destination)
     {
         navAgent.destination = destination;
+        targetLocation = destination;
         navAgent.stoppingDistance = 0;
         isMoving = true;
         agent.Animator.SetFloat("Vertical", 1);
@@ -55,6 +58,8 @@ public class AgentMoveToTarget : MonoBehaviour
     {
         navAgent.destination = destination;
         navAgent.stoppingDistance = stoppingDistance;
+        targetLocation = destination;
+        //Debug.Log("setting destination-" + targetLocation);
         isMoving = true;
         agent.Animator.SetFloat("Vertical", 1);
         StopAllCoroutines();
@@ -65,6 +70,8 @@ public class AgentMoveToTarget : MonoBehaviour
     public void SetDestination(Agent agent, float stoppingDistance, DestinationToAgentCompleted OnDestinationCompleted)
     {
         navAgent.destination = agent.transform.position;
+        targetLocation = agent.transform.position;
+        //Debug.Log("setting destination-" + targetLocation);
         navAgent.stoppingDistance = stoppingDistance;
         isMoving = true;
         agent.Animator.SetFloat("Vertical", 1);
@@ -80,8 +87,9 @@ public class AgentMoveToTarget : MonoBehaviour
 
         while (!destinationReached)
         {
-            var remainingDistance = GetPathRemainingDistance(navAgent);
-
+            //var remainingDistance = GetPathRemainingDistance(navAgent);
+            var remainingDistance = Vector3.Distance(transform.position, targetLocation);
+            //Debug.Log("remaining distance-" + remainingDistance+", "+ navAgent.stoppingDistance);
             if (distanceCheckErrors >= 5)
             {
                 Debug.LogError(gameObject.name + " in AgentMoveToTarget.cs -> CheckForDestinationCompleted(): Too many distanceErrorChecks. " +
@@ -95,14 +103,14 @@ public class AgentMoveToTarget : MonoBehaviour
             }
 
 
-            if (remainingDistance <= navAgent.stoppingDistance && remainingDistance >= 0)
+            if (remainingDistance <= 1.0)
             {
                 destinationReached = true;
                 StopMoving();
                 lookAroundAndStartAttack();
             }
 
-            yield return new WaitForSeconds(.1f);
+            yield return null;// new WaitForSeconds(.1f);
         }
 
 
@@ -140,7 +148,7 @@ public class AgentMoveToTarget : MonoBehaviour
                 StopMoving();
             }
 
-            yield return new WaitForSeconds(.1f);
+            yield return null;// new WaitForSeconds(.1f);
         }
 
 
@@ -149,11 +157,11 @@ public class AgentMoveToTarget : MonoBehaviour
     // from https://stackoverflow.com/a/61449518
     public float GetPathRemainingDistance(NavMeshAgent navMeshAgent)
     {
-        if (navMeshAgent.pathPending ||
+        /*if (navMeshAgent.pathPending ||
             navMeshAgent.pathStatus == NavMeshPathStatus.PathInvalid ||
             navMeshAgent.path.corners.Length == 0)
             return -1f;
-
+        */
         float distance = 0.0f;
         for (int i = 0; i < navMeshAgent.path.corners.Length - 1; ++i)
         {
