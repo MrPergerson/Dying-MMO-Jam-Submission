@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Anthony/Separated Scenes/UI System.unity
     guid: a8707c0be3d407f4e9d36d23844b198f
+  - enabled: 1
+    path: Assets/Scenes/PersistentGameObjects.unity
+    guid: f21470989a5180642a6172a80eaff90f
   m_configObjects: {}
