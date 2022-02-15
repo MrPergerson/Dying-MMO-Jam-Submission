@@ -43,5 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a279606a39896734da951c962972ff3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  storySystem: {fileID: 0}
+  SceneManagerPrefab: {fileID: 6164188131348503943, guid: cefe21f82f1d21a4fa42c6fa283c5ea5, type: 3}
+  startGameOnAwake: 0
+  persistentSceneLoaded: 0
+  managerList: []
   inkfile: {fileID: 0}

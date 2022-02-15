@@ -8,6 +8,7 @@ public class GameManager : Manager
     private static GameManager Instance;
     [Title("Game Setup")]
     [SerializeField] GameObject SceneManagerPrefab;
+    [SerializeField] bool startGameOnAwake = false;
     [SerializeField, ReadOnly]private bool persistentSceneLoaded = false;
 
     StorySystem storySystem;
@@ -28,6 +29,8 @@ public class GameManager : Manager
         if (Instance == null)
         {
             Instance = this;
+            if (startGameOnAwake)
+                StartGameHere();
         }
         else
         {
