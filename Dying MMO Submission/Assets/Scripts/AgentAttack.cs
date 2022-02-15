@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
@@ -27,6 +28,9 @@ public class AgentAttack : MonoBehaviour
     private Agent agent;
 
     private Agent Target { get { return _target; } set { _target = value; } }
+    private List<Agent> targets;
+
+
     public float AttackDistance { get { return _attackDistance; } set { _attackDistance = value; } }
 
     private IEnumerator cPerformSimpleAttack;
@@ -68,6 +72,7 @@ public class AgentAttack : MonoBehaviour
 
         abilitiesInCoolDown = new List<CombatAbility>();
         abilitiesIndexInCoolDown=new List<int> { };
+        targets = new List<Agent>();
         vfxPool = new Dictionary<int, VisualEffect>();
 
         vfxContainer = new GameObject("vfxContainer");
@@ -127,24 +132,29 @@ public class AgentAttack : MonoBehaviour
             if(attackMode>=0)
                 agent.Animator.SetBool("Ability1", true);
             if (attackMode == 1)
-                agent.Animator.SetBool("Ability2", true);
+                agent.Animator.SetTrigger("Ability2");
             else if (attackMode == 2)
-                agent.Animator.SetBool("Ability3", true);
+                agent.Animator.SetTrigger("Ability3");
             else if (attackMode == 3)
-                agent.Animator.SetBool("Ability4", true);
+                agent.Animator.SetTrigger("Ability4");
 
+            //if attack mode is 3, player needs to jump
+            //based on combat ability canAttackMultipleEnemies, 
+            targets.Clear();
+            targets.Add(target);
 
+            addNearbyEnemiesToList();
 
-            for (int i = 0; i < combatAbilitySet.abilities.Count; i++)
-            { 
-                if (combatAbilitySet.abilities[i].VFX_Hit == null) continue;
-
-                var vfxGameObject = Instantiate(combatAbilitySet.abilities[i].VFX_Hit, vfxContainer.transform);
+            //for (int i = 0; i < combatAbilitySet.abilities.Count; i++)
+            //{ 
+            //if (combatAbilitySet.abilities[i].VFX_Hit == null) continue;
+            if (combatAbilitySet.abilities[attackMode].VFX_Hit != null) {
+                var vfxGameObject = Instantiate(combatAbilitySet.abilities[attackMode].VFX_Hit, vfxContainer.transform);
 
                 if(vfxGameObject.TryGetComponent<VisualEffect>(out VisualEffect visualEffectComponent))
                 {
                     visualEffectComponent.Stop();
-                    vfxPool.Add(i, visualEffectComponent);
+                    vfxPool.Add(0, visualEffectComponent);
                 }
                 
             }
@@ -154,6 +164,19 @@ public class AgentAttack : MonoBehaviour
 
         }
 
+    }
+
+    private void addNearbyEnemiesToList()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            if (Vector3.Distance(transform.position, enemies[i].transform.position) < 5.0f)
+            {
+                if(targets[0]!= enemies[i].GetComponent<Agent>())
+                    targets.Add(enemies[i].GetComponent<Agent>());
+            }
+        }
     }
 
     public void EndAttack()
@@ -167,10 +190,12 @@ public class AgentAttack : MonoBehaviour
         //agent.Animator.SetInteger("AttackMode", -1);
         agent.Animator.SetBool("Ability1", false);
 
-        for (int i = 0; i < combatAbilitySet.abilities.Count; i++)
+        /*for (int i = 0; i < combatAbilitySet.abilities.Count; i++)
         {
             Destroy(vfxPool[i].gameObject, .2f);
-        }
+        }*/
+
+        Destroy(vfxPool[0].gameObject);
 
         vfxPool.Clear();
     }
@@ -195,7 +220,23 @@ public class AgentAttack : MonoBehaviour
                 break;
             }
             CombatAbility simpleAttack = combatAbilitySet.abilities[attackMode];
-            Target.TakeDamage(self, simpleAttack.Damage);
+
+            if (simpleAttack.CanHitMultipleEnemies)
+            {
+                for (int i = 0; i < targets.Count; i++)
+                {
+                    if (targets[i] != null)
+                    {
+                        targets[i].TakeDamage(self, simpleAttack.Damage);
+                        Debug.Log("hitting - " +i+", "+ targets[i].gameObject.name);
+                    }
+                }
+            }
+            else
+            {
+                Target.TakeDamage(self, simpleAttack.Damage);
+                Debug.Log("hitting - " + Target.gameObject.name);
+            }
 
             //vfx
             var origin = transform.position + Vector3.up;
@@ -215,6 +256,13 @@ public class AgentAttack : MonoBehaviour
             transform.LookAt(targetPos, Vector3.up);
 
             yield return new WaitForSeconds(simpleAttack.CoolDown);
+
+            if (abilitiesInCoolDown.Count > 0)
+            {
+                attackMode = abilitiesIndexInCoolDown[0];
+                abilitiesIndexInCoolDown.RemoveAt(0);
+                abilitiesInCoolDown.RemoveAt(0);
+            }
         }
 
         EndAttack();
@@ -271,9 +319,9 @@ public class AgentAttack : MonoBehaviour
 
     private void resetAnimatorParams()
     {
-        //agent.Animator.SetBool("Ability1", false);
-        agent.Animator.SetBool("Ability2", false);
-        agent.Animator.SetBool("Ability3", false);
-        agent.Animator.SetBool("Ability4", false);
+        agent.Animator.SetBool("Ability1", false);
+        //agent.Animator.SetBool("Ability2", false);
+        //agent.Animator.SetBool("Ability3", false);
+        //agent.Animator.SetBool("Ability4", false);
     }
 }

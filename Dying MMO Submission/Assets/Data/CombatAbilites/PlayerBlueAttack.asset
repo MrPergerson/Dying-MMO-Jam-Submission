@@ -15,10 +15,9 @@ MonoBehaviour:
   _name: Blue Attack
   _description: 
   _damage: 50
-  _coolDown: 2
+  _coolDown: 3
   _canHitMultipleEnemies: 0
   _attackRange: 1
   _VFX_Hit: {fileID: 8905827297373272175, guid: c6b4c63992e7f5e47a78a85659df0487, type: 3}
   _AUDIO_Hit: {fileID: 0}
-  _hitAudioMixer: {fileID: 0}
   _IMG_Icon: {fileID: 0}

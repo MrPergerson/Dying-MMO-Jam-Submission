@@ -14,6 +14,7 @@ public class EnemyAIBrain : Agent
 
     public float followRadius;
     public Vector3 guardPosition;
+    private AgentAudioPlayer audioPlayer;
 
     protected override void Awake()
     {
@@ -28,6 +29,7 @@ public class EnemyAIBrain : Agent
             playerController=FindObjectOfType<PlayerController>();
         layerMask = LayerMask.GetMask("Ground, NPC, Player");
         guardPosition = transform.position;
+        audioPlayer = GetComponent<AgentAudioPlayer>();
     }
 
     // only supports one threat atm
@@ -51,6 +53,7 @@ public class EnemyAIBrain : Agent
     public override void TakeDamage(Agent threat, float damage)
     {
         AddThreat(threat);
+        audioPlayer.playDamageSound();
         Health -= damage;
     }
 

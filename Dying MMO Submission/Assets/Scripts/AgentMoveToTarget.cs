@@ -61,17 +61,19 @@ public class AgentMoveToTarget : MonoBehaviour
         StartCoroutine(CheckForDestinationCompleted());
     }
 
-    public void SetDestination(Agent agent, float stoppingDistance, DestinationToAgentCompleted OnDestinationCompleted)
+    public void SetDestination(Agent targetAgent, float stoppingDistance, DestinationToAgentCompleted OnDestinationCompleted)
     {
-        navAgent.destination = agent.transform.position;
-        targetLocation = agent.transform.position;
+        Debug.Log("setting destination");
+        navAgent.destination = targetAgent.transform.position;
+        targetLocation = targetAgent.transform.position;
         //Debug.Log("setting destination-" + targetLocation);
         navAgent.stoppingDistance = stoppingDistance;
         isMoving = true;
         agent.Animator.SetFloat("Vertical", 1);
+        Debug.Log("animating to destination");
         StopAllCoroutines();
         //StartCoroutine(PlayWalkingSound());
-        StartCoroutine(CheckForDestinationCompleted(agent, OnDestinationCompleted));
+        StartCoroutine(CheckForDestinationCompleted(targetAgent, OnDestinationCompleted));
     }
 
     IEnumerator CheckForDestinationCompleted()
@@ -117,7 +119,7 @@ public class AgentMoveToTarget : MonoBehaviour
 
         while(!destinationReached)
         {
-            var remainingDistance = GetPathRemainingDistance(navAgent);
+            var remainingDistance = Vector3.Distance(transform.position, targetLocation);// GetPathRemainingDistance(navAgent);
 
             if (distanceCheckErrors >= 5)
             {

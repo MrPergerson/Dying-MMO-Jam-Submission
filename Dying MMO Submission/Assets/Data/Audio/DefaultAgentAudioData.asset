@@ -38,7 +38,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  damaged: []
+  damaged:
+  - {fileID: 8300000, guid: 548ebc15684c42346a82bc25b1bb9562, type: 3}
   death: []
   audioMixer: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
   footstepOverride: {fileID: 0}
