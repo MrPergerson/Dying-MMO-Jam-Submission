@@ -23,13 +23,6 @@ public class TabGroup : MonoBehaviour
 
     private TabSelectButton selectedTab;
 
-    /* ADDED
-    * tabDictionary
-    * chatLineObj
-    * choiceButtons
-    * choiceButtonText
-    * 
-    */
     public Dictionary<string, TabSelectButton> tabDictionary { get; private set; }
     private string currentTab = "Public";
     private string currentUserName;
@@ -44,7 +37,6 @@ public class TabGroup : MonoBehaviour
 
     private void Awake()
     {
-
         tabButtons = new List<TabSelectButton>();
 
         for (int i = 0; i < transform.childCount; i++)
@@ -60,28 +52,15 @@ public class TabGroup : MonoBehaviour
         if (tabArea == null) Debug.LogError(this + ": Could not find TabArea gameobject in children. Was the UI_MessageBox_TabArea tag assigned to it?");
         if (tabContent == null) Debug.LogError(this + ": Could not find TabContent gameobject in children. Was the UI_MessageBox_TabContent tag assigned to it?");
 
-        /* ADDED
-         * tabDictionary = new Dictionary
-         * Moved CreateTab()
-         */
         tabDictionary = new Dictionary<string, TabSelectButton>();
-        
     }
 
     private void Start()
     {
         CreateTab(currentTab);
-        /* ADDED
-         * SetChoicesText()
-         */
         SetChoicesText();
     }
 
-    /* ADDED
-    * SetChoicesText
-    * DisplayChoices
-    * 
-    */
     private void SetChoicesText()
     {
         /* Create Choice text array of TMPro GUI with equal to number of Chat Choices that can seen on screen

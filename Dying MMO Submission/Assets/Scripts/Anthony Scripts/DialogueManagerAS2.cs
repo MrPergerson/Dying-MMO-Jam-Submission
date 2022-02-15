@@ -25,7 +25,7 @@ public class DialogueManagerAS2 : Manager
 
     private TabGroup tabGroup;
 
-    //public TextMeshProUGUI inGameDialogueText;
+    [SerializeField, ReadOnly] private TextMeshProUGUI inGameDialogueText;
 
     private void Awake()
     {
@@ -53,23 +53,24 @@ public class DialogueManagerAS2 : Manager
         isAwake = true;
 
         //print("dialogue system ready");
-        
-            /*
+
         chatDelay = chatDelayNum;
 
         dialogueVariables = new DialogueVariables(globalVarInkFile);
 
-        //tabGroup = GameObject.FindGameObjectWithTag("UI_MessageBox").GetComponent<TabGroup>();
+
         tabGroup = FindObjectOfType<TabGroup>();
-        tabGroup.gameObject.SetActive(true);
-        print(tabGroup);
+        //tabGroup.gameObject.SetActive(true);
+
         if (!tabGroup)
-        {
             Debug.LogError(this + ": TabGroup component could not found in Scene.");
-        }
-        //inGameDialogueText.gameObject.SetActive(false);
+
+        inGameDialogueText = GameObject.FindGameObjectWithTag("UI_OnScreen_Text").GetComponent<TextMeshProUGUI>();
+        if (!inGameDialogueText)
+            Debug.LogError(this + ": Can't find On Screen Text object in Persistent Scene.");
+
+        inGameDialogueText.gameObject.SetActive(false);
         chatIsPlaying = false;
-        */
     }
 
     public override void OnNewLevelLoaded()
@@ -81,32 +82,27 @@ public class DialogueManagerAS2 : Manager
 
     private void Update()
     {
-
         if(isAwake)
         {
-            //...
-        }
-
-        /*
-        if (!chatIsPlaying)
-        {
-            return;
-        }
-
-        // Check there are no choices left before continuing the story
-        if (currentStory.currentChoices.Count == 0)
-        {
-            if (chatDelay <= 0)
+            if (!chatIsPlaying)
             {
-                chatDelay = chatDelayNum;
-                ContinueStory();
+                return;
             }
-            else
+
+            // Check there are no choices left before continuing the story
+            if (currentStory.currentChoices.Count == 0)
             {
-                chatDelay -= Time.deltaTime;
+                if (chatDelay <= 0)
+                {
+                    chatDelay = chatDelayNum;
+                    ContinueStory();
+                }
+                else
+                {
+                    chatDelay -= Time.deltaTime;
+                }
             }
         }
-        */
     }
 
     [Button("Enter Dialogue Mode")]
@@ -130,7 +126,7 @@ public class DialogueManagerAS2 : Manager
         yield return new WaitForSeconds(0.2f);
 
         dialogueVariables.StopListening(currentStory);
-        //inGameDialogueText.gameObject.SetActive(false);
+        inGameDialogueText.gameObject.SetActive(false);
         chatIsPlaying = false;
     }
 
@@ -138,9 +134,10 @@ public class DialogueManagerAS2 : Manager
     {
         if (currentStory.canContinue)
         {
-            //inGameDialogueText.gameObject.SetActive(false);
+            inGameDialogueText.gameObject.SetActive(false);
             tabGroup.DisplayChatLine(currentStory);
             tabGroup.DisplayChoices(currentStory);
+            StartCoroutine(ClearLastHighlightedChoice());
         }
         else
         {
@@ -150,8 +147,8 @@ public class DialogueManagerAS2 : Manager
 
     public void PlayInGameDialogue(string speaker, string inGameText)
     {
-        //inGameDialogueText.text = speaker + ": " + inGameText;
-        //inGameDialogueText.gameObject.SetActive(true);
+        inGameDialogueText.text = speaker + ": " + inGameText;
+        inGameDialogueText.gameObject.SetActive(true);
     }
 
     public void MakeChoice(int choiceIndex)
@@ -174,8 +171,12 @@ public class DialogueManagerAS2 : Manager
     public void ChangeInkJSON(TextAsset inkJSONFile)
     {
         inkJSON = inkJSONFile;
-        //EnterDialogueMode();
     }
 
-
+    private IEnumerator ClearLastHighlightedChoice()
+    {
+        // event system requires we clear it to avoid carrying over the Highlighted button animation
+        EventSystem.current.SetSelectedGameObject(null);
+        yield return new WaitForSeconds(1f); //IEnumerator needs a yeid return, so it wont throw error
+    }
 }

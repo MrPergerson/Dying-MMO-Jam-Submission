@@ -41,12 +41,7 @@ public class GameManager : Manager
     public override void AwakeManager()
     {
         sceneManager.onLevelLoaded += NotifyAllManagersOfLevelChange;
-    }
 
-    public override void OnNewLevelLoaded()
-    {
-        // when level is loaded//
-        /*
         storySystem = FindObjectOfType<StorySystem>();
         if (storySystem == null) Debug.LogError(this + ": Story system is null");
 
@@ -54,7 +49,12 @@ public class GameManager : Manager
         storySystem.StartStory();
         inkfile = storySystem.GetCurrentChapterInkFile();
         SendInkToDialogueManager();
-        */
+    }
+
+    public override void OnNewLevelLoaded()
+    {
+        // when level is loaded//
+        
     }
 
     private void PrintSuccess()
@@ -65,7 +65,6 @@ public class GameManager : Manager
             inkfile = storySystem.GetCurrentChapterInkFile();
             SendInkToDialogueManager();
         }
-        
     }
 
     private void SendInkToDialogueManager()

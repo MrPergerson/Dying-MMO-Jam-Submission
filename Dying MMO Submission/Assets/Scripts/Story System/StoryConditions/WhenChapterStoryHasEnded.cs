@@ -17,7 +17,6 @@ public class WhenChapterStoryHasEnded : StoryCondition
         {
             DialogueManagerAS2.GetInstance().EnterDialogueMode();
         }
-
     }
 
     public override bool IsConditionMet()
