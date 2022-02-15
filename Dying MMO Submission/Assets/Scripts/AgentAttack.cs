@@ -210,8 +210,16 @@ public class AgentAttack : MonoBehaviour
             if (Vector3.Distance(this.transform.position, Target.transform.position) > AttackDistance)
             {
                 // chase target??
-                Debug.Log("too far"+ Vector3.Distance(this.transform.position, Target.transform.position));
-                break;
+                while (GetComponent<EnemyAIBrain>() != null && Vector3.Distance(transform.position, Target.transform.position)<2*AttackDistance)
+                {
+                    GetComponent<AgentMoveToTarget>().SetDestination(Target.transform.position, 0);
+                    yield return new WaitForSeconds(0.5f);
+                }
+                if (Vector3.Distance(transform.position, Target.transform.position) >= 2 * AttackDistance)
+                {
+                    Debug.Log("too far" + Vector3.Distance(this.transform.position, Target.transform.position));
+                    break;
+                }
             }
 
             // TODO: add support for different combat abilites

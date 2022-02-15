@@ -99,7 +99,7 @@ public class AgentMoveToTarget : MonoBehaviour
             }
 
 
-            if (remainingDistance <= 1.0)
+            if (remainingDistance < 2)
             {
                 destinationReached = true;
                 StopMoving();
