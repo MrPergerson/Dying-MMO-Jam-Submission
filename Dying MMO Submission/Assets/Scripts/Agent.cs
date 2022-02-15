@@ -6,6 +6,8 @@ using UnityEngine;
 public abstract class Agent : MonoBehaviour
 {
     [SerializeField] protected float _health = 100;
+    protected float _maxHealth;
+    [SerializeField] protected float _healingRate = 10;
     [SerializeField] protected AgentAudioData _audioData;
     protected AgentMoveToTarget move;
     protected Animator _animator;
@@ -20,9 +22,16 @@ public abstract class Agent : MonoBehaviour
     public delegate void Respawned(Agent agent);
     public event Respawned onRespawned;
 
+    bool isAttacked = false;
+    float countDownSinceLastDamage = 0.0f;
+
     public float Health { 
         get { return _health; } 
-        protected set { 
+        protected set {
+            if (_health > value)
+            {
+                isAttacked = true;
+            }
             _health = value;
             onHealthChanged?.Invoke(Health);
             if (_health <= 0)
@@ -48,10 +57,29 @@ public abstract class Agent : MonoBehaviour
         move.audioData = AudioData;
 
         _animator = GetComponent<Animator>();
+        _maxHealth = Health;
     }
 
     protected virtual void Start()
     {
+    }
+
+    void Update()
+    {
+        if (isAttacked)
+        {
+            //isAttacked = false;
+            countDownSinceLastDamage += Time.deltaTime;
+        }
+        else
+            countDownSinceLastDamage = 0.0f;
+
+        if (countDownSinceLastDamage > 3.0f)
+        {
+            isAttacked = false;
+            StartCoroutine(startAutoHeal());
+            countDownSinceLastDamage = 0.0f;
+        }
     }
 
     public abstract void TakeDamage(Agent origin, float damage);
@@ -64,5 +92,16 @@ public abstract class Agent : MonoBehaviour
     public virtual void Respawn()
     {
         onRespawned?.Invoke(this);
+    }
+
+    IEnumerator startAutoHeal()
+    {
+        while(Health<_maxHealth && !isAttacked)
+        {
+            Health+= _healingRate;
+            if(Health > _maxHealth)
+                Health = _maxHealth;
+            yield return new WaitForSeconds(1.0f);
+        }
     }
 }

@@ -126,7 +126,7 @@ public class AgentAttack : MonoBehaviour
                 abilitiesInCoolDown.RemoveAt(0);
             }
 
-            Debug.Log("attack with mode - " + attackMode);
+            Debug.Log("attack with mode - " + attackMode+", target-"+Target.gameObject.name);
             resetAnimatorParams();
             //agent.Animator.SetBool("InCombat", true);
             if(attackMode>=0)
@@ -186,6 +186,7 @@ public class AgentAttack : MonoBehaviour
         StopCoroutine(cPerformSimpleAttack);
 
         resetAnimatorParams();
+        Debug.Log("EndAttack");
         //agent.Animator.SetBool("InCombat", false);
         //agent.Animator.SetInteger("AttackMode", -1);
         agent.Animator.SetBool("Ability1", false);
@@ -206,9 +207,10 @@ public class AgentAttack : MonoBehaviour
         while (Target.Health > 0 && Target != null)
         {
 
-            if (GetDistance(this.transform.position, Target.transform.position) > AttackDistance)
+            if (Vector3.Distance(this.transform.position, Target.transform.position) > AttackDistance)
             {
                 // chase target??
+                Debug.Log("too far"+ Vector3.Distance(this.transform.position, Target.transform.position));
                 break;
             }
 
@@ -264,6 +266,8 @@ public class AgentAttack : MonoBehaviour
                 abilitiesInCoolDown.RemoveAt(0);
             }
         }
+        Debug.Log("is target null" + Target == null);
+        Debug.Log("target health" + Target.Health);
 
         EndAttack();
     }
@@ -319,7 +323,7 @@ public class AgentAttack : MonoBehaviour
 
     private void resetAnimatorParams()
     {
-        agent.Animator.SetBool("Ability1", false);
+        //agent.Animator.SetBool("Ability1", false);
         //agent.Animator.SetBool("Ability2", false);
         //agent.Animator.SetBool("Ability3", false);
         //agent.Animator.SetBool("Ability4", false);
