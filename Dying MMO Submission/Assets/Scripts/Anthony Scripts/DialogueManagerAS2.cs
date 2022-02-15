@@ -36,7 +36,6 @@ public class DialogueManagerAS2 : Manager
             
         }
         instance = this;
-
     }
 
     public static DialogueManagerAS2 GetInstance()
