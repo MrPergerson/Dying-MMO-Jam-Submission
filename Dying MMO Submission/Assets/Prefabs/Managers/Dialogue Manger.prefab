@@ -44,6 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalVarInkFile: {fileID: 4900000, guid: 6eee720190ea28440a3ec686760927a1, type: 3}
-  chatDelayNum: 2
+  chatDelayNum: 4
   inkJSON: {fileID: 4900000, guid: 4b3b9ae8ac4a9224a83e0348be5e43e3, type: 3}
-  inGameDialogueText: {fileID: 0}

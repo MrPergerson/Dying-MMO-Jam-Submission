@@ -9,10 +9,10 @@ public class GameManager : Manager
     [Title("Game Setup")]
     [SerializeField] GameObject SceneManagerPrefab;
     [SerializeField] bool startGameOnAwake = false;
-    [SerializeField, ReadOnly]private bool persistentSceneLoaded = false;
+    [SerializeField, ReadOnly] private bool persistentSceneLoaded = false;
 
     StorySystem storySystem;
-    DialogueManagerAS2 dialogueManager;
+    //DialogueManagerAS2 dialogueManager;
     SceneManager sceneManager;
 
     [Title("Managers")]
@@ -23,6 +23,11 @@ public class GameManager : Manager
 
     public delegate void ManagersInitialized();
     public event ManagersInitialized onAllManagersInitialized;
+
+    public static GameManager GetInstance()
+    {
+        return Instance;
+    }
 
     private void Awake()
     {
@@ -46,16 +51,26 @@ public class GameManager : Manager
     public override void OnNewLevelLoaded()
     {
         // when level is loaded//
-        /*
+        GetInkAndSendToDialogueManager();
+    }
+
+    /// Added
+    public void GetInkAndSendToDialogueManager()
+    {
         storySystem = FindObjectOfType<StorySystem>();
-        if (storySystem == null) Debug.LogError(this + ": Story system is null");
+        if (storySystem == null) Debug.LogError(this + ": Story system is null.");
 
         storySystem.onChapterChanged += PrintSuccess;
         storySystem.StartStory();
         inkfile = storySystem.GetCurrentChapterInkFile();
         SendInkToDialogueManager();
-        */
     }
+
+    public StorySystem GetStorySystemReferenceFromGameManager()
+    {
+        return storySystem;
+    }
+    ///
 
     private void PrintSuccess()
     {
@@ -65,7 +80,6 @@ public class GameManager : Manager
             inkfile = storySystem.GetCurrentChapterInkFile();
             SendInkToDialogueManager();
         }
-        
     }
 
     private void SendInkToDialogueManager()
@@ -81,6 +95,7 @@ public class GameManager : Manager
     public void StartGameHere()
     {
         SetupPersistentScene();
+        //NotifyAllManagersOfLevelChange();
     }
 
     public void StartGameAtLevel(string levelName)
@@ -121,6 +136,11 @@ public class GameManager : Manager
         }
 
         sceneManager.onPersistentSceneLoaded += InitializeAllManagers;
+        if (startGameOnAwake)
+        {
+            sceneManager.onPersistentSceneLoaded += NotifyAllManagersOfLevelChange;
+            startGameOnAwake = false;
+        }
         sceneManager.LoadPersistentScene();
     }
 
