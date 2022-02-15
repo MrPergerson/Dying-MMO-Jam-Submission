@@ -5,6 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: aa1fe7a196add6741b3cf707afe153d5
   - enabled: 0
     path: Assets/Scenes/Testing/HDRP DEMO.unity
     guid: 3db1837cc97a95e4c98610966fac2b0b
@@ -15,6 +18,21 @@ EditorBuildSettings:
     path: Assets/Scenes/Anthony/GameMangerTest.unity
     guid: 12a0961a065ddcf44ac02b85bf326dbf
   - enabled: 1
+    path: Assets/Scenes/HubWorld_BlockOut.unity
+    guid: 7df1866cd5c85cb4f823b02060163ed5
+  - enabled: 1
+    path: Assets/Scenes/DungeonWorld_1_Blockout.unity
+    guid: 92b97dc9b7dc5a64883cec09059db4cf
+  - enabled: 1
+    path: Assets/Scenes/DungeonWorld_2_Blockout.unity
+    guid: bb76eda5c51e2a14f8afac04d7c3727c
+  - enabled: 1
     path: Assets/Scenes/Anthony/InGameStoryDialogueTest.unity
     guid: 11c6dbbeb8cfdef40b54b80aa383182d
+  - enabled: 1
+    path: Assets/Scenes/Anthony/Separated Scenes/Managers.unity
+    guid: 582e08d5b3ca518468c9a4d55f950f53
+  - enabled: 1
+    path: Assets/Scenes/Anthony/Separated Scenes/UI System.unity
+    guid: a8707c0be3d407f4e9d36d23844b198f
   m_configObjects: {}

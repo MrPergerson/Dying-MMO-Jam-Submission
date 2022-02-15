@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using TMPro;
 
-public class DialogueManagerAS2 : MonoBehaviour
+public class DialogueManagerAS2 : Manager
 {
     private static DialogueManagerAS2 instance;
 
@@ -25,7 +25,7 @@ public class DialogueManagerAS2 : MonoBehaviour
 
     private TabGroup tabGroup;
 
-    public TextMeshProUGUI inGameDialogueText;
+    //public TextMeshProUGUI inGameDialogueText;
 
     private void Awake()
     {
@@ -33,12 +33,10 @@ public class DialogueManagerAS2 : MonoBehaviour
         if (instance != null)
         {
             Debug.LogError(this.gameObject + " Awake: More than one Dialogue Manager detected");
+            
         }
         instance = this;
 
-        chatDelay = chatDelayNum;
-
-        dialogueVariables = new DialogueVariables(globalVarInkFile);
     }
 
     public static DialogueManagerAS2 GetInstance()
@@ -46,19 +44,50 @@ public class DialogueManagerAS2 : MonoBehaviour
         return instance;
     }
 
-    private void Start()
+    public override void AwakeManager()
     {
-        tabGroup = GameObject.FindGameObjectWithTag("UI_MessageBox").GetComponent<TabGroup>();
+        // Called by the game manager
+        // This will call when the PersistentGameObjects scene has loaded. However, a level may not be loaded at this time.
+        // Only expect to get references to gameobjects within the PersistentGameObjects scene. (Assuming this gameObject is in the Persistent scene)
+
+        isAwake = true;
+
+        //print("dialogue system ready");
+        
+            /*
+        chatDelay = chatDelayNum;
+
+        dialogueVariables = new DialogueVariables(globalVarInkFile);
+
+        //tabGroup = GameObject.FindGameObjectWithTag("UI_MessageBox").GetComponent<TabGroup>();
+        tabGroup = FindObjectOfType<TabGroup>();
+        tabGroup.gameObject.SetActive(true);
+        print(tabGroup);
         if (!tabGroup)
         {
             Debug.LogError(this + ": TabGroup component could not found in Scene.");
         }
-        inGameDialogueText.gameObject.SetActive(false);
+        //inGameDialogueText.gameObject.SetActive(false);
         chatIsPlaying = false;
+        */
+    }
+
+    public override void OnNewLevelLoaded()
+    {
+        // called every time a new level is loaded
+        // You should be able to safetly reference all gameObjects from all active scenes in this function.
+        // Scenes loaded that are not considered as levels, such as MainMenu and PersistentGameObjects, will not trigger this
     }
 
     private void Update()
     {
+
+        if(isAwake)
+        {
+            //...
+        }
+
+        /*
         if (!chatIsPlaying)
         {
             return;
@@ -77,6 +106,7 @@ public class DialogueManagerAS2 : MonoBehaviour
                 chatDelay -= Time.deltaTime;
             }
         }
+        */
     }
 
     [Button("Enter Dialogue Mode")]
@@ -100,7 +130,7 @@ public class DialogueManagerAS2 : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         dialogueVariables.StopListening(currentStory);
-        inGameDialogueText.gameObject.SetActive(false);
+        //inGameDialogueText.gameObject.SetActive(false);
         chatIsPlaying = false;
     }
 
@@ -108,7 +138,7 @@ public class DialogueManagerAS2 : MonoBehaviour
     {
         if (currentStory.canContinue)
         {
-            inGameDialogueText.gameObject.SetActive(false);
+            //inGameDialogueText.gameObject.SetActive(false);
             tabGroup.DisplayChatLine(currentStory);
             tabGroup.DisplayChoices(currentStory);
         }
@@ -120,8 +150,8 @@ public class DialogueManagerAS2 : MonoBehaviour
 
     public void PlayInGameDialogue(string speaker, string inGameText)
     {
-        inGameDialogueText.text = speaker + ": " + inGameText;
-        inGameDialogueText.gameObject.SetActive(true);
+        //inGameDialogueText.text = speaker + ": " + inGameText;
+        //inGameDialogueText.gameObject.SetActive(true);
     }
 
     public void MakeChoice(int choiceIndex)
@@ -146,4 +176,6 @@ public class DialogueManagerAS2 : MonoBehaviour
         inkJSON = inkJSONFile;
         //EnterDialogueMode();
     }
+
+
 }
