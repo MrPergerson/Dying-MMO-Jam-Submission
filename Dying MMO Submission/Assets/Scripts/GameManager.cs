@@ -51,12 +51,11 @@ public class GameManager : Manager
     public override void OnNewLevelLoaded()
     {
         // when level is loaded//
-        print(this);
-        SetStorySystemReferenceForGameManager();
+        GetInkAndSendToDialogueManager();
     }
 
     /// Added
-    public void SetStorySystemReferenceForGameManager()
+    public void GetInkAndSendToDialogueManager()
     {
         storySystem = FindObjectOfType<StorySystem>();
         if (storySystem == null) Debug.LogError(this + ": Story system is null.");
