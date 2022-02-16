@@ -75,6 +75,11 @@ public class PlayerController : Agent
                 }
 
             }
+            else if(hit.collider.tag == "Selectable")
+            {
+                var obj = hit.collider.gameObject.GetComponent<ISelectable>();
+                obj.Select();
+            }
 
         }
     }

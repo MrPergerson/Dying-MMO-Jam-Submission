@@ -57,12 +57,23 @@ public class SceneManager : Manager
         //print(CurrentLevel.name);
     }
 
+    public override void OnSceneChangeRequested()
+    {
+        // nothing
+    }
+
+    public override bool IsReadyToChangeScene()
+    {
+        return true;
+    }
+
     [Button()]
     public void LoadLevel(string name)
     {
         CurrentLevel = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
 
         StartCoroutine(LoadLevelAsync(name, CurrentLevel.name));
+        print("Traveling to " + name);
 
     }
 
@@ -71,6 +82,12 @@ public class SceneManager : Manager
         isProcessingLoad = true;
         var scene = UnityEngine.SceneManagement.SceneManager.GetSceneByName(nextLevel);
 
+        GameManager.GetInstance().NotifyAllManagersOfSceneChangeRequest();
+
+        while(!GameManager.GetInstance().AllScenesReadyToChangeScene())
+        {
+            yield return null;
+        }
 
         StartCoroutine(UnLoadSceneAsync(CurrentLevel.name));
 
@@ -156,7 +173,21 @@ public class SceneManager : Manager
 
     public void ReturnToMainMenu()
     {
+        StartCoroutine(ReturnToMainMenuAsync());
+    }
+
+    IEnumerator ReturnToMainMenuAsync()
+    {
+
+        GameManager.GetInstance().NotifyAllManagersOfLevelChange();
+
+        while (!GameManager.GetInstance().AllScenesReadyToChangeScene())
+        {
+            yield return null;
+        }
+
         StartCoroutine(LoadSceneAsync("MainMenu"));
     }
+
 
 }

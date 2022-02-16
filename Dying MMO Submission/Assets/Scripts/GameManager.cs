@@ -20,6 +20,7 @@ public class GameManager : Manager
 
     [Title("Debug")]
     [SerializeField, ReadOnly] private TextAsset inkfile;
+    [SerializeField, ReadOnly] private bool isReadyToChangeScene = false;
 
     public delegate void ManagersInitialized();
     public event ManagersInitialized onAllManagersInitialized;
@@ -52,18 +53,35 @@ public class GameManager : Manager
     {
         // when level is loaded//
         GetInkAndSendToDialogueManager();
+        SetupAllLevelExits();
+        isReadyToChangeScene = false;
+    }
+
+    public override void OnSceneChangeRequested()
+    {
+        CloseAllLevelExits();
+        //storySystem.EndStory();
+        isReadyToChangeScene = true;
+    }
+
+    public override bool IsReadyToChangeScene()
+    {
+        return isReadyToChangeScene;
     }
 
     /// Added
     public void GetInkAndSendToDialogueManager()
     {
         storySystem = FindObjectOfType<StorySystem>();
-        if (storySystem == null) Debug.LogError(this + ": Story system is null.");
+        if (storySystem != null)
+        {
+            storySystem.onChapterChanged += PrintSuccess;
+            storySystem.StartStory();
+            inkfile = storySystem.GetCurrentChapterInkFile();
+            SendInkToDialogueManager();
+        }
 
-        storySystem.onChapterChanged += PrintSuccess;
-        storySystem.StartStory();
-        inkfile = storySystem.GetCurrentChapterInkFile();
-        SendInkToDialogueManager();
+
     }
 
     public StorySystem GetStorySystemReferenceFromGameManager()
@@ -88,6 +106,41 @@ public class GameManager : Manager
             Debug.LogError(this + ": GameManager cannot find Dialogue Manager. Dialogue Manager might not be in scene.");
 
         DialogueManagerAS2.GetInstance().ChangeInkJSON(inkfile);
+    }
+
+    private void SetupAllLevelExits()
+    {
+        var levelExits = FindObjectsOfType<LevelExit>();
+        var levelDirs = FindObjectsOfType<LevelDirectoryExit>();
+
+        foreach (var exit in levelExits)
+        {
+            exit.onGoToLevel += sceneManager.LoadLevel;
+            
+        }
+
+        foreach (var exit in levelDirs)
+        {
+            exit.onGoToLevel += sceneManager.LoadLevel;
+
+        }
+    }
+
+    private void CloseAllLevelExits()
+    {
+        var levelExits = FindObjectsOfType<LevelExit>();
+        var levelDirs = FindObjectsOfType<LevelDirectoryExit>();
+
+        foreach (var exit in levelExits)
+        {
+            exit.onGoToLevel -= sceneManager.LoadLevel;
+        }
+
+        foreach (var exit in levelDirs)
+        {
+            exit.onGoToLevel -= sceneManager.LoadLevel;
+
+        }
     }
 
     #region UI
@@ -159,6 +212,25 @@ public class GameManager : Manager
         onAllManagersInitialized?.Invoke();
     }
 
+    public bool AllScenesReadyToChangeScene()
+    {
+        var count = 0;
+        foreach (var manager in managerList)
+        {
+            if (manager.IsReadyToChangeScene())
+                count++;
+        }
+        return count == managerList.Count;
+    }
+
+    public void NotifyAllManagersOfSceneChangeRequest()
+    {
+        foreach (var manager in managerList)
+        {
+            manager.OnSceneChangeRequested();
+        }
+    }
+
     public void NotifyAllManagersOfLevelChange()
     {
         foreach (var manager in managerList)
@@ -166,6 +238,7 @@ public class GameManager : Manager
             manager.OnNewLevelLoaded();
         }
     }
+
     #endregion
 
 }

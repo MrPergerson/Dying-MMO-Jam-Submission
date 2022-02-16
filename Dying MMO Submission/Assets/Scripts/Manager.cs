@@ -9,4 +9,8 @@ public abstract class Manager : MonoBehaviour
     public abstract void AwakeManager();
 
     public abstract void OnNewLevelLoaded();
+
+    public abstract void OnSceneChangeRequested();
+
+    public abstract bool IsReadyToChangeScene();
 }
