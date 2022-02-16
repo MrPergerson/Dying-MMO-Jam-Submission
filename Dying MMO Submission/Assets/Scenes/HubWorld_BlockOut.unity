@@ -28285,6 +28285,14 @@ PrefabInstance:
       value: HubWorld_Story
       objectReference: {fileID: 0}
     - target: {fileID: 1379557453765232807, guid: ecb3245e9d23f9b4d84f2a442337d3b8, type: 3}
+      propertyPath: startChapter
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1379557453765232807, guid: ecb3245e9d23f9b4d84f2a442337d3b8, type: 3}
+      propertyPath: _currentChapter
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1379557453765232807, guid: ecb3245e9d23f9b4d84f2a442337d3b8, type: 3}
       propertyPath: chapters.Array.size
       value: 3
       objectReference: {fileID: 0}
