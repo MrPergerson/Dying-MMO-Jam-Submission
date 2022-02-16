@@ -22,7 +22,7 @@ public class TestCondition : StoryCondition
         return conditionMet;
     }
 
-    public override void ResetCondition()
+    public override void InitializeCondition()
     {
         conditionMet = false;
         SetAsCurrentCondition(false);

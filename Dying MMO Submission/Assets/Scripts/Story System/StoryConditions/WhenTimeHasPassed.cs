@@ -8,11 +8,6 @@ public class WhenTimeHasPassed : StoryCondition
     [SerializeField] private float timeInSecondsToWait = 5;
     [SerializeField, ReadOnly] private float timeLeft;
 
-    private void OnEnable()
-    {
-        ResetCondition();
-    }
-
     private void Update()
     {
         if(IsCurrentCondition())
@@ -29,7 +24,7 @@ public class WhenTimeHasPassed : StoryCondition
         return conditionMet;
     }
 
-    public override void ResetCondition()
+    public override void InitializeCondition()
     {
         timeLeft = timeInSecondsToWait;
         conditionMet = false;

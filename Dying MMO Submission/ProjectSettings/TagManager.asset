@@ -11,6 +11,10 @@ TagManager:
   - UI_MessageBox
   - UI_MessageBox_TabArea
   - UI_TabPage_Content
+  - Ground_Grass
+  - Ground_Stone
+  - UI_OnScreen_Text
+  - Selectable
   layers:
   - Default
   - TransparentFX
