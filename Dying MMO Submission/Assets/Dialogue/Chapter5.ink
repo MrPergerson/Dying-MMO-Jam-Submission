@@ -1,3 +1,5 @@
+INCLUDE GlobalVariables.ink
+
 //Asking Silk for Help
 //Draft 1 | Text Updated 2/9 | Ink File Updated 2/13
 VAR willowRelationship = 0
@@ -122,4 +124,5 @@ Don't disappoint them.
 #[SERVER]
 SILKENSCRAPS HAS LEFT THE PARTY
 ~ sceneFinished = true
+~ scene05Finished = true
 -> END

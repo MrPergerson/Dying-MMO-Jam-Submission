@@ -11,7 +11,7 @@ public class Chapter : MonoBehaviour
     [TableColumnWidth(150, Resizable = false),SerializeField]
     private string _name;
     [SerializeField] private List<StoryCondition> transitionsToNextChapter;
-    [SerializeField] private TextAsset InkFile;
+    [SerializeField] private TextAsset inkFile;
 
     public delegate void ChapterStarted();
     public delegate void ChapterEnded();
@@ -34,16 +34,26 @@ public class Chapter : MonoBehaviour
             Debug.LogError(this.gameObject + ": No ending transitions found");
         }
 
+        foreach(var transition in transitionsToNextChapter)
+        {
+            if (transition == null) Debug.LogError(this + ": There is a null transition in " + gameObject.name + "'s transition list");
+        }
+
+        if (inkFile == null) Debug.LogError(this + ": No inkfile has been assigned to this chapter");
+
         if(!playing)
         {
             gameObject.SetActive(false);
         }
+
+        //InitializeAllTransitions();
     }
 
     public void StartChapter()
     {
         playing = true;
         StopAllCoroutines();
+        //InitializeAllTransitions();
         onChapterStarted?.Invoke();
         StartCoroutine(CheckForEndingTransition());
     }
@@ -59,12 +69,10 @@ public class Chapter : MonoBehaviour
     {
         nextChapterTransitionPassed = false;
 
-        foreach(var condition in transitionsToNextChapter)
-        {
-            condition.ResetCondition();
-        }
 
-        
+        //InitializeAllTransitions();
+
+
     }
 
     IEnumerator CheckForEndingTransition()
@@ -88,11 +96,20 @@ public class Chapter : MonoBehaviour
             if (currentIndex >= transitionsToNextChapter.Count)
                 return true;
 
-            transitionsToNextChapter[currentIndex].SetAsCurrentCondition(true);
+            var currentTransition = transitionsToNextChapter[currentIndex];
 
-            if (transitionsToNextChapter[currentIndex].ConditionMet())
+            if (!currentTransition.IsCurrentCondition())
+            {
+                currentTransition.gameObject.SetActive(true);
+                currentTransition.SetAsCurrentCondition(true);
+                currentTransition.InitializeCondition();
+
+            }
+
+            if (transitionsToNextChapter[currentIndex].IsConditionMet())
             {
                 transitionsToNextChapter[currentIndex].SetAsCurrentCondition(false);
+                transitionsToNextChapter[currentIndex].gameObject.SetActive(false);
                 currentIndex++;
             }
 
@@ -101,6 +118,22 @@ public class Chapter : MonoBehaviour
 
         nextChapterTransitionPassed = true;
         
+    }
+
+    /*
+    private void InitializeAllTransitions()
+    {
+        foreach (var condition in transitionsToNextChapter)
+        {
+            condition.InitializeCondition();
+            condition.gameObject.SetActive(false);
+        }
+    }
+    */
+
+    public TextAsset GetInkFile()
+    {
+        return inkFile;
     }
 
 

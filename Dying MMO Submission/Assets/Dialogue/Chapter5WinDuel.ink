@@ -1,3 +1,4 @@
+INCLUDE GlobalVariables.ink
 //Win the Duel
 //Draft 1 | Text Updated 2/9 | Ink File Updated 2/13
 VAR willowRelationship = 0
@@ -32,4 +33,5 @@ You're the one that basically forced me to duel you man.
 I like you more when you don't talk.
 We should get moving, Willow's waiting for us.
 ~ sceneFinished = true
+~ scene05WinFinished = true
 -> END

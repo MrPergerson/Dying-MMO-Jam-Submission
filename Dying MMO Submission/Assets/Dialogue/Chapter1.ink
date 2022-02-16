@@ -1,3 +1,5 @@
+INCLUDE GlobalVariables.ink
+
 //Willow Reaches Out
 //Draft 1 | Text Updated 2/7 | Ink File Updated 2/13
 VAR willowRelationship = 0
@@ -61,4 +63,5 @@ What do you say?
     Meet me at {meetingPlace}, there's no way I'm letting you spend the day alone.
 -
 ~ sceneFinished = true
+~ scene01Finished = true
 -> END

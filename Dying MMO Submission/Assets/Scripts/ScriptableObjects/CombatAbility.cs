@@ -33,5 +33,6 @@ public class CombatAbility : ScriptableObject
     public AudioClip AUDIO_Hit { get { return _AUDIO_Hit; } }
     public AudioMixerGroup HitAudioMixer{ get {return _hitAudioMixer;}}
     public Sprite IMG_Icon { get { return _IMG_Icon; } }
+    public bool CanHitMultipleEnemies { get { return _canHitMultipleEnemies; } }
 
 }

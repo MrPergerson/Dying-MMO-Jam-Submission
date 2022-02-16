@@ -1,3 +1,5 @@
+INCLUDE GlobalVariables.ink
+
 //After the Bucket List
 //Draft 1 | Text Updated 2/8 | Ink File Updated 2/13
 VAR willowRelationship = 0
@@ -36,4 +38,5 @@ See you then!
 #[SERVER]
 w1ll0w_w1sp HAS LEFT THE PARTY
 ~ sceneFinished = true
+~ scene04Finished = true
 -> END

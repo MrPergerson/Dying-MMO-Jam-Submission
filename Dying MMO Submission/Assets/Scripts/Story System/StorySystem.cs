@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UnityEngine.SceneManagement;
 
 public class StorySystem : MonoBehaviour
 {
@@ -11,15 +12,13 @@ public class StorySystem : MonoBehaviour
     [SerializeField]
     List<Chapter> chapters = new List<Chapter>();
 
+    public delegate void ChapterChanged();
+    public event ChapterChanged onChapterChanged;
+
     private int CurrentChapter { get; set; } 
     private enum storyState { NotStarted, TransitioningToNextChapter, Paused, Ended }
 
-    private void Start()
-    {
-        ResetStory();
-    }
-
-    private void ResetStory()
+    private void InitializeStory()
     {
         CurrentChapter = -1;
         CurrentStoryState = storyState.NotStarted;
@@ -34,6 +33,8 @@ public class StorySystem : MonoBehaviour
     private void BeginChapter()
     {
         SetStoryDetails(storyState.TransitioningToNextChapter, chapters[CurrentChapter].Name);
+
+        onChapterChanged?.Invoke();
 
         chapters[CurrentChapter].onChapterEnded += TransitionToNextChapter;
         chapters[CurrentChapter].StartChapter();
@@ -67,12 +68,25 @@ public class StorySystem : MonoBehaviour
         chapters[CurrentChapter-1].gameObject.SetActive(false);
     }
 
+    public TextAsset GetCurrentChapterInkFile()
+    {
+        if(CurrentStoryState != storyState.NotStarted && CurrentStoryState != storyState.Ended)
+        {
+            return chapters[CurrentChapter].GetInkFile();
+        }
+        else
+        {
+            Debug.LogError(this + ": Request was made to get the current chapter's ink file, but the story has either not started or has ended");
+            return null;
+        }
+    }
+
     [Button("Start Story")]
     public void StartStory()
     {
         if(CurrentStoryState == storyState.NotStarted || CurrentStoryState == storyState.Ended)
         {
-            ResetStory();
+            InitializeStory();
             TransitionToNextChapter();
         }
         else
@@ -98,7 +112,4 @@ public class StorySystem : MonoBehaviour
 
         print("Story Ended");
     }
-
-
-
 }
