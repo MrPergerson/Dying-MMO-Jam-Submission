@@ -34,14 +34,20 @@ MonoBehaviour:
     - {fileID: 8300000, guid: f3932fcd88ffbe84aa8c5d803fb5a8b9, type: 3}
     - {fileID: 8300000, guid: d2cb88f326fa87e4eb3b3f76fd09d4db, type: 3}
     - {fileID: 8300000, guid: 148b59fefab2c9e42aba5c0a9cdb074e, type: 3}
+    - {fileID: 8300000, guid: 2f821228c079e9842ab04644892586c9, type: 3}
+    - {fileID: 8300000, guid: a01e640ca432e4e448b1566ad60331b9, type: 3}
+    - {fileID: 8300000, guid: 012b6ed32a8145442b6d76bb50a56d65, type: 3}
   attack:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 7c3482c3651c3e84e9da4950594b5aa0, type: 3}
+  - {fileID: 8300000, guid: 2f0ea4fa422ad9449ba5efc8c8516ad6, type: 3}
+  - {fileID: 8300000, guid: 33c42b469df68af489a3ae70521c0152, type: 3}
+  - {fileID: 8300000, guid: 80be19450db47454180ef1a1567c1087, type: 3}
+  - {fileID: 8300000, guid: b0d3db736f10070439c5591dd6ce7029, type: 3}
+  - {fileID: 8300000, guid: 81fb2dbb8f3aaf34aa1d7296edff6257, type: 3}
   damaged: []
   death: []
   audioMixer: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
-  footstepOverride: {fileID: -4217051870133058606, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
-  attackOverride: {fileID: 0}
-  damagedOverride: {fileID: 0}
-  deathOverride: {fileID: 0}
+  footstepOverride: {fileID: 4995412392367245536, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  attackOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  damagedOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  deathOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
