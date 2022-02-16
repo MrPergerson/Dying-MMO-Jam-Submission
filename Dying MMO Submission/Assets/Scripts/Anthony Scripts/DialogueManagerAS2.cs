@@ -79,6 +79,19 @@ public class DialogueManagerAS2 : Manager
         // Scenes loaded that are not considered as levels, such as MainMenu and PersistentGameObjects, will not trigger this
     }
 
+    public override void OnSceneChangeRequested()
+    {
+        // The scene is about the change
+        // SceneManger will wait until IsReadyToChangeScene returns true before changing the scene
+    }
+
+    public override bool IsReadyToChangeScene()
+    {
+        // will get checked multiple times
+        // to don't put anything performance heavy in here
+        return true;
+    }
+
     private void Update()
     {
         if(isAwake)
@@ -178,4 +191,6 @@ public class DialogueManagerAS2 : Manager
         EventSystem.current.SetSelectedGameObject(null);
         yield return new WaitForSeconds(1f); //IEnumerator needs a yeid return, so it wont throw error
     }
+
+
 }
