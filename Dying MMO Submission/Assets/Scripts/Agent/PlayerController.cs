@@ -129,4 +129,10 @@ public class PlayerController : Agent
     {
         Application.Quit();
     }
+
+    public void attackEnemy(Agent target)
+    {
+        attack.StartAttack(target);
+    }
+
 }

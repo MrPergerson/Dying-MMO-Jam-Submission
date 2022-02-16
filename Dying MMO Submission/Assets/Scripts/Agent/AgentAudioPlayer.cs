@@ -40,7 +40,11 @@ public class AgentAudioPlayer : MonoBehaviour, IAudioPlayer
 
     public void PlayAudioClip(AudioClip clip, AudioMixerGroup mixer)
     {
-        if (mixer == null) Debug.LogError(this + " -> PlayAudio(): Audio Mixer recieved was null");
+        if (mixer == null)
+        {
+            Debug.LogError(this + " -> PlayAudio(): Audio Mixer recieved was null");
+            return;
+        }
 
         if(!audioSources.ContainsKey(mixer))
         {
@@ -102,4 +106,12 @@ public class AgentAudioPlayer : MonoBehaviour, IAudioPlayer
 
         audioSources[mixer].PlayOneShot(clip);  
     }
+
+    public void playDamageSound()
+    {
+        var damageSound = agentAudioData.DamagedAudio[0];
+        var damageMixer = agentAudioData.DamagedAudioMixerOverride!=null? agentAudioData.DamagedAudioMixerOverride: agentAudioData.AudioMixer;
+        PlayAudioClip(damageSound, damageMixer);
+    }
+
 }
