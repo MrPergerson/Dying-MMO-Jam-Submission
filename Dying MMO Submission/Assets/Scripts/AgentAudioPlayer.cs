@@ -40,7 +40,11 @@ public class AgentAudioPlayer : MonoBehaviour, IAudioPlayer
 
     public void PlayAudioClip(AudioClip clip, AudioMixerGroup mixer)
     {
-        if (mixer == null) Debug.LogError(this + " -> PlayAudio(): Audio Mixer recieved was null");
+        if (mixer == null)
+        {
+            Debug.LogError(this + " -> PlayAudio(): Audio Mixer recieved was null");
+            return;
+        }
 
         if(!audioSources.ContainsKey(mixer))
         {

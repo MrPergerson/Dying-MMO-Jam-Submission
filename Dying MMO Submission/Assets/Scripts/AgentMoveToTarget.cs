@@ -38,7 +38,7 @@ public class AgentMoveToTarget : MonoBehaviour
 
     public void SetDestination(Vector3 destination)
     {
-        navAgent.destination = destination;
+        navAgent.SetDestination(destination);
         targetLocation = destination;
         navAgent.stoppingDistance = 0;
         isMoving = true;
@@ -50,7 +50,7 @@ public class AgentMoveToTarget : MonoBehaviour
 
     public void SetDestination(Vector3 destination, float stoppingDistance)
     {
-        navAgent.destination = destination;
+        navAgent.SetDestination(destination);
         navAgent.stoppingDistance = stoppingDistance;
         targetLocation = destination;
         //Debug.Log("setting destination-" + targetLocation);
@@ -64,7 +64,7 @@ public class AgentMoveToTarget : MonoBehaviour
     public void SetDestination(Agent targetAgent, float stoppingDistance, DestinationToAgentCompleted OnDestinationCompleted)
     {
         Debug.Log("setting destination");
-        navAgent.destination = targetAgent.transform.position;
+        navAgent.SetDestination(targetAgent.transform.position);
         targetLocation = targetAgent.transform.position;
         //Debug.Log("setting destination-" + targetLocation);
         navAgent.stoppingDistance = stoppingDistance;
@@ -99,7 +99,7 @@ public class AgentMoveToTarget : MonoBehaviour
             }
 
 
-            if (remainingDistance < 2)
+            if (remainingDistance < 1)
             {
                 destinationReached = true;
                 StopMoving();
@@ -133,7 +133,7 @@ public class AgentMoveToTarget : MonoBehaviour
                 distanceCheckErrors++;
             }
 
-            if (remainingDistance <= navAgent.stoppingDistance && remainingDistance >= 0)
+            if (remainingDistance < 0.5)
             {
                 if (OnDestinationCompleted != null)
                     OnDestinationCompleted(agent);
@@ -172,6 +172,7 @@ public class AgentMoveToTarget : MonoBehaviour
     public void StopMoving()
     {
         isMoving = false;
+        navAgent.destination = transform.position;
         agent.Animator.SetFloat("Vertical", 0);
     }
 

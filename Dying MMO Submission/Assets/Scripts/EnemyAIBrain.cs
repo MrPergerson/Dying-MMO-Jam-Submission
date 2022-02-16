@@ -11,6 +11,7 @@ public class EnemyAIBrain : Agent
 
     public static PlayerController playerController;
     float cooldownTimeRemaining = 0.0f;
+    bool waitingToFollow = false;
 
     public float followRadius;
     public Vector3 guardPosition;
@@ -57,6 +58,16 @@ public class EnemyAIBrain : Agent
         Health -= damage;
     }
 
+    IEnumerator waitAndFollow()
+    {
+        waitingToFollow = true;
+        yield return new WaitForSeconds(1.0f);
+        if (Vector3.Distance(guardPosition, playerController.gameObject.transform.position) < followRadius &&
+            Vector3.Distance(guardPosition, playerController.gameObject.transform.position) > GetComponent<AgentAttack>().AttackDistance)
+                move.SetDestination(playerController.gameObject.transform.position, 0);
+        waitingToFollow = false;
+    }
+
     void Update()
     {
         //check if player is around
@@ -68,9 +79,10 @@ public class EnemyAIBrain : Agent
                 AddThreat(playerController);
                 cooldownTimeRemaining = 2.0f;
             }
-            else if (Vector3.Distance(guardPosition, playerController.gameObject.transform.position) < followRadius)
+            else if (!waitingToFollow && Vector3.Distance(guardPosition, playerController.gameObject.transform.position) < followRadius)
             {
-                move.SetDestination(playerController.gameObject.transform.position, 0);
+                //move.SetDestination(playerController.gameObject.transform.position, 0);
+                StartCoroutine(waitAndFollow());
             }
             else
             {

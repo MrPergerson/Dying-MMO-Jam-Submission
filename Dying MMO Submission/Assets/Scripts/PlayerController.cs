@@ -57,7 +57,6 @@ public class PlayerController : Agent
             var tag = hit.collider.tag;
             if (tag == "Ground" || tag == "Ground_Grass" || tag == "Ground_Stone")
             {
-                Debug.Log("looking");
                 move.SetDestination(hit.point, 0);
 
             }

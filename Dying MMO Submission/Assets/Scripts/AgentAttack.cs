@@ -206,12 +206,15 @@ public class AgentAttack : MonoBehaviour
     {
         while (Target.Health > 0 && Target != null)
         {
-
+            Debug.Log("[" + gameObject.name + "] starting attack");
+            var targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
+            transform.LookAt(targetPos, Vector3.up);
             if (Vector3.Distance(this.transform.position, Target.transform.position) > AttackDistance)
             {
                 // chase target??
                 while (GetComponent<EnemyAIBrain>() != null && Vector3.Distance(transform.position, Target.transform.position)<2*AttackDistance)
                 {
+                    Debug.Log("[" + gameObject.name + "] chasing target");
                     GetComponent<AgentMoveToTarget>().SetDestination(Target.transform.position, 0);
                     yield return new WaitForSeconds(0.5f);
                 }
@@ -231,6 +234,8 @@ public class AgentAttack : MonoBehaviour
             }
             CombatAbility simpleAttack = combatAbilitySet.abilities[attackMode];
 
+            bool isTargetAlive = true;
+
             if (simpleAttack.CanHitMultipleEnemies)
             {
                 for (int i = 0; i < targets.Count; i++)
@@ -238,22 +243,33 @@ public class AgentAttack : MonoBehaviour
                     if (targets[i] != null)
                     {
                         targets[i].TakeDamage(self, simpleAttack.Damage);
-                        Debug.Log("hitting - " +i+", "+ targets[i].gameObject.name);
+                        Debug.Log("[" + gameObject.name + "] hitting - " + i+", "+ targets[i].gameObject.name + ", its health - " + targets[i].Health);
+                        if (targets[i].Health <= 0) isTargetAlive = false;
                     }
                 }
             }
             else
             {
                 Target.TakeDamage(self, simpleAttack.Damage);
-                Debug.Log("hitting - " + Target.gameObject.name);
+                Debug.Log("[" + gameObject.name + "] hitting - " + Target.gameObject.name+", its health - "+ Target.Health);
+                if (Target.Health <= 0) isTargetAlive = false;
             }
 
+            //if enemy is dead, wait for attack animation to end and then stop attack
+            if (!isTargetAlive)
+            {
+                Debug.Log("[" + gameObject.name + "] target dead. quitting");
+                yield return new WaitForSeconds(1.0f);
+                break;
+            }
+            Debug.Log("["+gameObject.name+"] playing vfx");
             //vfx
             var origin = transform.position + Vector3.up;
             var to = Target.transform.position + Vector3.up;
             vfxPool[0].gameObject.transform.position = (transform.forward * .6f) + Vector3.up + transform.position;
             vfxPool[0].Play();
 
+            Debug.Log("[" + gameObject.name + "] playing audio");
             //audio
             if (playsAudio)
             {
@@ -262,11 +278,10 @@ public class AgentAttack : MonoBehaviour
                 audioPlayer.PlayAudioClip(hitAudio, hitMixer);
             }
 
-            var targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
-            transform.LookAt(targetPos, Vector3.up);
+            Debug.Log("[" + gameObject.name + "] waiting for cooldown");
 
             yield return new WaitForSeconds(simpleAttack.CoolDown);
-
+            Debug.Log("[" + gameObject.name + "] cooldown done");
             if (abilitiesInCoolDown.Count > 0)
             {
                 attackMode = abilitiesIndexInCoolDown[0];
@@ -274,8 +289,6 @@ public class AgentAttack : MonoBehaviour
                 abilitiesInCoolDown.RemoveAt(0);
             }
         }
-        Debug.Log("is target null" + Target == null);
-        Debug.Log("target health" + Target.Health);
 
         EndAttack();
     }
