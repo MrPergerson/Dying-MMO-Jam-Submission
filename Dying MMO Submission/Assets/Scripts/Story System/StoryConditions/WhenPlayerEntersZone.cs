@@ -35,4 +35,8 @@ public class WhenPlayerEntersZone : StoryCondition
         zone.onTriggerZoneEnter += CheckIfPlayerEnteredZone;
     }
 
+    public override void DeinitializeCondition()
+    {
+        zone.onTriggerZoneEnter -= CheckIfPlayerEnteredZone;
+    }
 }

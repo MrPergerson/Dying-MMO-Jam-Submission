@@ -18,6 +18,8 @@ public abstract class StoryCondition : MonoBehaviour
 
     public abstract void InitializeCondition();
 
+    public abstract void DeinitializeCondition();
+
     public virtual bool IsCurrentCondition()
     {
         

@@ -37,4 +37,9 @@ public class TestCondition : StoryCondition
     {
         isCurrentCondition = value;
     }
+
+    public override void DeinitializeCondition()
+    {
+        // nothing
+    }
 }

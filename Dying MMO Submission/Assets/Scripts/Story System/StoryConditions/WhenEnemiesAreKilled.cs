@@ -88,6 +88,8 @@ public class WhenEnemiesAreKilled : StoryCondition
         conditionMet = false;
     }
 
-
-
+    public override void DeinitializeCondition()
+    {
+        // close all events
+    }
 }

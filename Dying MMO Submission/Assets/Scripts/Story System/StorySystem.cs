@@ -39,6 +39,11 @@ public class StorySystem : MonoBehaviour
 
     }
 
+    public void InitializeStoryConditions()
+    {
+        chapters[CurrentChapter].InitializeCurrentStoryCondition();
+    }
+
     private void BeginChapter()
     {
         SetStoryDetails(storyState.TransitioningToNextChapter, chapters[CurrentChapter].Name);
