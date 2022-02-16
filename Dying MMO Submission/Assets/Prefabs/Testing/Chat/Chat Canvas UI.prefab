@@ -100,7 +100,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4087
 --- !u!1 &6623931956961667054
 GameObject:
   m_ObjectHideFlags: 0
@@ -1194,10 +1194,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 458ff2ffdf0b25c429b7969e30e0380a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chatPanel: {fileID: 6623931956961667054}
+  chatLineParent: []
+  chatLineObj: {fileID: 0}
+  chatLinePos: {fileID: 0}
   chatText: {fileID: 6623931958273042593}
   chatChoices:
   - {fileID: 6623931957483437925}
   - {fileID: 6623931957275099355}
   - {fileID: 6623931958511644801}
+  chatDelayNum: 1
   inkJSON: {fileID: 4900000, guid: e31a19660cae13641a0ea0ef6380be8b, type: 3}
