@@ -58,14 +58,14 @@ public class PlayerController : Agent
             if (tag == "Ground" || tag == "Ground_Grass" || tag == "Ground_Stone")
             {
                 move.SetDestination(hit.point, 0);
+                attack.EndCombat();
 
             }
             else if (hit.collider.tag == "Enemy")
             {
-
                 if (hit.collider.gameObject.TryGetComponent<EnemyAIBrain>(out EnemyAIBrain enemy))
                 {
-                    AgentMoveToTarget.DestinationToAgentCompleted onDestinationToAgentCompleted = attack.StartAttack;
+                    AgentMoveToTarget.DestinationToAgentCompleted onDestinationToAgentCompleted = attack.EnterCombat;
                     move.SetDestination(enemy, attack.AttackDistance, onDestinationToAgentCompleted);
 
                 }
@@ -73,7 +73,6 @@ public class PlayerController : Agent
                 {
                     Debug.LogError(gameObject.name + " -> PlayerController.cs -> HandlePrimaryCursorInput: Failed to get EnemyAIBrain");
                 }
-
             }
             else if(hit.collider.tag == "Selectable")
             {
@@ -132,7 +131,7 @@ public class PlayerController : Agent
 
     public void attackEnemy(Agent target)
     {
-        attack.StartAttack(target);
+        attack.EnterCombat(target);
     }
 
 }

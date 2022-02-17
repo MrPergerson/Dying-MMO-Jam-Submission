@@ -8,7 +8,6 @@ public abstract class Agent : MonoBehaviour
     [SerializeField] protected float _health = 100;
     protected float _maxHealth;
     [SerializeField] protected float _healingRate = 10;
-    [SerializeField] protected AgentAudioData _audioData;
     protected AgentMoveToTarget move;
     protected Animator _animator;
 
@@ -41,11 +40,6 @@ public abstract class Agent : MonoBehaviour
         } 
     }
 
-    public AgentAudioData AudioData
-    {
-        get { return _audioData; }
-    }
-
     public Animator Animator
     {
         get { return _animator; }
@@ -54,7 +48,6 @@ public abstract class Agent : MonoBehaviour
     protected virtual void Awake()
     {
         move = GetComponent<AgentMoveToTarget>();
-        move.audioData = AudioData;
 
         _animator = GetComponent<Animator>();
         _maxHealth = Health;

@@ -16,15 +16,17 @@ public class AgentAttack : MonoBehaviour
     [Header("Combat Abilities")]
     [SerializeField] CombatAbilitySet combatAbilitySet;
     [Header("Debug")]
+    [SerializeField, ReadOnly] private bool isInCombat = false;
     [SerializeField, ReadOnly] private Agent _target;
     [SerializeField] bool playsAudio = true;
 
-
+    private bool currentAbilityCancelled = false;
 
     private List<CombatAbility> abilitiesInCoolDown;
     private List<int> abilitiesIndexInCoolDown;
     private Dictionary<int, VisualEffect> vfxPool;
-    
+
+    private Queue<CombatAbility> combatAbilitesInQueque = new Queue<CombatAbility>();
 
     private AgentAudioPlayer audioPlayer;
     private GameObject vfxContainer;
@@ -37,6 +39,7 @@ public class AgentAttack : MonoBehaviour
     public float AttackDistance { get { return _attackDistance; } set { _attackDistance = value; } }
 
     private IEnumerator cPerformSimpleAttack;
+    private IEnumerator cProcessCombatAbilities;
 
     public delegate void AttackEnded();
     public event AttackEnded onAttackEnded;
@@ -89,47 +92,49 @@ public class AgentAttack : MonoBehaviour
     private void Update()
     {
         ProcessCoolDowns();
-    }
 
-    private void ProcessCoolDowns()
-    {
-        if(abilitiesInCoolDown.Count > 0)
+        if(isInCombat)
         {
-            //abilitiesInCoolDown.ForEach(ability => ability.TimeUntilCoolDownEnds -= Time.deltaTime);
-            //abilitiesInCoolDown.RemoveAll(ability => ability.TimeUntilCoolDownEnds <= 0);
-
-            for(int i = 0; i < abilitiesInCoolDown.Count; i++)
-            {
-                abilitiesInCoolDown[i].TimeUntilCoolDownEnds -= Time.deltaTime;
-                if(abilitiesInCoolDown[i].TimeUntilCoolDownEnds <= 0)
-                {
-                    abilitiesInCoolDown.RemoveAt(i);
-                    abilitiesIndexInCoolDown.RemoveAt((int)i);
-                    Debug.Log("removing from abilitiesInCoolDown " + (i + 1));
-                    i--;
-                }
-            }
-
+            LookAtTarget();
+            // Needs the following
+            // follow target if they run away
+            // stop attack if distance is too far
+            
+            // note, player will end combat when they click away, see PlayerController script
+            
         }
     }
 
 
-    public void StartAttack(Agent target)
+    public void EnterCombat(Agent target)
     {
         if (!target.Equals(Target))
         {
             Target = target;
-            
+            isInCombat = true;
+
+
+
+
+            /*
+            // I'll let you pick and choose what to keep and remove
+
+
             int attackMode = 0;
-            Debug.Log("abilitiesInCoolDown.Count- " + abilitiesInCoolDown.Count);
+
+            //Debug.Log("abilitiesInCoolDown.Count- " + abilitiesInCoolDown.Count);
             if (abilitiesInCoolDown.Count > 0)
             {
+                // did you make another coolDown list?
                 attackMode = abilitiesIndexInCoolDown[0];
                 abilitiesIndexInCoolDown.RemoveAt(0);
                 abilitiesInCoolDown.RemoveAt(0);
             }
 
-            Debug.Log("attack with mode - " + attackMode+", target-"+Target.gameObject.name);
+            // There is now a function that will play animations
+            // I also modified the animator
+
+            //Debug.Log("attack with mode - " + attackMode+", target-"+Target.gameObject.name);
             resetAnimatorParams();
             //agent.Animator.SetBool("InCombat", true);
             if(attackMode>=0)
@@ -143,32 +148,120 @@ public class AgentAttack : MonoBehaviour
 
             //if attack mode is 3, player needs to jump
             //based on combat ability canAttackMultipleEnemies, 
+
+            */
             targets.Clear();
             targets.Add(target);
 
-            addNearbyEnemiesToList();
+            // see comments about this function
+            //addNearbyEnemiesToList();
 
-            //for (int i = 0; i < combatAbilitySet.abilities.Count; i++)
-            //{ 
-            //if (combatAbilitySet.abilities[i].VFX_Hit == null) continue;
-            if (combatAbilitySet.abilities[attackMode].VFX_Hit != null) {
-                var vfxGameObject = Instantiate(combatAbilitySet.abilities[attackMode].VFX_Hit, vfxContainer.transform);
-
-                if(vfxGameObject.TryGetComponent<VisualEffect>(out VisualEffect visualEffectComponent))
-                {
-                    visualEffectComponent.Stop();
-                    vfxPool.Add(0, visualEffectComponent);
-                }
-                
-            }
-
-            cPerformSimpleAttack = PerformSimpleAttack(GetComponent<Agent>(), attackMode);
-            StartCoroutine(cPerformSimpleAttack);
+            cProcessCombatAbilities = ProcessCombatAbilities();
+            StartCoroutine(cProcessCombatAbilities);
 
         }
 
     }
 
+    public void EndCombat()
+    {
+        if(isInCombat)
+        {
+
+            Target = null;
+            isInCombat = false;
+            onAttackEnded?.Invoke();
+            StopCoroutine(cProcessCombatAbilities);
+        }
+
+        //resetAnimatorParams();
+        //Debug.Log("EndAttack");
+        //agent.Animator.SetBool("InCombat", false);
+        //agent.Animator.SetInteger("AttackMode", -1);
+        //agent.Animator.SetBool("Ability1", false);
+
+    }
+
+    public void PerformCombat(int index)
+    {
+        if (index >= combatAbilitySet.abilities.Count)
+        {
+            Debug.LogError(gameObject.name + " -> " + this.ToString() + " -> PerformCombat(): Ability index out of range. " +
+                "PerformCombat() is calling for an ability that is not in combatAbilitySet");
+            return;
+        }
+
+
+        CombatAbility combatAbility = combatAbilitySet.abilities[index];
+
+        if (combatAbility.TimeUntilCoolDownEnds <= 0)
+        {
+            combatAbilitesInQueque.Enqueue(combatAbility);
+
+            // you shouldn't be able to cancel the default ability
+            if (index > 0) currentAbilityCancelled = true;
+
+            //Debug.Log("Adding to abilitiesInCoolDown " + (index + 1));
+            //Debug.Log("Performed combat ability " + (index + 1));
+        }
+        else
+        {
+            //print("Combat ability " + (index + 1) + " is on cooldown until " + combatAbility.TimeUntilCoolDownEnds + " seconds.");
+        }
+
+    }
+
+    // Delete this comment after you read it
+    // Feel free to remove or keep the comments in this function
+    IEnumerator ProcessCombatAbilities()
+    {
+        while(isInCombat)
+        {
+            // Assign the default ability
+            CombatAbility activeCombatAbility = combatAbilitySet.abilities[0];
+            currentAbilityCancelled = false;
+
+            // If the player pressed any of the special abilities
+            while(combatAbilitesInQueque.Count != 0)
+            { 
+                //ignore all of the combat abilities used by the player accept for the last one pressed
+                // This should prevent any issues with clicking multiple keys at once
+                // not sure if the queque is the best solution for this (or even needed), but it seemed easy
+                activeCombatAbility = combatAbilitesInQueque.Dequeue();
+            }
+
+            if(activeCombatAbility.TimeUntilCoolDownEnds <= 0)
+            {
+                SetCombatAbilityCoolDown(activeCombatAbility);
+
+                var abilityIndex = combatAbilitySet.abilities.IndexOf(activeCombatAbility);
+                PlayCombatAnimation(abilityIndex);
+
+                //abilitiesIndexInCoolDown.Add(index);
+            }
+
+            // wait until the combat ability cool down ends or when the player pressed another combat ability
+            yield return new WaitUntil(() => {
+                return currentAbilityCancelled || activeCombatAbility.TimeUntilCoolDownEnds <= 0;
+                });
+        }
+    }
+
+    private void SetCombatAbilityCoolDown(CombatAbility ability)
+    {
+        ability.TimeUntilCoolDownEnds = ability.CoolDown;
+        abilitiesInCoolDown.Add(ability);
+    }
+
+    // Deepakk, I'll let you figure out where this should go
+    // Since you are checking all enemies in the scene, you should put this in
+    // in a place where it won't get called every frame, such as a coroutine.
+    //
+    // I suggest you call this function when the target has been defeated.
+    // OnEnemyDefeated -> check for nearby enemies -> if no enemies -> do nothing
+    //
+    // Also, remember that the all agents should be able to use this function
+    // Or you make a PlayerAttack script that inherits from this script
     private void addNearbyEnemiesToList()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -182,48 +275,28 @@ public class AgentAttack : MonoBehaviour
         }
     }
 
-    public void EndAttack()
-    {
-        Target = null;
-        onAttackEnded?.Invoke();
-        StopCoroutine(cPerformSimpleAttack);
-
-        resetAnimatorParams();
-        Debug.Log("EndAttack");
-        //agent.Animator.SetBool("InCombat", false);
-        //agent.Animator.SetInteger("AttackMode", -1);
-        agent.Animator.SetBool("Ability1", false);
-
-        /*for (int i = 0; i < combatAbilitySet.abilities.Count; i++)
-        {
-            Destroy(vfxPool[i].gameObject, .2f);
-        }*/
-
-        Destroy(vfxPool[0].gameObject);
-
-        vfxPool.Clear();
-    }
-
+    /* 
+     * Deepakk, move your code out of this function and delete this function
+     */
     // need to pause the attack if doing movement within attackdistance 
     IEnumerator PerformSimpleAttack(Agent self, int attackMode)
     {
         while (Target.Health > 0 && Target != null)
         {
-            Debug.Log("[" + gameObject.name + "] starting attack");
-            var targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
-            transform.LookAt(targetPos, Vector3.up);
+            //Debug.Log("[" + gameObject.name + "] starting attack");
+           
             if (Vector3.Distance(this.transform.position, Target.transform.position) > AttackDistance)
             {
                 // chase target??
                 while (GetComponent<EnemyAIBrain>() != null && Vector3.Distance(transform.position, Target.transform.position)<2*AttackDistance)
                 {
-                    Debug.Log("[" + gameObject.name + "] chasing target");
+                    //Debug.Log("[" + gameObject.name + "] chasing target");
                     GetComponent<AgentMoveToTarget>().SetDestination(Target.transform.position, 0);
                     yield return new WaitForSeconds(0.5f);
                 }
                 if (Vector3.Distance(transform.position, Target.transform.position) >= 2 * AttackDistance)
                 {
-                    Debug.Log("too far" + Vector3.Distance(this.transform.position, Target.transform.position));
+                    //Debug.Log("too far" + Vector3.Distance(this.transform.position, Target.transform.position));
                     break;
                 }
             }
@@ -232,7 +305,7 @@ public class AgentAttack : MonoBehaviour
             //int index = 0;
             if (attackMode >= combatAbilitySet.abilities.Count)
             {
-                Debug.LogError("Invalid attack mode");
+                //Debug.LogError("Invalid attack mode");
                 break;
             }
             CombatAbility simpleAttack = combatAbilitySet.abilities[attackMode];
@@ -246,7 +319,7 @@ public class AgentAttack : MonoBehaviour
                     if (targets[i] != null)
                     {
                         targets[i].TakeDamage(self, simpleAttack.Damage);
-                        Debug.Log("[" + gameObject.name + "] hitting - " + i+", "+ targets[i].gameObject.name + ", its health - " + targets[i].Health);
+                        //Debug.Log("[" + gameObject.name + "] hitting - " + i+", "+ targets[i].gameObject.name + ", its health - " + targets[i].Health);
                         if (targets[i].Health <= 0) isTargetAlive = false;
                     }
                 }
@@ -254,37 +327,28 @@ public class AgentAttack : MonoBehaviour
             else
             {
                 Target.TakeDamage(self, simpleAttack.Damage);
-                Debug.Log("[" + gameObject.name + "] hitting - " + Target.gameObject.name+", its health - "+ Target.Health);
+                //Debug.Log("[" + gameObject.name + "] hitting - " + Target.gameObject.name+", its health - "+ Target.Health);
                 if (Target.Health <= 0) isTargetAlive = false;
             }
 
             //if enemy is dead, wait for attack animation to end and then stop attack
             if (!isTargetAlive)
             {
-                Debug.Log("[" + gameObject.name + "] target dead. quitting");
+                //Debug.Log("[" + gameObject.name + "] target dead. quitting");
                 yield return new WaitForSeconds(1.0f);
                 break;
             }
-            Debug.Log("["+gameObject.name+"] playing vfx");
-            //vfx
-            var origin = transform.position + Vector3.up;
-            var to = Target.transform.position + Vector3.up;
-            vfxPool[0].gameObject.transform.position = (transform.forward * .6f) + Vector3.up + transform.position;
-            vfxPool[0].Play();
+            //Debug.Log("["+gameObject.name+"] playing vfx");
 
-            Debug.Log("[" + gameObject.name + "] playing audio");
+
+            //Debug.Log("[" + gameObject.name + "] playing audio");
             //audio
-            if (playsAudio)
-            {
-                var hitAudio = simpleAttack.AUDIO_Hit;
-                var hitMixer = simpleAttack.HitAudioMixer;
-                audioPlayer.PlayAudioClip(hitAudio, hitMixer);
-            }
 
-            Debug.Log("[" + gameObject.name + "] waiting for cooldown");
+
+            //Debug.Log("[" + gameObject.name + "] waiting for cooldown");
 
             yield return new WaitForSeconds(simpleAttack.CoolDown);
-            Debug.Log("[" + gameObject.name + "] cooldown done");
+            //Debug.Log("[" + gameObject.name + "] cooldown done");
             if (abilitiesInCoolDown.Count > 0)
             {
                 attackMode = abilitiesIndexInCoolDown[0];
@@ -293,39 +357,121 @@ public class AgentAttack : MonoBehaviour
             }
         }
 
-        EndAttack();
+        EndCombat();
     }
 
-    public void PerformCombat(int index)
+    private void ProcessCoolDowns()
     {
-        if(index >= combatAbilitySet.abilities.Count)
+        if (abilitiesInCoolDown.Count > 0)
         {
-            Debug.LogError(gameObject.name + " -> " + this.ToString() + " -> PerformCombat(): Ability index out of range. " +
-                "PerformCombat() is calling for an ability that is not in combatAbilitySet");
-            return;
+            //abilitiesInCoolDown.ForEach(ability => ability.TimeUntilCoolDownEnds -= Time.deltaTime);
+            //abilitiesInCoolDown.RemoveAll(ability => ability.TimeUntilCoolDownEnds <= 0);
+
+            for (int i = 0; i < abilitiesInCoolDown.Count; i++)
+            {
+                abilitiesInCoolDown[i].TimeUntilCoolDownEnds -= Time.deltaTime;
+                if (abilitiesInCoolDown[i].TimeUntilCoolDownEnds <= 0)
+                {
+                    abilitiesInCoolDown.RemoveAt(i);
+                    //abilitiesIndexInCoolDown.RemoveAt((int)i);
+                    //Debug.Log("removing from abilitiesInCoolDown " + (i + 1));
+                    i--;
+                }
+            }
+
         }
-
-
-        CombatAbility combatAbility = combatAbilitySet.abilities[index];
-
-        if(combatAbility.TimeUntilCoolDownEnds <= 0)
-        {
-            combatAbility.TimeUntilCoolDownEnds = combatAbility.CoolDown;
-            abilitiesInCoolDown.Add(combatAbility);
-            abilitiesIndexInCoolDown.Add(index);
-            Debug.Log("Adding to abilitiesInCoolDown " + (index + 1));
-            // animation and sound effect
-            Debug.Log("Performed combat ability " + (index + 1));
-        }
-        else
-        {
-            print("Combat ability " + (index + 1) + " is on cooldown until " + combatAbility.TimeUntilCoolDownEnds + " seconds.");
-        }
-
     }
 
-    // include other attacks in here?
-    // could they be there own classes??
+    private void PlayCombatAnimation(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                agent.Animator.SetTrigger("Ability1");
+                break;
+            case 1:
+                agent.Animator.SetTrigger("Ability2");
+                break;
+            case 2:
+                agent.Animator.SetTrigger("Ability3");
+                break;
+            case 3:
+                agent.Animator.SetTrigger("Ability4");
+                break;
+            default:
+                agent.Animator.SetTrigger("Ability1");
+                break;
+        }
+    }
+
+    private void LookAtTarget()
+    {
+        var targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
+        transform.LookAt(targetPos, Vector3.up);
+    }
+
+    private void SetupVFX()
+    {
+        //for (int i = 0; i < combatAbilitySet.abilities.Count; i++)
+        //{ 
+        //if (combatAbilitySet.abilities[i].VFX_Hit == null) continue;
+        /*
+        if (combatAbilitySet.abilities[attackMode].VFX_Hit != null) {
+            var vfxGameObject = Instantiate(combatAbilitySet.abilities[attackMode].VFX_Hit, vfxContainer.transform);
+
+            if(vfxGameObject.TryGetComponent<VisualEffect>(out VisualEffect visualEffectComponent))
+            {
+                visualEffectComponent.Stop();
+                vfxPool.Add(0, visualEffectComponent);
+            }
+
+        }
+        */
+    }
+
+    private void ClearVFX()
+    {
+
+        /*for (int i = 0; i < combatAbilitySet.abilities.Count; i++)
+        {
+            Destroy(vfxPool[i].gameObject, .2f);
+        }
+
+
+        Destroy(vfxPool[0].gameObject);
+
+        vfxPool.Clear();
+        */
+    }
+
+    #region Animation Events
+
+    private void PlayHitVFX()
+    {
+        /*
+        //vfx
+        var origin = transform.position + Vector3.up;
+        var to = Target.transform.position + Vector3.up;
+        vfxPool[0].gameObject.transform.position = (transform.forward * .6f) + Vector3.up + transform.position;
+        vfxPool[0].Play();
+        */
+    }
+
+    private void PlayHitAudio()
+    {
+
+        /*
+        if (playsAudio)
+        {
+            var hitAudio = combatAbility.AUDIO_Hit;
+            var hitMixer = combatAbility.HitAudioMixer;
+            audioPlayer.PlayAudioClip(hitAudio, hitMixer);
+        }
+        */
+    }
+    #endregion
+
+    #region Helper Functions
 
     public float GetDistance(Vector3 a, Vector3 b)
     {
@@ -352,4 +498,6 @@ public class AgentAttack : MonoBehaviour
         //agent.Animator.SetBool("Ability3", false);
         //agent.Animator.SetBool("Ability4", false);
     }
+
+    #endregion
 }
