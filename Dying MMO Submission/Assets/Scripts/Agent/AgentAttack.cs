@@ -96,12 +96,17 @@ public class AgentAttack : MonoBehaviour
         if(isInCombat)
         {
             LookAtTarget();
-            // Needs the following
+ 
             // follow target if they run away
+
             // stop attack if distance is too far
-            
+            if (Vector3.Distance(this.transform.position, Target.transform.position) > AttackDistance)
+            {
+                EndCombat();
+            }
+
             // note, player will end combat when they click away, see PlayerController script
-            
+
         }
     }
 
