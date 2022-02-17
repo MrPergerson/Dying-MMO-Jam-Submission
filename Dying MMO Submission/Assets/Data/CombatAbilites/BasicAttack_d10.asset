@@ -19,6 +19,6 @@ MonoBehaviour:
   _canHitMultipleEnemies: 0
   _attackRange: 1
   _VFX_Hit: {fileID: 2923950367495716213, guid: 17b94d976d6022d48923d6f9c292f359, type: 3}
-  _AUDIO_Hit: {fileID: 8300000, guid: 50d818e1b83e69c459bc5add7020d2fa, type: 3}
-  _hitAudioMixer: {fileID: 4244932018823789354, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  _AUDIO_Hit: {fileID: 8300000, guid: 7c3482c3651c3e84e9da4950594b5aa0, type: 3}
+  _hitAudioMixer: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
   _IMG_Icon: {fileID: 0}
