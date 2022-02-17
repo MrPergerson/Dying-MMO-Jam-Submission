@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.VFX;
 
 [RequireComponent(typeof(Agent))]
@@ -17,6 +18,8 @@ public class AgentAttack : MonoBehaviour
     [Header("Debug")]
     [SerializeField, ReadOnly] private Agent _target;
     [SerializeField] bool playsAudio = true;
+
+
 
     private List<CombatAbility> abilitiesInCoolDown;
     private List<int> abilitiesIndexInCoolDown;
