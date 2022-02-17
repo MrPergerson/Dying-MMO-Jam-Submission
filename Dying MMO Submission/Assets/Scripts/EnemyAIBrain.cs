@@ -39,7 +39,7 @@ public class EnemyAIBrain : Agent
         if(this.threat == null)
         {
             this.threat = threat;
-            attack.StartAttack(threat);
+            attack.EnterCombat(threat);
             attack.onAttackEnded += RemoveThreat;
 
         }
