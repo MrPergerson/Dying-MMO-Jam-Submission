@@ -16,7 +16,6 @@ public class AgentAttack : MonoBehaviour
     [Header("Combat Abilities")]
     [SerializeField] CombatAbilitySet combatAbilitySet;
     [Header("Debug")]
-    [SerializeField, ReadOnly] private bool isInCombat = false;
     [SerializeField, ReadOnly] private Agent _target;
     [SerializeField] bool playsAudio = true;
 
@@ -27,6 +26,7 @@ public class AgentAttack : MonoBehaviour
     private Dictionary<int, VisualEffect> vfxPool;
 
     private Queue<CombatAbility> combatAbilitesInQueque = new Queue<CombatAbility>();
+    private CombatAbility activeCombatAbility;
 
     private AgentAudioPlayer audioPlayer;
     private GameObject vfxContainer;
@@ -93,7 +93,7 @@ public class AgentAttack : MonoBehaviour
     {
         ProcessCoolDowns();
 
-        if(isInCombat)
+        if(agent.IsInCombat)
         {
             LookAtTarget();
  
@@ -116,7 +116,8 @@ public class AgentAttack : MonoBehaviour
         if (!target.Equals(Target))
         {
             Target = target;
-            isInCombat = true;
+            Target.onDeath += EndCombat;
+            agent.IsInCombat = true;
 
 
 
@@ -170,11 +171,11 @@ public class AgentAttack : MonoBehaviour
 
     public void EndCombat()
     {
-        if(isInCombat)
+        if(agent.IsInCombat)
         {
-
+            Target.onDeath -= EndCombat;
             Target = null;
-            isInCombat = false;
+            agent.IsInCombat = false;
             onAttackEnded?.Invoke();
             StopCoroutine(cProcessCombatAbilities);
         }
@@ -220,10 +221,10 @@ public class AgentAttack : MonoBehaviour
     // Feel free to remove or keep the comments in this function
     IEnumerator ProcessCombatAbilities()
     {
-        while(isInCombat)
+        while(agent.IsInCombat)
         {
             // Assign the default ability
-            CombatAbility activeCombatAbility = combatAbilitySet.abilities[0];
+            activeCombatAbility = combatAbilitySet.abilities[0];
             currentAbilityCancelled = false;
 
             // If the player pressed any of the special abilities
@@ -256,6 +257,15 @@ public class AgentAttack : MonoBehaviour
     {
         ability.TimeUntilCoolDownEnds = ability.CoolDown;
         abilitiesInCoolDown.Add(ability);
+    }
+
+    // Called by animator event
+    public void DamageTarget()
+    {
+        if(agent.IsInCombat)
+        {
+            Target.TakeDamage(this.agent, activeCombatAbility.Damage);
+        }
     }
 
     // Deepakk, I'll let you figure out where this should go
@@ -411,8 +421,11 @@ public class AgentAttack : MonoBehaviour
 
     private void LookAtTarget()
     {
-        var targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
-        transform.LookAt(targetPos, Vector3.up);
+        if(Target)
+        {
+            var targetPos = new Vector3(Target.transform.position.x, transform.position.y, Target.transform.position.z);
+            transform.LookAt(targetPos, Vector3.up);
+        }
     }
 
     private void SetupVFX()

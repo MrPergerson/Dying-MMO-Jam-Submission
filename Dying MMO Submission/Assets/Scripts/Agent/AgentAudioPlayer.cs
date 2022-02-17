@@ -109,9 +109,16 @@ public class AgentAudioPlayer : MonoBehaviour, IAudioPlayer
 
     public void playDamageSound()
     {
-        var damageSound = agentAudioData.DamagedAudio[0];
-        var damageMixer = agentAudioData.DamagedAudioMixerOverride!=null? agentAudioData.DamagedAudioMixerOverride: agentAudioData.AudioMixer;
-        PlayAudioClip(damageSound, damageMixer);
+        if(agentAudioData != null && agentAudioData.DamagedAudio.Count > 0)
+        {
+            var damageSound = agentAudioData.DamagedAudio[0];
+            var damageMixer = agentAudioData.DamagedAudioMixerOverride!=null? agentAudioData.DamagedAudioMixerOverride: agentAudioData.AudioMixer;
+            if(damageSound != null && damageMixer != null)
+            {
+                PlayAudioClip(damageSound, damageMixer);
+
+            }
+        }
     }
 
 }

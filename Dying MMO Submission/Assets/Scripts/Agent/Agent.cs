@@ -15,21 +15,23 @@ public abstract class Agent : MonoBehaviour
     public delegate void HealthChanged(float health);
     public event HealthChanged onHealthChanged;
 
-    public delegate  void Death(Agent agent);
+    public delegate void Death();
     public event Death onDeath;
 
-    public delegate void Respawned(Agent agent);
+    public delegate void Respawned();
     public event Respawned onRespawned;
 
-    bool isAttacked = false;
+    public bool _isInCombat = false;
     float countDownSinceLastDamage = 0.0f;
+
+    public bool IsInCombat { get { return _isInCombat; } set { _isInCombat = value; } }
 
     public float Health { 
         get { return _health; } 
         protected set {
             if (_health > value)
             {
-                isAttacked = true;
+                IsInCombat = true;
             }
             _health = value;
             onHealthChanged?.Invoke(Health);
@@ -59,7 +61,8 @@ public abstract class Agent : MonoBehaviour
 
     void Update()
     {
-        if (isAttacked)
+        /*
+        if (IsInCombat)
         {
             //isAttacked = false;
             countDownSinceLastDamage += Time.deltaTime;
@@ -69,27 +72,28 @@ public abstract class Agent : MonoBehaviour
 
         if (countDownSinceLastDamage > 3.0f)
         {
-            isAttacked = false;
+            IsInCombat = false;
             StartCoroutine(startAutoHeal());
             countDownSinceLastDamage = 0.0f;
         }
+        */
     }
 
     public abstract void TakeDamage(Agent origin, float damage);
 
     public virtual void Die()
     {
-        onDeath?.Invoke(this);
+        onDeath?.Invoke();
     }
 
     public virtual void Respawn()
     {
-        onRespawned?.Invoke(this);
+        onRespawned?.Invoke();
     }
 
     IEnumerator startAutoHeal()
     {
-        while(Health<_maxHealth && !isAttacked)
+        while(Health<_maxHealth && !IsInCombat)
         {
             Health+= _healingRate;
             if(Health > _maxHealth)
