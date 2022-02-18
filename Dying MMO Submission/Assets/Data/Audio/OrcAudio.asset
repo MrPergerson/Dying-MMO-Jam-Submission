@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e1cc76e5fd5737e47843ed43c007cd2a, type: 3}
-  m_Name: DefaultAgentAudioData
+  m_Name: OrcAudio
   m_EditorClassIdentifier: 
   footsteps:
     defaultFootsteps:
@@ -39,22 +39,15 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 012b6ed32a8145442b6d76bb50a56d65, type: 3}
   aggro: []
   attack:
-  - {fileID: 8300000, guid: edff67e0fa357234a8805b38db7d1019, type: 3}
-  - {fileID: 8300000, guid: e0be50b90fc437b4b9e3b05341f408ab, type: 3}
-  - {fileID: 8300000, guid: 37cc19153aecd7948826234b4db19218, type: 3}
-  - {fileID: 8300000, guid: a1e56b70f932ad143a67b2841d0a6b8e, type: 3}
-  - {fileID: 8300000, guid: 4ed6319ebb77da341808d52e35985f0e, type: 3}
-  - {fileID: 8300000, guid: 5a6afd69e6b9c96478853579225bf0f7, type: 3}
-  punch:
-  - {fileID: 8300000, guid: 50d818e1b83e69c459bc5add7020d2fa, type: 3}
-  - {fileID: 8300000, guid: be65896525f20f14aa17e79bdb2c9203, type: 3}
-  - {fileID: 8300000, guid: 8da987f1b743073499c253e6cf336389, type: 3}
+  - {fileID: 8300000, guid: 2cc94605b6f330944aa1e2a495a8137d, type: 3}
+  - {fileID: 8300000, guid: bee079857dd71d546a8ab1f662e051ef, type: 3}
+  - {fileID: 8300000, guid: e8fc3c4f17f64bf498940395ca46e4e6, type: 3}
+  - {fileID: 8300000, guid: b93662b8b7250bf40ba8618fcb93a64b, type: 3}
   damaged: []
   death: []
   audioMixer: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
   footstepOverride: {fileID: 4995412392367245536, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
   aggroOverride: {fileID: 0}
   attackOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
-  punchOverride: {fileID: 0}
   damagedOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
   deathOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}

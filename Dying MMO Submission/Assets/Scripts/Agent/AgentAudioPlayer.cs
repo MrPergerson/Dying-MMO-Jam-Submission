@@ -121,4 +121,30 @@ public class AgentAudioPlayer : MonoBehaviour, IAudioPlayer
         }
     }
 
+    public void PlayAttackSound()
+    {
+        if (agentAudioData != null && agentAudioData.AttackAudio.Count > 0)
+        {
+            var attackSound = agentAudioData.AttackAudio[0];
+            var attackMixer = agentAudioData.AttackAudioMixerOverride != null ? agentAudioData.AttackAudioMixerOverride : agentAudioData.AudioMixer;
+            if (attackSound != null && attackMixer != null)
+            {
+                PlayAudioClip(attackSound, attackMixer);
+            }
+        }
+    }
+
+    public void PlayPunchSound()
+    {
+        if (agentAudioData != null && agentAudioData.PunchAudio.Count > 0)
+        {
+            var clip = agentAudioData.PunchAudio[0];
+            var mixer = agentAudioData.PunchAudioMixerOverride != null ? agentAudioData.PunchAudioMixerOverride : agentAudioData.AudioMixer;
+            if (clip != null)
+            {
+                PlayAudioClip(clip, mixer);
+            }
+        }
+    }
+
 }
