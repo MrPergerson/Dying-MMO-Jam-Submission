@@ -88,20 +88,23 @@ public class EnemyAIBrain : NPC
         switch (index)
         {
             case 0:
-                Animator.SetTrigger("Ability1");
-                break;
-            case 1:
-                Animator.SetTrigger("Ability2");
-                break;
-            case 2:
-                Animator.SetTrigger("Ability3");
-                break;
-            case 3:
-                Animator.SetTrigger("Ability4");
+                Animator.SetTrigger("Ability1");   
                 break;
             default:
                 Animator.SetTrigger("Ability1");
                 break;
         }
+    }
+
+    public override void Respawn()
+    {
+        base.Respawn();
+        Animator.SetBool("IsDead", false);
+    }
+
+    public override void Die()
+    {
+        base.Die();
+        Animator.SetBool("IsDead", true);
     }
 }

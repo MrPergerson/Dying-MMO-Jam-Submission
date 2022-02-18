@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,9 +9,11 @@ public abstract class Agent : MonoBehaviour
     [SerializeField] protected float _health = 100;
     protected float _maxHealth;
     [SerializeField] protected float _healingRate = 10;
+    [SerializeField, ReadOnly] public bool isAlive = true;
     protected AgentMoveToTarget move;
     protected Animator _animator;
     public Agent threat;
+
 
 
     public delegate void HealthChanged(float health);

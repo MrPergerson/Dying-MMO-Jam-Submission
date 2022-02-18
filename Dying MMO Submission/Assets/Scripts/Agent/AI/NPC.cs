@@ -14,6 +14,7 @@ public class NPC : Agent
     protected State currentState;
     public IdleState idleState = new IdleState();
     public AttackState attackState = new AttackState();
+    public DeathState deathState = new DeathState();
 
     protected override void Awake()
     {
@@ -43,7 +44,7 @@ public class NPC : Agent
     // only supports one threat atm
     public override void AddThreat(Agent threat)
     {
-        if (this.threat == null)
+        if (this.threat == null && isAlive)
         {
             this.threat = threat;
             SwitchState(attackState);
@@ -87,7 +88,7 @@ public class NPC : Agent
     public override void Die()
     {
         base.Die();
-        SwitchState(idleState);
+        SwitchState(deathState);
         StartCoroutine(DeactivateNPC());
 
     }
@@ -96,7 +97,7 @@ public class NPC : Agent
     // has to do with the ProcessCombatAbilities() in AgentAttack not stopping in time
     IEnumerator DeactivateNPC()
     {
-        yield return new WaitForSeconds(.8f);
+        yield return new WaitForSeconds(5f);
         this.gameObject.SetActive(false);
     }
 
