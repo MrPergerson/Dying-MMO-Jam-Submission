@@ -32,7 +32,7 @@ public class AgentAttack : MonoBehaviour
     private GameObject vfxContainer;
     private Agent agent;
 
-    private Agent Target { get { return _target; } set { _target = value; } }
+    public Agent Target { get { return _target; } set { _target = value; } }
     private List<Agent> targets;
 
 
@@ -100,7 +100,7 @@ public class AgentAttack : MonoBehaviour
             // follow target if they run away
 
             // stop attack if distance is too far
-            if (Vector3.Distance(this.transform.position, Target.transform.position) > AttackDistance)
+            if (Target==null || Vector3.Distance(this.transform.position, Target.transform.position) > AttackDistance)
             {
                 EndCombat();
             }
@@ -173,11 +173,15 @@ public class AgentAttack : MonoBehaviour
     {
         if(agent.IsInCombat)
         {
-            Target.onDeath -= EndCombat;
-            Target = null;
+            if (Target != null)
+            {
+                Target.onDeath -= EndCombat;
+                Target = null;
+            }
             agent.IsInCombat = false;
             onAttackEnded?.Invoke();
-            StopCoroutine(cProcessCombatAbilities);
+            if(cProcessCombatAbilities!=null)
+                StopCoroutine(cProcessCombatAbilities);
         }
 
         //resetAnimatorParams();

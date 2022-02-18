@@ -25,7 +25,7 @@ public class AgentMoveToTarget : MonoBehaviour
     {
         navAgent.SetDestination(destination);
         targetLocation = destination;
-        navAgent.stoppingDistance = 0;
+        navAgent.stoppingDistance = 2f;
         isMoving = true;
         agent.Animator.SetFloat("Vertical", 1);
         StopAllCoroutines();
@@ -35,6 +35,7 @@ public class AgentMoveToTarget : MonoBehaviour
 
     public void SetDestination(Vector3 destination, float stoppingDistance)
     {
+        if (stoppingDistance == 0) stoppingDistance = 0.5f;
         navAgent.SetDestination(destination);
         navAgent.stoppingDistance = stoppingDistance;
         targetLocation = destination;
@@ -48,6 +49,7 @@ public class AgentMoveToTarget : MonoBehaviour
 
     public void SetDestination(Agent targetAgent, float stoppingDistance, DestinationToAgentCompleted OnDestinationCompleted)
     {
+        if (stoppingDistance == 0) stoppingDistance = 0.5f;
         //Debug.Log("setting destination");
         navAgent.SetDestination(targetAgent.transform.position);
         targetLocation = targetAgent.transform.position;
@@ -70,7 +72,7 @@ public class AgentMoveToTarget : MonoBehaviour
         {
             //var remainingDistance = GetPathRemainingDistance(navAgent);
             var remainingDistance = Vector3.Distance(transform.position, targetLocation);
-            //Debug.Log("remaining distance-" + remainingDistance+", "+ navAgent.stoppingDistance);
+            //Debug.Log("["+gameObject.name+"] remaining distance-" + remainingDistance+", "+ navAgent.stoppingDistance);
             if (distanceCheckErrors >= 5)
             {
                 Debug.LogError(gameObject.name + " in AgentMoveToTarget.cs -> CheckForDestinationCompleted(): Too many distanceErrorChecks. " +
@@ -84,11 +86,12 @@ public class AgentMoveToTarget : MonoBehaviour
             }
 
             
-            if (remainingDistance < .5)
+            if (remainingDistance < navAgent.stoppingDistance)
             {
                 destinationReached = true;
                 StopMoving();
-                //lookAroundAndStartAttack();
+                if(GetComponent<PlayerController>() != null)
+                    lookAroundAndStartAttack();
             }
 
             yield return null;// new WaitForSeconds(.1f);

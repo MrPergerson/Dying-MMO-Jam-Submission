@@ -21,7 +21,7 @@ public class AgentAudioPlayer : MonoBehaviour, IAudioPlayer
     {
         audioSourceContainer = new GameObject("Agent AudioSource");
         audioSourceContainer.transform.parent = this.transform;
-        audioSourceContainer.transform.position = Vector3.zero + Vector3.up;
+        audioSourceContainer.transform.localPosition= Vector3.zero+ Vector3.up;
         groundMask = LayerMask.GetMask("Ground");
     }
 
