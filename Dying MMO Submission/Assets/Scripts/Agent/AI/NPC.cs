@@ -35,6 +35,7 @@ public class NPC : Agent
 
     public void SwitchState(State state)
     {
+        currentState.ExitState(this);
         currentState = state;
         state.EnterState(this);
     }
@@ -46,20 +47,19 @@ public class NPC : Agent
         {
             this.threat = threat;
             SwitchState(attackState);
-
-
         }
     }
 
     public override void RemoveThreat()
     {
         threat = null;
-        SwitchState(idleState);
     }
 
-    public override void TakeDamage(Agent origin, float damage)
+    public override void TakeDamage(Agent threat, float damage)
     {
-        //
+        AddThreat(threat);
+        //audioPlayer.playDamagedSound();
+        Health -= damage;
     }
 
     public override void PlayCombatAnimation(int index)
@@ -83,4 +83,28 @@ public class NPC : Agent
                 break;
         }
     }
+
+    public override void Die()
+    {
+        base.Die();
+        SwitchState(idleState);
+        StartCoroutine(DeactivateNPC());
+
+    }
+
+    //this is a hack. Without this, all agents will no longer attack after one enemy dies.
+    // has to do with the ProcessCombatAbilities() in AgentAttack not stopping in time
+    IEnumerator DeactivateNPC()
+    {
+        yield return new WaitForSeconds(.8f);
+        this.gameObject.SetActive(false);
+    }
+
+    public override void Respawn()
+    {
+        base.Respawn();
+        SwitchState(idleState);
+        this.gameObject.SetActive(true);
+    }
+
 }

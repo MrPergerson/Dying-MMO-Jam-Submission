@@ -16,8 +16,6 @@ public class EnemyAIBrain : NPC
     public Vector3 guardPosition;
     private AgentAudioPlayer audioPlayer;
 
-
-
     protected override void Awake()
     {
         base.Awake();
@@ -33,13 +31,6 @@ public class EnemyAIBrain : NPC
         base.Start();
         layerMask = LayerMask.GetMask("Ground, NPC, Player");
 
-    }
-
-    public override void TakeDamage(Agent threat, float damage)
-    {
-        AddThreat(threat);
-        audioPlayer.playDamagedSound();
-        Health -= damage;
     }
 
     IEnumerator waitAndFollow()
@@ -92,18 +83,6 @@ public class EnemyAIBrain : NPC
 
     }
     
-    public override void Die()
-    {
-        base.Die();
-        this.gameObject.SetActive(false);
-    }
-
-    public override void Respawn()
-    {
-        base.Respawn();
-        this.gameObject.SetActive(true);
-    }
-
     public override void PlayCombatAnimation(int index)
     {
         switch (index)

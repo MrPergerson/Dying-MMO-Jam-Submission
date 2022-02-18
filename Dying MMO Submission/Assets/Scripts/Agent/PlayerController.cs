@@ -73,6 +73,7 @@ public class PlayerController : Agent
                     move.SetDestination(threat, 2, onDestinationToAgentCompleted);
 
                     threat.onDeath += attackAbility.EndCombat;
+                    threat.onDeath += RemoveThreat;
 
                 }
                 else
@@ -140,7 +141,7 @@ public class PlayerController : Agent
 
     IEnumerator startAutoHeal()
     {
-        while (Health < _maxHealth && attackAbility.isInCombat)
+        while (Health < _maxHealth && attackAbility.IsInCombat)
         {
             Health += _healingRate;
             if (Health > _maxHealth)

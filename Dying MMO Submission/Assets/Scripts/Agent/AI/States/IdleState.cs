@@ -4,6 +4,11 @@ public class IdleState : State
 {
     public override void EnterState(NPC npc)
     {
+        npc.RemoveThreat();
+    }
+
+    public override void ExitState(NPC npc)
+    {
         //
     }
 

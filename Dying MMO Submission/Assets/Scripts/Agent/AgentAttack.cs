@@ -16,7 +16,8 @@ public class AgentAttack : MonoBehaviour
     [Header("Debug")]
     [SerializeField, ReadOnly] private Agent _target;
     [SerializeField] bool playsAudio = true;
-    public bool isInCombat = false;
+    public bool _isInCombat = false;
+
 
     private bool currentAbilityCancelled = false;
 
@@ -31,14 +32,15 @@ public class AgentAttack : MonoBehaviour
     private GameObject vfxContainer;
     private Agent agent;
 
-    private Agent Target { get { return _target; } set { _target = value; } }
     private List<Agent> targets;
 
     private IEnumerator cPerformSimpleAttack;
     private IEnumerator cProcessCombatAbilities;
 
     public delegate void AttackEnded();
-    public event AttackEnded onAttackEnded;
+    //public event AttackEnded onAttackEnded;
+    private Agent Target { get { return _target; } set { _target = value; } }
+    public bool IsInCombat { get { return _isInCombat; } set { _isInCombat = value; } }
 
     private void Awake()
     {
@@ -89,7 +91,7 @@ public class AgentAttack : MonoBehaviour
     {
         ProcessCoolDowns();
 
-        if(isInCombat)
+        if(IsInCombat)
         {
             LookAtTarget();
  
@@ -107,10 +109,10 @@ public class AgentAttack : MonoBehaviour
     {
         if (!target.Equals(Target))
         {
-            Debug.Log("Entered combat with " + target.name);
+            //Debug.Log(this + " Entered combat with " + target.name);
             Target = target;
             
-            isInCombat = true;
+            IsInCombat = true;
 
             /*
             // I'll let you pick and choose what to keep and remove
@@ -161,11 +163,13 @@ public class AgentAttack : MonoBehaviour
 
     public void EndCombat()
     {
-        if(isInCombat)
+        // this is getting called twice
+        if (IsInCombat)
         {
             Target = null;
-            isInCombat = false;
-            onAttackEnded?.Invoke();
+            IsInCombat = false;
+            currentAbilityCancelled = true;
+            //onAttackEnded?.Invoke();
             StopCoroutine(cProcessCombatAbilities);
         }
 
@@ -209,8 +213,8 @@ public class AgentAttack : MonoBehaviour
     // Delete this comment after you read it
     // Feel free to remove or keep the comments in this function
     IEnumerator ProcessCombatAbilities()
-    {
-        while(isInCombat)
+    {     
+        while(IsInCombat)
         {
             // Assign the default ability
             currentCombatAbility = combatAbilitySet.abilities[0];
@@ -240,6 +244,8 @@ public class AgentAttack : MonoBehaviour
                 return currentAbilityCancelled || currentCombatAbility.TimeUntilCoolDownEnds <= 0;
                 });
         }
+
+        print(this + " coroutine has ended");
     }
 
     private void SetCombatAbilityCoolDown(CombatAbility ability)
@@ -251,7 +257,7 @@ public class AgentAttack : MonoBehaviour
     // Called by animator event
     public void DamageTarget()
     {
-        if(isInCombat)
+        if(IsInCombat)
         {
             Target.TakeDamage(this.agent, currentCombatAbility.Damage);
             if(playsAudio)
