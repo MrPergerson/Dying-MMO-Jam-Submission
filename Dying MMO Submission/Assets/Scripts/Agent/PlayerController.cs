@@ -13,7 +13,8 @@ public class PlayerController : Agent
     private AgentAttack attackAbility;
     [SerializeField] LayerMask layerMask;
 
-
+    // Added handleMouseOnUI
+    private HandleMouseOnUI handleMouseOnUI;
     protected override void Awake()
     {
         base.Awake();
@@ -33,6 +34,8 @@ public class PlayerController : Agent
         controls.Main.CombatAbility3.performed += PerformCombatAbility;
         controls.Main.CombatAbility4.performed += PerformCombatAbility;
         controls.Main.EndGame.performed += QuitApp;
+
+        handleMouseOnUI = GetComponent<HandleMouseOnUI>();// Added
     }
 
     private void OnEnable()
@@ -52,7 +55,8 @@ public class PlayerController : Agent
         var ray = Camera.main.ScreenPointToRay(mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, layerMask))
+        // Added && !handleMouseOnUI.IsMouseOnUI() to check if mouse is NOT on UI
+        if (Physics.Raycast(ray, out hit, layerMask) && !handleMouseOnUI.IsMouseOnUI())
         {
             var tag = hit.collider.tag;
             if (tag == "Ground" || tag == "Ground_Grass" || tag == "Ground_Stone")

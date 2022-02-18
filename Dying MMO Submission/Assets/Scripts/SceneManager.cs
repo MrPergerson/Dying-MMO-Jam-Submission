@@ -151,14 +151,14 @@ public class SceneManager : Manager
         isProcessingLoad = true;
         CurrentLevel = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
 
-        StartCoroutine(LoadSceneAsync("PersistentGameObjects", true));
+        StartCoroutine(LoadSceneAsync("UIScalingTest", true));
 
         while (isProcessingLoad)
         {
             yield return null;
         }
 
-        var persistentScene = UnityEngine.SceneManagement.SceneManager.GetSceneByName("PersistentGameObjects");
+        var persistentScene = UnityEngine.SceneManagement.SceneManager.GetSceneByName("UIScalingTest");
         UnityEngine.SceneManagement.SceneManager.SetActiveScene(persistentScene);
 
         var gameManager = FindObjectOfType<GameManager>();
