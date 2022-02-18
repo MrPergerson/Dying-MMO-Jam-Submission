@@ -8,30 +8,26 @@ public abstract class Agent : MonoBehaviour
     [SerializeField] protected float _health = 100;
     protected float _maxHealth;
     [SerializeField] protected float _healingRate = 10;
-    [SerializeField] protected AgentAudioData _audioData;
     protected AgentMoveToTarget move;
     protected Animator _animator;
+    public Agent threat;
 
 
     public delegate void HealthChanged(float health);
     public event HealthChanged onHealthChanged;
 
-    public delegate  void Death(Agent agent);
+    public delegate void Death();
     public event Death onDeath;
 
-    public delegate void Respawned(Agent agent);
+    public delegate void Respawned();
     public event Respawned onRespawned;
 
-    bool isAttacked = false;
     float countDownSinceLastDamage = 0.0f;
+
 
     public float Health { 
         get { return _health; } 
         protected set {
-            if (_health > value)
-            {
-                isAttacked = true;
-            }
             _health = value;
             onHealthChanged?.Invoke(Health);
             if (_health <= 0)
@@ -39,11 +35,6 @@ public abstract class Agent : MonoBehaviour
                 Die();
             }
         } 
-    }
-
-    public AgentAudioData AudioData
-    {
-        get { return _audioData; }
     }
 
     public Animator Animator
@@ -54,7 +45,6 @@ public abstract class Agent : MonoBehaviour
     protected virtual void Awake()
     {
         move = GetComponent<AgentMoveToTarget>();
-        move.audioData = AudioData;
 
         _animator = GetComponent<Animator>();
         _maxHealth = Health;
@@ -64,9 +54,10 @@ public abstract class Agent : MonoBehaviour
     {
     }
 
-    void Update()
+    protected virtual void Update()
     {
-        if (isAttacked)
+        /*
+        if (IsInCombat)
         {
             //isAttacked = false;
             countDownSinceLastDamage += Time.deltaTime;
@@ -76,32 +67,40 @@ public abstract class Agent : MonoBehaviour
 
         if (countDownSinceLastDamage > 3.0f)
         {
-            isAttacked = false;
+            IsInCombat = false;
             StartCoroutine(startAutoHeal());
             countDownSinceLastDamage = 0.0f;
         }
+        */
+    }
+
+    public virtual void AddThreat(Agent threat)
+    {
+        if (this.threat == null)
+        {
+            this.threat = threat;
+
+        }
+    }
+
+    public virtual void RemoveThreat()
+    {
+        threat = null;
     }
 
     public abstract void TakeDamage(Agent origin, float damage);
 
     public virtual void Die()
     {
-        onDeath?.Invoke(this);
+        onDeath?.Invoke();
     }
 
     public virtual void Respawn()
     {
-        onRespawned?.Invoke(this);
+        onRespawned?.Invoke();
     }
 
-    IEnumerator startAutoHeal()
-    {
-        while(Health<_maxHealth && !isAttacked)
-        {
-            Health+= _healingRate;
-            if(Health > _maxHealth)
-                Health = _maxHealth;
-            yield return new WaitForSeconds(1.0f);
-        }
-    }
+
+
+    public abstract void PlayCombatAnimation(int index);
 }

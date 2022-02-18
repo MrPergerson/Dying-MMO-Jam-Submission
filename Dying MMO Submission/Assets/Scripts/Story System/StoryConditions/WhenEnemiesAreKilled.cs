@@ -16,7 +16,7 @@ public class WhenEnemiesAreKilled : StoryCondition
 
     private bool conditionIsReady = false;
 
-
+    /*
     [Button("Update Enemies list")]
     private void UpdateEnemyList()
     {
@@ -48,6 +48,7 @@ public class WhenEnemiesAreKilled : StoryCondition
 
         conditionIsReady = true;
     }
+    */
 
     [Button("Clear found data")]
     private void ClearData()
@@ -83,11 +84,13 @@ public class WhenEnemiesAreKilled : StoryCondition
     // does this act as a setup condition as well?
     public override void InitializeCondition()
     {
-        UpdateEnemyList();
+        //UpdateEnemyList();
         //RespawnEnemies();
         conditionMet = false;
     }
 
-
-
+    public override void DeinitializeCondition()
+    {
+        // close all events
+    }
 }

@@ -29,4 +29,9 @@ public class WhenTimeHasPassed : StoryCondition
         timeLeft = timeInSecondsToWait;
         conditionMet = false;
     }
+
+    public override void DeinitializeCondition()
+    {
+        // nothing
+    }
 }

@@ -6,21 +6,30 @@ using UnityEngine.SceneManagement;
 
 public class StorySystem : MonoBehaviour
 {
+    [Title("Setup")]
+    [SerializeField, LabelText("Start Chapter")] private int _currentChapter = 1;
+    //[SerializeField] private int startCondition = 1;
+
+    [Title("Status")]
     [SerializeField, ReadOnly, LabelText("Current Chapter")] private string currentChapterName;
     [SerializeField, ReadOnly] storyState CurrentStoryState = storyState.NotStarted;
-    //[TableList]
-    [SerializeField]
+
+    
+    [Title("Chapters In Story")][SerializeField]
     List<Chapter> chapters = new List<Chapter>();
 
     public delegate void ChapterChanged();
     public event ChapterChanged onChapterChanged;
 
-    private int CurrentChapter { get; set; } 
+    private int CurrentChapter { get { return _currentChapter; } set { _currentChapter = value; } } 
     private enum storyState { NotStarted, TransitioningToNextChapter, Paused, Ended }
 
     private void InitializeStory()
     {
-        CurrentChapter = -1;
+        CurrentChapter -= 2;
+        if (CurrentChapter < -1) CurrentChapter = -1;
+        if (CurrentChapter >= chapters.Count) CurrentChapter = chapters.Count - 1;
+
         CurrentStoryState = storyState.NotStarted;
 
         foreach (var chapter in chapters)
@@ -28,6 +37,11 @@ public class StorySystem : MonoBehaviour
             chapter.gameObject.SetActive(false);
         }
 
+    }
+
+    public void InitializeStoryConditions()
+    {
+        chapters[CurrentChapter].InitializeCurrentStoryCondition();
     }
 
     private void BeginChapter()

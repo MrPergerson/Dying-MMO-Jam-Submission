@@ -37,6 +37,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 2f821228c079e9842ab04644892586c9, type: 3}
     - {fileID: 8300000, guid: a01e640ca432e4e448b1566ad60331b9, type: 3}
     - {fileID: 8300000, guid: 012b6ed32a8145442b6d76bb50a56d65, type: 3}
+  aggro: []
   attack:
   - {fileID: 8300000, guid: 7c3482c3651c3e84e9da4950594b5aa0, type: 3}
   - {fileID: 8300000, guid: 2f0ea4fa422ad9449ba5efc8c8516ad6, type: 3}
@@ -48,6 +49,7 @@ MonoBehaviour:
   death: []
   audioMixer: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
   footstepOverride: {fileID: 4995412392367245536, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  aggroOverride: {fileID: 0}
   attackOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
   damagedOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
   deathOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}

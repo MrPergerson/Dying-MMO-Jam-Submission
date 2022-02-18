@@ -16,17 +16,20 @@ public class AgentAudioData : ScriptableObject
         public List<AudioClip> stoneFootsteps;
     }
     [SerializeField] private FootstepSet footsteps;
+    [SerializeField] private List<AudioClip> aggro;
     [SerializeField] private List<AudioClip> attack;
     [SerializeField] private List<AudioClip> damaged;
     [SerializeField] private List<AudioClip> death;
     [Title("Audio Mixers", "Tie all sounds to one audio mixer. Use the overrides to target specific sounds.", bold: true)]
     [SerializeField] private AudioMixerGroup audioMixer;
     [SerializeField] private AudioMixerGroup footstepOverride;
+    [SerializeField] private AudioMixerGroup aggroOverride;
     [SerializeField] private AudioMixerGroup attackOverride;
     [SerializeField] private AudioMixerGroup damagedOverride;
     [SerializeField] private AudioMixerGroup deathOverride;
 
     public FootstepSet FootStepAudio { get { return footsteps; } }
+    public List<AudioClip> AggroAudio { get { return aggro; } }
     public List<AudioClip> AttackAudio { get { return attack; } }
     public List<AudioClip> DamagedAudio { get { return damaged; } }
     public List<AudioClip> DeathAudio { get { return death; } }
