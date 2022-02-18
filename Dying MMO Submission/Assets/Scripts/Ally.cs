@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Ally : Agent
+public class Ally : NPC
 {
 
     public bool followPlayer = false;
@@ -16,26 +16,27 @@ public class Ally : Agent
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
         playerController=GameObject.FindObjectOfType<PlayerController>(); 
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        // The party system should assign the Ally's target
         if (followPlayer)
         {
             if (playerController != null)
             {
-                if (playerController.IsInCombat)
+                if (playerController.attackAbility.IsInCombat)
                 {
                     Agent target = playerController.gameObject.GetComponent<AgentAttack>().Target;
                     //or check other targets nearby
                     if (target != null)
                     {
                         AgentMoveToTarget.DestinationToAgentCompleted onDestinationToAgentCompleted = GetComponent<AgentAttack>().EnterCombat;
-                        move.SetDestination(target, GetComponent<AgentAttack>().AttackDistance, onDestinationToAgentCompleted);
+                        move.SetDestination(target, 2, onDestinationToAgentCompleted);
                     }
                 }
                 else

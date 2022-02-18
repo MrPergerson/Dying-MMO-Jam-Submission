@@ -32,7 +32,6 @@ public class AgentAttack : MonoBehaviour
     private GameObject vfxContainer;
     private Agent agent;
 
-    public Agent Target { get { return _target; } set { _target = value; } }
     private List<Agent> targets;
 
     private IEnumerator cPerformSimpleAttack;
@@ -40,7 +39,7 @@ public class AgentAttack : MonoBehaviour
 
     public delegate void AttackEnded();
     //public event AttackEnded onAttackEnded;
-    private Agent Target { get { return _target; } set { _target = value; } }
+    public Agent Target { get { return _target; } set { _target = value; } }
     public bool IsInCombat { get { return _isInCombat; } set { _isInCombat = value; } }
 
     private void Awake()

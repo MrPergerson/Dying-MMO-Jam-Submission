@@ -61,11 +61,11 @@ public class EnemyAIBrain : NPC
                 AddThreat(playerController);
                 cooldownTimeRemaining = 2.0f;
             }
-            /*else if (!waitingToFollow && Vector3.Distance(guardPosition, playerController.gameObject.transform.position) < followRadius)
+            else if (!waitingToFollow && Vector3.Distance(guardPosition, playerController.gameObject.transform.position) < followRadius)
             {
                 //move.SetDestination(playerController.gameObject.transform.position, 0);
                 StartCoroutine(waitAndFollow());
-            }*/
+            }
             else
             {
                 move.SetDestination(guardPosition, 0);
@@ -73,7 +73,7 @@ public class EnemyAIBrain : NPC
         }
         if(cooldownTimeRemaining>0.0f)
             cooldownTimeRemaining -= Time.deltaTime;
-            */
+         */
     }
 
     void OnDrawGizmosSelected()
