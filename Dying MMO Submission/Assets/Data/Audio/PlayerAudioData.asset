@@ -13,9 +13,44 @@ MonoBehaviour:
   m_Name: PlayerAudioData
   m_EditorClassIdentifier: 
   footsteps:
-    defaultFootsteps: []
-    grassFootsteps: []
-    stoneFootsteps: []
-  attack: []
+    defaultFootsteps:
+    - {fileID: 8300000, guid: 28fc5f51f52fccd4db8e9d84ab1312a6, type: 3}
+    - {fileID: 8300000, guid: 1aaed2ce7e1ff4d44aa28031f7eb3f70, type: 3}
+    - {fileID: 8300000, guid: 32b28453ab7beea4b8ab9cc37d85e0ef, type: 3}
+    - {fileID: 8300000, guid: b44e41dfbc6975d43892740ab55da3bf, type: 3}
+    - {fileID: 8300000, guid: 0efae02381d01ab4abfae5582e84af76, type: 3}
+    - {fileID: 8300000, guid: 66ff67fcf45343c4fb92e7b521e96c5d, type: 3}
+    - {fileID: 8300000, guid: fc7f2241361aab943b97f2ee7c629ea6, type: 3}
+    grassFootsteps:
+    - {fileID: 8300000, guid: 28fc5f51f52fccd4db8e9d84ab1312a6, type: 3}
+    - {fileID: 8300000, guid: 1aaed2ce7e1ff4d44aa28031f7eb3f70, type: 3}
+    - {fileID: 8300000, guid: 32b28453ab7beea4b8ab9cc37d85e0ef, type: 3}
+    - {fileID: 8300000, guid: b44e41dfbc6975d43892740ab55da3bf, type: 3}
+    - {fileID: 8300000, guid: 0efae02381d01ab4abfae5582e84af76, type: 3}
+    - {fileID: 8300000, guid: 66ff67fcf45343c4fb92e7b521e96c5d, type: 3}
+    - {fileID: 8300000, guid: fc7f2241361aab943b97f2ee7c629ea6, type: 3}
+    stoneFootsteps:
+    - {fileID: 8300000, guid: b54f6bea17257254591524052586c1da, type: 3}
+    - {fileID: 8300000, guid: f3932fcd88ffbe84aa8c5d803fb5a8b9, type: 3}
+    - {fileID: 8300000, guid: d2cb88f326fa87e4eb3b3f76fd09d4db, type: 3}
+    - {fileID: 8300000, guid: 148b59fefab2c9e42aba5c0a9cdb074e, type: 3}
+    - {fileID: 8300000, guid: 2f821228c079e9842ab04644892586c9, type: 3}
+    - {fileID: 8300000, guid: a01e640ca432e4e448b1566ad60331b9, type: 3}
+    - {fileID: 8300000, guid: 012b6ed32a8145442b6d76bb50a56d65, type: 3}
+    - {fileID: 8300000, guid: 77baf7feba99ed444a66ced0e5b8dc9a, type: 3}
+    - {fileID: 8300000, guid: f7fa95ebb3d99554da8387d15cafa029, type: 3}
+    - {fileID: 8300000, guid: 8084f391ecd370c4e8eefabb07078323, type: 3}
+  attack:
+  - {fileID: 8300000, guid: edff67e0fa357234a8805b38db7d1019, type: 3}
+  - {fileID: 8300000, guid: e0be50b90fc437b4b9e3b05341f408ab, type: 3}
+  - {fileID: 8300000, guid: 37cc19153aecd7948826234b4db19218, type: 3}
+  - {fileID: 8300000, guid: a1e56b70f932ad143a67b2841d0a6b8e, type: 3}
+  - {fileID: 8300000, guid: 4ed6319ebb77da341808d52e35985f0e, type: 3}
+  - {fileID: 8300000, guid: 5a6afd69e6b9c96478853579225bf0f7, type: 3}
   damaged: []
   death: []
+  audioMixer: {fileID: 24300002, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  footstepOverride: {fileID: 4995412392367245536, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  attackOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  damagedOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  deathOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
