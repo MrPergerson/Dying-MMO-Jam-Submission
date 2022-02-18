@@ -245,7 +245,7 @@ public class AgentAttack : MonoBehaviour
                 });
         }
 
-        print(this + " coroutine has ended");
+        //print(this + " coroutine has ended");
     }
 
     private void SetCombatAbilityCoolDown(CombatAbility ability)
