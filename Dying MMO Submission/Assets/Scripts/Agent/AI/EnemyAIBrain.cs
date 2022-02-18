@@ -57,14 +57,15 @@ public class EnemyAIBrain : NPC
             
             if(Vector3.Distance(playerController.gameObject.transform.position, transform.position) < GetComponent<AgentAttack>().AttackDistance)
             {
+                move.SetDestination(playerController.gameObject.transform.position);
                 AddThreat(playerController);
                 cooldownTimeRemaining = 2.0f;
             }
-            else if (!waitingToFollow && Vector3.Distance(guardPosition, playerController.gameObject.transform.position) < followRadius)
+            /*else if (!waitingToFollow && Vector3.Distance(guardPosition, playerController.gameObject.transform.position) < followRadius)
             {
                 //move.SetDestination(playerController.gameObject.transform.position, 0);
                 StartCoroutine(waitAndFollow());
-            }
+            }*/
             else
             {
                 move.SetDestination(guardPosition, 0);

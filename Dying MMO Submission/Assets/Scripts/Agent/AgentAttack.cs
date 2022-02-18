@@ -32,6 +32,7 @@ public class AgentAttack : MonoBehaviour
     private GameObject vfxContainer;
     private Agent agent;
 
+    public Agent Target { get { return _target; } set { _target = value; } }
     private List<Agent> targets;
 
     private IEnumerator cPerformSimpleAttack;
