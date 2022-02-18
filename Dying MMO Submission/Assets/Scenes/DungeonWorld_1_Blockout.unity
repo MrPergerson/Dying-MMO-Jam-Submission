@@ -29135,7 +29135,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f57590384f3123d47be2ca510d885e22, type: 2}
+  - {fileID: 2100000, guid: 7f7df0c4372b0d341a4241db04a850d4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -29400,7 +29400,7 @@ MonoBehaviour:
     IsBuilt: 0
   backfaces_: 0
   materials:
-  - {fileID: 2100000, guid: f57590384f3123d47be2ca510d885e22, type: 2}
+  - {fileID: 2100000, guid: 7f7df0c4372b0d341a4241db04a850d4, type: 2}
   originalMaterials: []
   editMode: 1
   recalculateTangents: 1
