@@ -887,6 +887,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7717744119086487219, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7717744119086487221, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
       propertyPath: _audioData
       value: 
@@ -986,6 +990,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7717744119086487219, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7717744119086487221, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
       propertyPath: _audioData
       value: 
@@ -1015,6 +1023,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7717744117946095276, guid: 834932d6db9bf9542801cfaf223a5e04, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7717744119086487218, guid: 834932d6db9bf9542801cfaf223a5e04, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1062,6 +1074,14 @@ PrefabInstance:
     - target: {fileID: 7717744119086487219, guid: 834932d6db9bf9542801cfaf223a5e04, type: 3}
       propertyPath: m_Name
       value: Ally
+      objectReference: {fileID: 0}
+    - target: {fileID: 7717744119086487219, guid: 834932d6db9bf9542801cfaf223a5e04, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8732896979418910936, guid: 834932d6db9bf9542801cfaf223a5e04, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 834932d6db9bf9542801cfaf223a5e04, type: 3}
@@ -1149,6 +1169,10 @@ PrefabInstance:
     - target: {fileID: 7717744119086487219, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
       propertyPath: m_Name
       value: Enemy (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7717744119086487219, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7717744119086487221, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
       propertyPath: _audioData
@@ -1341,6 +1365,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7717744119086487219, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7717744119086487221, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
       propertyPath: _audioData
       value: 
@@ -1373,6 +1401,10 @@ PrefabInstance:
     - target: {fileID: 1502830042276463372, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
       propertyPath: m_Name
       value: MusicPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502830042276463372, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1502830042276463373, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
       propertyPath: DopplerLevel
@@ -1495,6 +1527,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestFloor
       objectReference: {fileID: 0}
+    - target: {fileID: 2190486703503729375, guid: 9cf2648a44af88b4d9f41b717c0b4900, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cf2648a44af88b4d9f41b717c0b4900, type: 3}
 --- !u!1001 &5429939429526499020
@@ -1592,6 +1628,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CursorPoint
       objectReference: {fileID: 0}
+    - target: {fileID: 5429939429293052474, guid: d225d5219db0d8746931efa69f4e0dd6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5429939429293052475, guid: d225d5219db0d8746931efa69f4e0dd6, type: 3}
       propertyPath: m_Camera
       value: 
@@ -1608,6 +1648,10 @@ PrefabInstance:
     - target: {fileID: 6803392250194869380, guid: bda3c32a04494af48b261ba8b2ccc4d0, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6803392250194869380, guid: bda3c32a04494af48b261ba8b2ccc4d0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6803392250194869383, guid: bda3c32a04494af48b261ba8b2ccc4d0, type: 3}
       propertyPath: m_RootOrder
@@ -2351,6 +2395,10 @@ PrefabInstance:
     - target: {fileID: 7717744119086487219, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7717744119086487219, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7717744119086487221, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
       propertyPath: _audioData

@@ -3,11 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Ally : NPC
+[RequireComponent(typeof(AgentAttack))]
+public class Ally : Agent
 {
 
     public bool followPlayer = false;
     PlayerController playerController;
+    AgentAttack attackAbility;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        attackAbility = GetComponent<AgentAttack>();
+    }
+
+    public override void PlayCombatAnimation(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                Animator.SetTrigger("Ability1");
+                break;
+            case 1:
+                Animator.SetTrigger("Ability2");
+                break;
+            case 2:
+                Animator.SetTrigger("Ability3");
+                break;
+            case 3:
+                Animator.SetTrigger("Ability4");
+                break;
+            default:
+                Animator.SetTrigger("Ability1");
+                break;
+        }
+    }
 
     public override void TakeDamage(Agent origin, float damage)
     {
@@ -35,8 +65,10 @@ public class Ally : NPC
                     //or check other targets nearby
                     if (target != null)
                     {
-                        AgentMoveToTarget.DestinationToAgentCompleted onDestinationToAgentCompleted = GetComponent<AgentAttack>().EnterCombat;
+                        
+                        AgentMoveToTarget.DestinationToAgentCompleted onDestinationToAgentCompleted = attackAbility.EnterCombat;
                         move.SetDestination(target, 2, onDestinationToAgentCompleted);
+                        target.onDeath += attackAbility.EndCombat;
                     }
                 }
                 else

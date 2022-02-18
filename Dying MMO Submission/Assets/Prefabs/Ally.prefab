@@ -300,10 +300,7 @@ MonoBehaviour:
   _healingRate: 10
   isAlive: 1
   threat: {fileID: 0}
-  attackRange: 2
-  chaseTime: 2
-  attackAbility: {fileID: 0}
-  followPlayer: 0
+  followPlayer: 1
 --- !u!114 &7717744119086487222
 MonoBehaviour:
   m_ObjectHideFlags: 0
