@@ -107,7 +107,7 @@ public class AgentAudioPlayer : MonoBehaviour, IAudioPlayer
         audioSources[mixer].PlayOneShot(clip);  
     }
 
-    public void playDamageSound()
+    public void playDamagedSound()
     {
         if(agentAudioData != null && agentAudioData.DamagedAudio.Count > 0)
         {

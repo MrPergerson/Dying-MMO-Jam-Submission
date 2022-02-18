@@ -10,6 +10,7 @@ public abstract class Agent : MonoBehaviour
     [SerializeField] protected float _healingRate = 10;
     protected AgentMoveToTarget move;
     protected Animator _animator;
+    public Agent threat;
 
 
     public delegate void HealthChanged(float health);
@@ -21,18 +22,12 @@ public abstract class Agent : MonoBehaviour
     public delegate void Respawned();
     public event Respawned onRespawned;
 
-    public bool _isInCombat = false;
     float countDownSinceLastDamage = 0.0f;
 
-    public bool IsInCombat { get { return _isInCombat; } set { _isInCombat = value; } }
 
     public float Health { 
         get { return _health; } 
         protected set {
-            if (_health > value)
-            {
-                IsInCombat = true;
-            }
             _health = value;
             onHealthChanged?.Invoke(Health);
             if (_health <= 0)
@@ -59,7 +54,7 @@ public abstract class Agent : MonoBehaviour
     {
     }
 
-    void Update()
+    protected virtual void Update()
     {
         /*
         if (IsInCombat)
@@ -79,6 +74,20 @@ public abstract class Agent : MonoBehaviour
         */
     }
 
+    public virtual void AddThreat(Agent threat)
+    {
+        if (this.threat == null)
+        {
+            this.threat = threat;
+
+        }
+    }
+
+    public virtual void RemoveThreat()
+    {
+        threat = null;
+    }
+
     public abstract void TakeDamage(Agent origin, float damage);
 
     public virtual void Die()
@@ -91,14 +100,7 @@ public abstract class Agent : MonoBehaviour
         onRespawned?.Invoke();
     }
 
-    IEnumerator startAutoHeal()
-    {
-        while(Health<_maxHealth && !IsInCombat)
-        {
-            Health+= _healingRate;
-            if(Health > _maxHealth)
-                Health = _maxHealth;
-            yield return new WaitForSeconds(1.0f);
-        }
-    }
+
+
+    public abstract void PlayCombatAnimation(int index);
 }

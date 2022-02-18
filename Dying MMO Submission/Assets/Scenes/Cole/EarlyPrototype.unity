@@ -1063,7 +1063,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7717744119086487218, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.3
+      value: 7.6
       objectReference: {fileID: 0}
     - target: {fileID: 7717744119086487218, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1071,7 +1071,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7717744119086487218, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.96
+      value: 9.1
       objectReference: {fileID: 0}
     - target: {fileID: 7717744119086487218, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1250,7 +1250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7717744119086487218, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.2
+      value: 6.2
       objectReference: {fileID: 0}
     - target: {fileID: 7717744119086487218, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1258,7 +1258,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7717744119086487218, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.65
+      value: 18.1
       objectReference: {fileID: 0}
     - target: {fileID: 7717744119086487218, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1320,6 +1320,14 @@ PrefabInstance:
     - target: {fileID: 1502830042276463372, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
       propertyPath: m_Name
       value: MusicPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502830042276463373, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: DopplerLevel
+      value: 1.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502830042276463373, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1502830042276463374, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
       propertyPath: m_RootOrder
@@ -1602,7 +1610,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 6556564920e2a184b9ca90558946443f, type: 2}
     - target: {fileID: 6803392250194869389, guid: bda3c32a04494af48b261ba8b2ccc4d0, type: 3}
       propertyPath: playsAudio
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9117483405951437254, guid: bda3c32a04494af48b261ba8b2ccc4d0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2295,6 +2303,10 @@ PrefabInstance:
       propertyPath: _audioData
       value: 
       objectReference: {fileID: 11400000, guid: 4d77c3e398b805c4185c5c75e4ac479e, type: 2}
+    - target: {fileID: 7717744119086487221, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
+      propertyPath: attackRange
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7717744119086487221, guid: ccde48cecb433ce439eaec7cfced1f20, type: 3}
       propertyPath: followRadius
       value: 8
