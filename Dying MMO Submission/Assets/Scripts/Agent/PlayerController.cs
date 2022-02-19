@@ -36,6 +36,8 @@ public class PlayerController : Agent
         controls.Main.EndGame.performed += QuitApp;
 
         handleMouseOnUI = GetComponent<HandleMouseOnUI>();// Added
+
+        StartCoroutine(startAutoHeal());
     }
 
     private void OnEnable()
@@ -74,7 +76,7 @@ public class PlayerController : Agent
 
                     AgentMoveToTarget.DestinationToAgentCompleted onDestinationToAgentCompleted = attackAbility.EnterCombat;
                     // function requires attack distance, but this is a hack. Cole, remember to look back at this
-                    move.SetDestination(threat, 2, onDestinationToAgentCompleted);
+                    move.SetDestination(threat, 1, onDestinationToAgentCompleted);
 
                     threat.onDeath += attackAbility.EndCombat;
                     threat.onDeath += RemoveThreat;
@@ -125,6 +127,8 @@ public class PlayerController : Agent
     public override void Die()
     {
         base.Die();
+        isAlive = false;
+        SceneManager.Instance.RestartLevel();
         // scene will need to restart
     }
 
@@ -145,13 +149,17 @@ public class PlayerController : Agent
 
     IEnumerator startAutoHeal()
     {
-        while (Health < _maxHealth && attackAbility.IsInCombat)
+        while(isAlive)
         {
-            Health += _healingRate;
-            if (Health > _maxHealth)
-                Health = _maxHealth;
+            if (Health < _maxHealth && !attackAbility.IsInCombat)
+            {
+                Health += _healingRate;
+                if (Health > _maxHealth)
+                    Health = _maxHealth;
+            }
             yield return new WaitForSeconds(1.0f);
         }
+
     }
 
     public override void PlayCombatAnimation(int index)

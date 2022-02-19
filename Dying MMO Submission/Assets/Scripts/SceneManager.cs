@@ -172,6 +172,13 @@ public class SceneManager : Manager
         onPersistentSceneLoaded?.Invoke();
     }
 
+    [Button()]
+    public void RestartLevel()
+    {
+        //UnityEngine.SceneManagement.SceneManager.Get
+        LoadLevel(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+    }
+
     public void ReturnToMainMenu()
     {
         StartCoroutine(ReturnToMainMenuAsync());
