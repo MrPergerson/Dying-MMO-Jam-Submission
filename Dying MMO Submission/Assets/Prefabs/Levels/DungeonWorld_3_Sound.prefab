@@ -44,12 +44,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1502830042276463372, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1502830042276463373, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 233b4f4459952254a8604e22444aebec, type: 3}
+      objectReference: {fileID: 8300000, guid: 7b0eeaa7e895a644285859fbfc30e662, type: 3}
+    - target: {fileID: 1502830042276463373, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -691381137282789585, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
     - target: {fileID: 1502830042276463374, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
       propertyPath: m_RootOrder
       value: 0

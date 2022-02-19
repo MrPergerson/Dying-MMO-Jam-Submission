@@ -18,7 +18,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9ca20f706c13cc54fa60240f736c9b55, type: 3}
   - {fileID: 8300000, guid: 1cd19ab6f45dd2c488cf6f45d2df834a, type: 3}
   - {fileID: 8300000, guid: 1129cbb63339a8a468a50290f659238f, type: 3}
-  _audioMixer: {fileID: 0}
-  _alertOverride: {fileID: 0}
-  _chatPingOverride: {fileID: 0}
-  _buttonAudioSetOverride: {fileID: 0}
+  _audioMixer: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  _alertOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  _chatPingOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  _buttonAudioSetOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}

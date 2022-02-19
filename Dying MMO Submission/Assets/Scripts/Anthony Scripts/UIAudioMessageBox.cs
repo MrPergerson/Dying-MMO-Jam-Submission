@@ -10,7 +10,7 @@ public class UIAudioMessageBox : MonoBehaviour, IAudioPlayer
     [SerializeField] private UIAudioData uiAudioData;
 
     private Dictionary<AudioMixerGroup, AudioSource> audioSources = new Dictionary<AudioMixerGroup, AudioSource>();
-    private AudioSource audioSource;
+    private AudioSource audioPlayer;
     private GameObject audioSourceContainer;
 
     [TitleGroup("Debug")]
@@ -18,7 +18,7 @@ public class UIAudioMessageBox : MonoBehaviour, IAudioPlayer
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        audioPlayer = GetComponent<AudioSource>();
     }
 
     public void PlayAudioClip(AudioClip clip, AudioMixerGroup mixer)
@@ -39,7 +39,7 @@ public class UIAudioMessageBox : MonoBehaviour, IAudioPlayer
 
     public void PlayAudioClip(AudioClip clip)
     {
-        audioSource.PlayOneShot(clip);
+        audioPlayer.PlayOneShot(clip);
     }
 
     private void CreateNewAudioSource(AudioMixerGroup mixer)
