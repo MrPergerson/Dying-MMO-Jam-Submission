@@ -202,14 +202,21 @@ public class GameManager : Manager
     {
         persistentSceneLoaded = true;
 
+        DialogueManagerAS2.GetInstance().AwakeManager();
+        StoryManager.GetInstance().AwakeManager();
+        GameManager.Instance.AwakeManager();
+        SceneManager.Instance.AwakeManager();
+        ActionBarManager.GetInstance().AwakeManager();
+        PartySystem.Instance.AwakeManager();
+        
         var managers = FindObjectsOfType<Manager>();
 
         foreach(var manager in managers)
         {
-            manager.AwakeManager();
+           // manager.AwakeManager();
             managerList.Add(manager);
         }
-
+        
         onAllManagersInitialized?.Invoke();
     }
 

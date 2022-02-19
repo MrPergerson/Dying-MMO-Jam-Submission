@@ -38,7 +38,8 @@ public class StoryManager : Manager
 
     public override void OnNewLevelLoaded()
     {
-        story.InitializeStoryConditions();
+        if(story.CurrentStoryState != StorySystem.storyState.Ended)
+            story.InitializeStoryConditions();
     }
 
     public override void OnSceneChangeRequested()

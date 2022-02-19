@@ -90,8 +90,8 @@ public class AgentMoveToTarget : MonoBehaviour
             {
                 destinationReached = true;
                 StopMoving();
-                if(GetComponent<PlayerController>() != null)
-                    lookAroundAndStartAttack();
+                //if(GetComponent<PlayerController>() != null)
+                    //lookAroundAndStartAttack();
             }
 
             yield return null;// new WaitForSeconds(.1f);

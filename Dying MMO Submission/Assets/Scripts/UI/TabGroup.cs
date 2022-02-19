@@ -35,7 +35,8 @@ public class TabGroup : MonoBehaviour
     [SerializeField] private Button[] choiceButtons;
     private TextMeshProUGUI[] choiceButtonText;
 
-    private UIAudioMessageBox uiAudioMessageBox;
+    [Header("UI Audio")]
+    public UIAudioMessageBox uiAudioMessageBox;
 
     private void Awake()
     {
@@ -55,6 +56,9 @@ public class TabGroup : MonoBehaviour
         if (tabContent == null) Debug.LogError(this + ": Could not find TabContent gameobject in children. Was the UI_MessageBox_TabContent tag assigned to it?");
 
         tabDictionary = new Dictionary<string, TabSelectButton>();
+
+        if (!uiAudioMessageBox)
+            Debug.LogError(this + ": UiAudioMessageBox component is missing.");
     }
 
     private void Start()
@@ -104,17 +108,7 @@ public class TabGroup : MonoBehaviour
         {
             choiceButtons[i].gameObject.SetActive(false);
         }
-
-        //StartCoroutine(ClearEventSystemChoices());
-    }
-
-    private IEnumerator ClearEventSystemChoices()
-    {
-        // event system requires we clear it first, then wait
-        // for at least one frame before we set current selected objects    
-        EventSystem.current.SetSelectedGameObject(null);
-        yield return new WaitForEndOfFrame();
-        EventSystem.current.SetSelectedGameObject(choiceButtons[0].gameObject);
+        
     }
 
     public void OnClickChoice(int buttonIndex)
@@ -124,19 +118,19 @@ public class TabGroup : MonoBehaviour
         switch (buttonIndex)
         {
             case 0:
-                buttonName = "name0Test";
+                buttonName = "UI_ButtonPress-001";
                 break;
             case 1:
-                buttonName = "name1Test";
+                buttonName = "UI_ButtonPress-001";
                 break;
             case 2:
-                buttonName = "name2Test";
+                buttonName = "UI_ButtonPress-002";
                 break;
             case 3:
-                buttonName = "name3Test";
+                buttonName = "UI_ButtonPress-003";
                 break;
         }
-        //uiAudioMessageBox.UIPlayButtonSound(buttonName);
+        uiAudioMessageBox.UIPlayButtonSound(buttonName);
     }
 
     private void ResetTabs()
@@ -313,7 +307,26 @@ public class TabGroup : MonoBehaviour
                 CreateTab(currentTab);
 
             chatObject.GetComponent<TextMeshProUGUI>().text = "["+ currentUserName +"]" + ": " + chatText;
+            if (currentUserName.Contains("s1lverSun"))
+            {
+                chatObject.GetComponent<TextMeshProUGUI>().color = Color.white;
+            }
+            else if (currentUserName.Contains("w1ll0w_w1sp"))
+            {
+                chatObject.GetComponent<TextMeshProUGUI>().color = Color.cyan;
+            }
+            else if (currentUserName.Contains("silkenscraps"))
+            {
+                chatObject.GetComponent<TextMeshProUGUI>().color = Color.gray;
+            }
+            else
+            {
+                chatObject.GetComponent<TextMeshProUGUI>().color = Color.green;
+            }
+
             chatObject.transform.SetParent(GetTabContentTransform(currentTab));
+            uiAudioMessageBox.UIPlayAlertSound();
+
             //print(currentTab);
         }
     }

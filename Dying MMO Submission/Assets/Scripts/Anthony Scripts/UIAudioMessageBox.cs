@@ -10,10 +10,16 @@ public class UIAudioMessageBox : MonoBehaviour, IAudioPlayer
     [SerializeField] private UIAudioData uiAudioData;
 
     private Dictionary<AudioMixerGroup, AudioSource> audioSources = new Dictionary<AudioMixerGroup, AudioSource>();
+    private AudioSource audioPlayer;
     private GameObject audioSourceContainer;
 
     [TitleGroup("Debug")]
     [SerializeField, ReadOnly] int currentAudioSourceCount = 0;
+
+    private void Start()
+    {
+        audioPlayer = GetComponent<AudioSource>();
+    }
 
     public void PlayAudioClip(AudioClip clip, AudioMixerGroup mixer)
     {
@@ -29,6 +35,11 @@ public class UIAudioMessageBox : MonoBehaviour, IAudioPlayer
         }
 
         audioSources[mixer].PlayOneShot(clip);
+    }
+
+    public void PlayAudioClip(AudioClip clip)
+    {
+        audioPlayer.PlayOneShot(clip);
     }
 
     private void CreateNewAudioSource(AudioMixerGroup mixer)
@@ -49,10 +60,10 @@ public class UIAudioMessageBox : MonoBehaviour, IAudioPlayer
         if (uiAudioData != null)
         {
             var alertSound = uiAudioData.Alert;
-            var alertMixer = uiAudioData.AlertAudioMixerOverride != null ? uiAudioData.AlertAudioMixerOverride : uiAudioData.AudioMixer;
-            if (alertSound != null && alertMixer != null)
+            //var alertMixer = uiAudioData.AlertAudioMixerOverride != null ? uiAudioData.AlertAudioMixerOverride : uiAudioData.AudioMixer;
+            if (alertSound != null)
             {
-                PlayAudioClip(alertSound, alertMixer);
+                PlayAudioClip(alertSound);
             }
         }
     }
@@ -62,10 +73,10 @@ public class UIAudioMessageBox : MonoBehaviour, IAudioPlayer
         if (uiAudioData != null)
         {
             var chatPingSound = uiAudioData.ChatPing;
-            var chatPingMixer = uiAudioData.ChatPingAudioMixerOverride != null ? uiAudioData.ChatPingAudioMixerOverride : uiAudioData.AudioMixer;
-            if (chatPingSound != null && chatPingMixer != null)
+            //var chatPingMixer = uiAudioData.ChatPingAudioMixerOverride != null ? uiAudioData.ChatPingAudioMixerOverride : uiAudioData.AudioMixer;
+            if (chatPingSound != null)
             {
-                PlayAudioClip(chatPingSound, chatPingMixer);
+                PlayAudioClip(chatPingSound);
             }
         }
     }
@@ -83,12 +94,13 @@ public class UIAudioMessageBox : MonoBehaviour, IAudioPlayer
                 }
             }
             //print(chatButtonSound.name);
-            var chatButtonMixer = uiAudioData.ButtonAudioSetAudioMixerOverride != null ? uiAudioData.ButtonAudioSetAudioMixerOverride : uiAudioData.AudioMixer;
-            if (chatButtonSound != null && chatButtonMixer != null)
+            
+            //var chatButtonMixer = uiAudioData.ButtonAudioSetAudioMixerOverride != null ? uiAudioData.ButtonAudioSetAudioMixerOverride : uiAudioData.AudioMixer;
+            if (chatButtonSound != null)
             {
-                PlayAudioClip(chatButtonSound, chatButtonMixer);
+                PlayAudioClip(chatButtonSound);
             }
-            else if(chatButtonSound == null)
+            else
             {
                 Debug.LogError(this + ": audio button sound is empty.");
             }

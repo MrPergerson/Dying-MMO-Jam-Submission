@@ -16,7 +16,7 @@ public class SceneManager : Manager
     public static SceneManager Instance;
 
     [Title("Loading Screen")]
-    [SerializeField] private GameObject loadingCanvas;
+    [SerializeField, ReadOnly] private GameObject loadingCanvas;
 
     private Scene _currentLevelScene;
     private bool _isLoadingScene = false;
@@ -47,8 +47,8 @@ public class SceneManager : Manager
 
     public override void AwakeManager()
     {
-        //print(" scene manager ready");
-        //print(CurrentLevel.name);
+        loadingCanvas = GameObject.FindGameObjectWithTag("UI_LoadingScreen");
+        loadingCanvas.SetActive(false);
     }
 
     public override void OnNewLevelLoaded()
@@ -113,6 +113,7 @@ public class SceneManager : Manager
 
     IEnumerator LoadSceneAsync(string name, bool isAdditive = false)
     {
+        if (loadingCanvas) loadingCanvas.SetActive(true);
         var loadMode = isAdditive ? LoadSceneMode.Additive : LoadSceneMode.Single;
 
         AsyncOperation asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(name, loadMode);
@@ -123,6 +124,7 @@ public class SceneManager : Manager
             yield return null;
         }
 
+        if (loadingCanvas) loadingCanvas.SetActive(false);
         isProcessingLoad = false;
 
     }
@@ -151,14 +153,14 @@ public class SceneManager : Manager
         isProcessingLoad = true;
         CurrentLevel = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
 
-        StartCoroutine(LoadSceneAsync("UIScalingTest", true));
+        StartCoroutine(LoadSceneAsync("CharacterInfoUI", true));
 
         while (isProcessingLoad)
         {
             yield return null;
         }
 
-        var persistentScene = UnityEngine.SceneManagement.SceneManager.GetSceneByName("UIScalingTest");
+        var persistentScene = UnityEngine.SceneManagement.SceneManager.GetSceneByName("CharacterInfoUI");
         UnityEngine.SceneManagement.SceneManager.SetActiveScene(persistentScene);
 
         var gameManager = FindObjectOfType<GameManager>();
@@ -168,6 +170,13 @@ public class SceneManager : Manager
         UnityEngine.SceneManagement.SceneManager.SetActiveScene(CurrentLevel);
 
         onPersistentSceneLoaded?.Invoke();
+    }
+
+    [Button()]
+    public void RestartLevel()
+    {
+        //UnityEngine.SceneManagement.SceneManager.Get
+        LoadLevel(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 
     public void ReturnToMainMenu()
