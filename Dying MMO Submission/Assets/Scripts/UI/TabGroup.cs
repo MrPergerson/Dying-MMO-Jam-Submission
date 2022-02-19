@@ -136,7 +136,7 @@ public class TabGroup : MonoBehaviour
                 buttonName = "name3Test";
                 break;
         }
-        uiAudioMessageBox.UIPlayButtonSound(buttonName);
+        //uiAudioMessageBox.UIPlayButtonSound(buttonName);
     }
 
     private void ResetTabs()
