@@ -57,6 +57,7 @@ public class EnemyAIBrain : NPC
             
             if(Vector3.Distance(playerController.gameObject.transform.position, transform.position) < GetComponent<AgentAttack>().AttackDistance)
             {
+                move.SetDestination(playerController.gameObject.transform.position);
                 AddThreat(playerController);
                 cooldownTimeRemaining = 2.0f;
             }
@@ -72,7 +73,7 @@ public class EnemyAIBrain : NPC
         }
         if(cooldownTimeRemaining>0.0f)
             cooldownTimeRemaining -= Time.deltaTime;
-            */
+         */
     }
 
     void OnDrawGizmosSelected()

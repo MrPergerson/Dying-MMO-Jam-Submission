@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1cc76e5fd5737e47843ed43c007cd2a, type: 3}
+  m_Name: OrcAudio
+  m_EditorClassIdentifier: 
+  footsteps:
+    defaultFootsteps:
+    - {fileID: 8300000, guid: 28fc5f51f52fccd4db8e9d84ab1312a6, type: 3}
+    - {fileID: 8300000, guid: 1aaed2ce7e1ff4d44aa28031f7eb3f70, type: 3}
+    - {fileID: 8300000, guid: 32b28453ab7beea4b8ab9cc37d85e0ef, type: 3}
+    - {fileID: 8300000, guid: b44e41dfbc6975d43892740ab55da3bf, type: 3}
+    - {fileID: 8300000, guid: 0efae02381d01ab4abfae5582e84af76, type: 3}
+    - {fileID: 8300000, guid: 66ff67fcf45343c4fb92e7b521e96c5d, type: 3}
+    - {fileID: 8300000, guid: fc7f2241361aab943b97f2ee7c629ea6, type: 3}
+    grassFootsteps:
+    - {fileID: 8300000, guid: 28fc5f51f52fccd4db8e9d84ab1312a6, type: 3}
+    - {fileID: 8300000, guid: 1aaed2ce7e1ff4d44aa28031f7eb3f70, type: 3}
+    - {fileID: 8300000, guid: 32b28453ab7beea4b8ab9cc37d85e0ef, type: 3}
+    - {fileID: 8300000, guid: b44e41dfbc6975d43892740ab55da3bf, type: 3}
+    - {fileID: 8300000, guid: 0efae02381d01ab4abfae5582e84af76, type: 3}
+    - {fileID: 8300000, guid: 66ff67fcf45343c4fb92e7b521e96c5d, type: 3}
+    - {fileID: 8300000, guid: fc7f2241361aab943b97f2ee7c629ea6, type: 3}
+    stoneFootsteps:
+    - {fileID: 8300000, guid: b54f6bea17257254591524052586c1da, type: 3}
+    - {fileID: 8300000, guid: f3932fcd88ffbe84aa8c5d803fb5a8b9, type: 3}
+    - {fileID: 8300000, guid: d2cb88f326fa87e4eb3b3f76fd09d4db, type: 3}
+    - {fileID: 8300000, guid: 148b59fefab2c9e42aba5c0a9cdb074e, type: 3}
+    - {fileID: 8300000, guid: 2f821228c079e9842ab04644892586c9, type: 3}
+    - {fileID: 8300000, guid: a01e640ca432e4e448b1566ad60331b9, type: 3}
+    - {fileID: 8300000, guid: 012b6ed32a8145442b6d76bb50a56d65, type: 3}
+  aggro: []
+  attack:
+  - {fileID: 8300000, guid: 2cc94605b6f330944aa1e2a495a8137d, type: 3}
+  - {fileID: 8300000, guid: bee079857dd71d546a8ab1f662e051ef, type: 3}
+  - {fileID: 8300000, guid: e8fc3c4f17f64bf498940395ca46e4e6, type: 3}
+  - {fileID: 8300000, guid: b93662b8b7250bf40ba8618fcb93a64b, type: 3}
+  damaged: []
+  death: []
+  audioMixer: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  footstepOverride: {fileID: 4995412392367245536, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  aggroOverride: {fileID: 0}
+  attackOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  damagedOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  deathOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}

@@ -10,7 +10,7 @@ public class PlayerController : Agent
     private PlayerControls controls;
     private PlayerInput playerInput;
 
-    private AgentAttack attackAbility;
+    public AgentAttack attackAbility;
     [SerializeField] LayerMask layerMask;
 
     // Added handleMouseOnUI
