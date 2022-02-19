@@ -12,9 +12,9 @@ public class StorySystem : MonoBehaviour
 
     [Title("Status")]
     [SerializeField, ReadOnly, LabelText("Current Chapter")] private string currentChapterName;
-    [SerializeField, ReadOnly] storyState CurrentStoryState = storyState.NotStarted;
+    [SerializeField, ReadOnly] public storyState CurrentStoryState = storyState.NotStarted;
+        
 
-    
     [Title("Chapters In Story")][SerializeField]
     List<Chapter> chapters = new List<Chapter>();
 
@@ -22,7 +22,7 @@ public class StorySystem : MonoBehaviour
     public event ChapterChanged onChapterChanged;
 
     private int CurrentChapter { get { return _currentChapter; } set { _currentChapter = value; } } 
-    private enum storyState { NotStarted, TransitioningToNextChapter, Paused, Ended }
+    public enum storyState { NotStarted, TransitioningToNextChapter, Paused, Ended }
 
     private void InitializeStory()
     {
@@ -124,6 +124,6 @@ public class StorySystem : MonoBehaviour
             chapter.gameObject.SetActive(false);
         }
 
-        print("Story Ended");
+        SceneManager.Instance.LoadLevel("GameOver");
     }
 }

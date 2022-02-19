@@ -55,6 +55,7 @@ public abstract class Agent : MonoBehaviour
 
     protected virtual void Start()
     {
+        isAlive = true;
     }
 
     protected virtual void Update()

@@ -36,6 +36,7 @@ public class DialogueManagerAS2 : Manager
             
         }
         instance = this;
+        dialogueVariables = new DialogueVariables(globalVarInkFile);
     }
 
     public static DialogueManagerAS2 GetInstance()
@@ -55,7 +56,7 @@ public class DialogueManagerAS2 : Manager
 
         chatDelay = chatDelayNum;
 
-        dialogueVariables = new DialogueVariables(globalVarInkFile);
+        
 
 
         tabGroup = FindObjectOfType<TabGroup>();
@@ -63,12 +64,13 @@ public class DialogueManagerAS2 : Manager
 
         if (!tabGroup)
             Debug.LogError(this + ": TabGroup component could not found in Scene.");
-
+        /*
         inGameDialogueText = GameObject.FindGameObjectWithTag("UI_OnScreen_Text").GetComponent<TextMeshProUGUI>();
         if (!inGameDialogueText)
             Debug.LogError(this + ": Can't find On Screen Text object in Persistent Scene.");
 
         inGameDialogueText.gameObject.SetActive(false);
+        */
         chatIsPlaying = false;
     }
 
@@ -120,6 +122,7 @@ public class DialogueManagerAS2 : Manager
     [Button("Enter Dialogue Mode")]
     public void EnterDialogueMode()
     {
+        //Debug.Log("Enter Dialogue called with current story as " + currentStory);
         if (inkJSON == null)
         {
             Debug.LogError(this + ": no ink file to read. Did not recieve ink from Game Manager.");
@@ -128,6 +131,7 @@ public class DialogueManagerAS2 : Manager
         {
             currentStory = new Story(inkJSON.text);
             chatIsPlaying = true;
+            //Debug.Log("Dialogue vars is null: " + (dialogueVariables == null));
             dialogueVariables.StartListening(currentStory);
             ContinueStory();
         }
@@ -138,7 +142,7 @@ public class DialogueManagerAS2 : Manager
         yield return new WaitForSeconds(0.2f);
 
         dialogueVariables.StopListening(currentStory);
-        inGameDialogueText.gameObject.SetActive(false);
+        //inGameDialogueText.gameObject.SetActive(false);
         chatIsPlaying = false;
     }
 
@@ -146,7 +150,7 @@ public class DialogueManagerAS2 : Manager
     {
         if (currentStory.canContinue)
         {
-            inGameDialogueText.gameObject.SetActive(false);
+            //inGameDialogueText.gameObject.SetActive(false);
             tabGroup.DisplayChatLine(currentStory);
             tabGroup.DisplayChoices(currentStory);
             StartCoroutine(ClearLastHighlightedChoice());
@@ -159,8 +163,8 @@ public class DialogueManagerAS2 : Manager
 
     public void PlayInGameDialogue(string speaker, string inGameText)
     {
-        inGameDialogueText.text = speaker + ": " + inGameText;
-        inGameDialogueText.gameObject.SetActive(true);
+        //inGameDialogueText.text = speaker + ": " + inGameText;
+        //inGameDialogueText.gameObject.SetActive(true);
     }
 
     public void MakeChoice(int choiceIndex)
