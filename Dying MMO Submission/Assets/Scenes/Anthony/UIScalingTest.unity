@@ -1702,6 +1702,59 @@ MonoBehaviour:
   - {fileID: 1505114344}
   inkFile: {fileID: 4900000, guid: 78bc5b77e6f5a5140922238111a101b9, type: 3}
   nextChapterTransitionPassed: 0
+--- !u!1 &1238894462
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1238894463}
+  - component: {fileID: 1238894464}
+  m_Layer: 0
+  m_Name: ch06_obj01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1238894463
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238894462}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1910240570}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1238894464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238894462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f69e4e320985fe746b09f590d67dc13b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCurrentCondition: 0
+  conditionMet: 0
+  onSelectedAsCurrentCondition:
+    m_PersistentCalls:
+      m_Calls: []
+  onConditionMet:
+    m_PersistentCalls:
+      m_Calls: []
+  objectiveID: ch06_obj01
+  objective: {fileID: 0}
 --- !u!1 &1257951046
 GameObject:
   m_ObjectHideFlags: 0
@@ -2519,6 +2572,59 @@ Transform:
   m_Father: {fileID: 1910240570}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1874433287
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1874433288}
+  - component: {fileID: 1874433289}
+  m_Layer: 0
+  m_Name: ch03_obj02
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1874433288
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874433287}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2038561247}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1874433289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874433287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f69e4e320985fe746b09f590d67dc13b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isCurrentCondition: 0
+  conditionMet: 0
+  onSelectedAsCurrentCondition:
+    m_PersistentCalls:
+      m_Calls: []
+  onConditionMet:
+    m_PersistentCalls:
+      m_Calls: []
+  objectiveID: ch03_obj02
+  objective: {fileID: 0}
 --- !u!1 &1910240568
 GameObject:
   m_ObjectHideFlags: 0
@@ -2551,6 +2657,7 @@ MonoBehaviour:
   playing: 1
   _name: chapter 6
   transitionsToNextChapter:
+  - {fileID: 1238894464}
   - {fileID: 1832041309}
   inkFile: {fileID: 4900000, guid: b6d81165918eb614c8ad5c1fd55ef0e0, type: 3}
   nextChapterTransitionPassed: 0
@@ -2566,6 +2673,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1832041310}
+  - {fileID: 1238894463}
   m_Father: {fileID: 689153651}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2853,8 +2961,9 @@ MonoBehaviour:
   playing: 1
   _name: chapter 3
   transitionsToNextChapter:
-  - {fileID: 910996840}
   - {fileID: 1500005048}
+  - {fileID: 910996840}
+  - {fileID: 1874433289}
   inkFile: {fileID: 4900000, guid: 5f1c8119cac2daa4b9b29c4e1705776c, type: 3}
   nextChapterTransitionPassed: 0
 --- !u!4 &2038561247
@@ -2870,6 +2979,7 @@ Transform:
   m_Children:
   - {fileID: 910996839}
   - {fileID: 1500005049}
+  - {fileID: 1874433288}
   m_Father: {fileID: 689153651}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
