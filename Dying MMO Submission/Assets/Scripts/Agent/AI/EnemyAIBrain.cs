@@ -16,8 +16,6 @@ public class EnemyAIBrain : NPC
     public Vector3 guardPosition;
     private AgentAudioPlayer audioPlayer;
 
-
-
     protected override void Awake()
     {
         base.Awake();
@@ -33,13 +31,6 @@ public class EnemyAIBrain : NPC
         base.Start();
         layerMask = LayerMask.GetMask("Ground, NPC, Player");
 
-    }
-
-    public override void TakeDamage(Agent threat, float damage)
-    {
-        AddThreat(threat);
-        audioPlayer.playDamagedSound();
-        Health -= damage;
     }
 
     IEnumerator waitAndFollow()
@@ -66,6 +57,7 @@ public class EnemyAIBrain : NPC
             
             if(Vector3.Distance(playerController.gameObject.transform.position, transform.position) < GetComponent<AgentAttack>().AttackDistance)
             {
+                move.SetDestination(playerController.gameObject.transform.position);
                 AddThreat(playerController);
                 cooldownTimeRemaining = 2.0f;
             }
@@ -81,7 +73,7 @@ public class EnemyAIBrain : NPC
         }
         if(cooldownTimeRemaining>0.0f)
             cooldownTimeRemaining -= Time.deltaTime;
-            */
+         */
     }
 
     void OnDrawGizmosSelected()
@@ -92,37 +84,28 @@ public class EnemyAIBrain : NPC
 
     }
     
-    public override void Die()
-    {
-        base.Die();
-        this.gameObject.SetActive(false);
-    }
-
-    public override void Respawn()
-    {
-        base.Respawn();
-        this.gameObject.SetActive(true);
-    }
-
     public override void PlayCombatAnimation(int index)
     {
         switch (index)
         {
             case 0:
-                Animator.SetTrigger("Ability1");
-                break;
-            case 1:
-                Animator.SetTrigger("Ability2");
-                break;
-            case 2:
-                Animator.SetTrigger("Ability3");
-                break;
-            case 3:
-                Animator.SetTrigger("Ability4");
+                Animator.SetTrigger("Ability1");   
                 break;
             default:
                 Animator.SetTrigger("Ability1");
                 break;
         }
+    }
+
+    public override void Respawn()
+    {
+        base.Respawn();
+        Animator.SetBool("IsDead", false);
+    }
+
+    public override void Die()
+    {
+        base.Die();
+        Animator.SetBool("IsDead", true);
     }
 }

@@ -6,5 +6,7 @@ public abstract class State
 
     public abstract void Update(NPC npc);
 
+    public abstract void ExitState(NPC npc);
+
 
 }

@@ -2377,7 +2377,6 @@ MonoBehaviour:
   playing: 1
   _name: chapter 1
   transitionsToNextChapter:
-  - {fileID: 0}
   - {fileID: 5953495787127967526}
   inkFile: {fileID: 4900000, guid: 5430d8058d6a29140af717d931cd7dca, type: 3}
   nextChapterTransitionPassed: 0
