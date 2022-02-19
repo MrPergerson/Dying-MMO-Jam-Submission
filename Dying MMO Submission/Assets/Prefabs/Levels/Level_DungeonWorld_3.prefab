@@ -105,7 +105,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: ch03_obj02
+      Data: ch03_obj01
     - Name: $v
       Entry: 10
       Data: 0
@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 8873773139529267567}
   - component: {fileID: 8873773139529267566}
   m_Layer: 0
-  m_Name: ch03_obj02_defeatBoss
+  m_Name: ch03_obj01_defeatBoss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

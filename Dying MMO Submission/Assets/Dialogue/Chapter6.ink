@@ -128,6 +128,7 @@ I hope we can stay in touch in the future.
 Goodbye s1lverSun.
 #[SERVER]
 w1ll0w_w1sp IS NOW OFFLINE
+~ scene06Finished = true
 ~ sceneFinished = true
 -> END
 
@@ -168,6 +169,7 @@ Thank you for telling me the truth.
 #[SERVER]
 w1ll0w_w1sp IS NOW OFFLINE
 
+~ scene06Finished = true
 ~ sceneFinished = true
 -> END
 

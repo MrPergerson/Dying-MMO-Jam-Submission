@@ -24,7 +24,7 @@ Where is the Usual Spot?
 }
 = Nice
 #silkenscraps
-It's past the portal south of town.
+It's past the town gate, then south of town.
 #s1lverSun
 Wow, that was surprisingly helpful of you.
 #silk
@@ -43,6 +43,7 @@ Just a message away.
 I miss him so much.
 Anyway. Willow will be waiting for you.
 Don't be late.
+~ scene05Finished = true
 ~sceneFinished = true
 -> END
 = Rude
@@ -66,4 +67,5 @@ Willow will be waiting for you.
 Don't disappoint them.
 A\*****e.
 ~sceneFinished = true
+~ scene05Finished = true
 -> END
