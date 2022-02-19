@@ -18,6 +18,7 @@ TagManager:
   - UI_LoadingScreen
   - Ally
   - UI_HealthBar
+  - PartySystem_AllySpawn
   layers:
   - Default
   - TransparentFX

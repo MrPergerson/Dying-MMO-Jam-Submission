@@ -152,7 +152,7 @@ public class PlayerController : Agent
     {
         healthBar = hb;
         healthBar.SetMaxHealth(Health);
-        print(healthBar + " " + Health);
+        //print(healthBar + " " + Health);
     }
 
     private void QuitApp(InputAction.CallbackContext context)

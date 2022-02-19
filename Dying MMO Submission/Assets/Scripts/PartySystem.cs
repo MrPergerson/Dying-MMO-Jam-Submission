@@ -1,13 +1,16 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartySystem : MonoBehaviour
+public class PartySystem : Manager
 {
-    [SerializeField]
-    private GameObject allyPrefab;
+    public static PartySystem Instance;
 
-    private GameObject[] generatedAllies;
+    [SerializeField]
+    private List<GameObject> allies;
+
+    [SerializeField, ReadOnly] private Ally[] currentParty;
 
     float timer = 0.0f;
 
@@ -15,30 +18,72 @@ public class PartySystem : MonoBehaviour
     bool partyFollowing = false;
     bool partyStopped = false;
 
-    public void createParty(int numAlliesToCreate, Vector3 spawnLocation)
+    Transform allySpawnPoint;
+
+    private void Awake()
     {
-        generatedAllies=new GameObject[numAlliesToCreate];
-        for (int i = 0; i < numAlliesToCreate; i++)
+        if(Instance == null)
         {
-            generatedAllies[i] = Instantiate(allyPrefab);
-            generatedAllies[i].transform.position =spawnLocation+ new Vector3(Random.Range(-5,5), 0, Random.Range(-5, 5));
-            generatedAllies[i].GetComponent<Ally>().followPlayer = false;
+            Instance = this;
         }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
+    public override void AwakeManager()
+    {
+        //
+    }
+
+    public void createParty(Vector3 spawnLocation)
+    {
+        currentParty= new Ally[allies.Count];
+        for (int i = 0; i < currentParty.Length; i++)
+        {
+            currentParty[i] = Instantiate(allies[i].GetComponent<Ally>());
+            currentParty[i].transform.position =spawnLocation+ new Vector3(Random.Range(-2,2), 0, Random.Range(-2, 2));
+            currentParty[i].GetComponent<Ally>().followPlayer = false;
+        }
+    }
+
+    public override bool IsReadyToChangeScene()
+    {
+        return true;
+    }
+
+    public override void OnNewLevelLoaded()
+    {
+        var allySpawnPointObj = GameObject.FindGameObjectWithTag("PartySystem_AllySpawn");
+        if(allySpawnPointObj)
+        {
+            allySpawnPoint = allySpawnPointObj.transform;
+            createParty(allySpawnPoint.position);
+            startFollowing();
+
+        }
+
+    }
+
+    public override void OnSceneChangeRequested()
+    {
+        throw new System.NotImplementedException();
     }
 
     public void startFollowing()
     {
-        for (int i = 0; i < generatedAllies.Length; i++)
+        for (int i = 0; i < currentParty.Length; i++)
         {
-            generatedAllies[i].GetComponent<Ally>().followPlayer = true;
+            currentParty[i].followPlayer = true;
         }
     }
 
     public void stopFollowing()
     {
-        for (int i = 0; i < generatedAllies.Length; i++)
+        for (int i = 0; i < currentParty.Length; i++)
         {
-            generatedAllies[i].GetComponent<Ally>().followPlayer = false;
+            currentParty[i].followPlayer = false;
         }
     }
 
