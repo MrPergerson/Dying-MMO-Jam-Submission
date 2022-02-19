@@ -107,7 +107,7 @@ public class AgentAudioPlayer : MonoBehaviour, IAudioPlayer
         audioSources[mixer].PlayOneShot(clip);  
     }
 
-    public void playDamageSound()
+    public void playDamagedSound()
     {
         if(agentAudioData != null && agentAudioData.DamagedAudio.Count > 0)
         {
@@ -117,6 +117,34 @@ public class AgentAudioPlayer : MonoBehaviour, IAudioPlayer
             {
                 PlayAudioClip(damageSound, damageMixer);
 
+            }
+        }
+    }
+
+    public void PlayAttackSound()
+    {
+        if (agentAudioData != null && agentAudioData.AttackAudio.Count > 0)
+        {
+            int randomIndex = Random.Range(0, agentAudioData.AttackAudio.Count);
+            var attackSound = agentAudioData.AttackAudio[randomIndex];
+            var attackMixer = agentAudioData.AttackAudioMixerOverride != null ? agentAudioData.AttackAudioMixerOverride : agentAudioData.AudioMixer;
+            if (attackSound != null && attackMixer != null)
+            {
+                PlayAudioClip(attackSound, attackMixer);
+            }
+        }
+    }
+
+    public void PlayPunchSound()
+    {
+        if (agentAudioData != null && agentAudioData.PunchAudio.Count > 0)
+        {
+            int randomIndex = Random.Range(0, agentAudioData.PunchAudio.Count);
+            var clip = agentAudioData.PunchAudio[randomIndex];
+            var mixer = agentAudioData.PunchAudioMixerOverride != null ? agentAudioData.PunchAudioMixerOverride : agentAudioData.AudioMixer;
+            if (clip != null)
+            {
+                PlayAudioClip(clip, mixer);
             }
         }
     }

@@ -11,13 +11,13 @@ public class AgentAttack : MonoBehaviour
 {
     //public float simpleAttackCoolDown = 1;
     //[SerializeField] float _damage = 20;
-    [Header("Settings")]
-    [SerializeField] float _attackDistance = 2;
     [Header("Combat Abilities")]
     [SerializeField] CombatAbilitySet combatAbilitySet;
     [Header("Debug")]
     [SerializeField, ReadOnly] private Agent _target;
     [SerializeField] bool playsAudio = true;
+    public bool _isInCombat = false;
+
 
     private bool currentAbilityCancelled = false;
 
@@ -26,23 +26,21 @@ public class AgentAttack : MonoBehaviour
     private Dictionary<int, VisualEffect> vfxPool;
 
     private Queue<CombatAbility> combatAbilitesInQueque = new Queue<CombatAbility>();
-    private CombatAbility activeCombatAbility;
+    private CombatAbility currentCombatAbility;
 
     private AgentAudioPlayer audioPlayer;
     private GameObject vfxContainer;
     private Agent agent;
 
-    public Agent Target { get { return _target; } set { _target = value; } }
     private List<Agent> targets;
-
-
-    public float AttackDistance { get { return _attackDistance; } set { _attackDistance = value; } }
 
     private IEnumerator cPerformSimpleAttack;
     private IEnumerator cProcessCombatAbilities;
 
     public delegate void AttackEnded();
-    public event AttackEnded onAttackEnded;
+    //public event AttackEnded onAttackEnded;
+    public Agent Target { get { return _target; } set { _target = value; } }
+    public bool IsInCombat { get { return _isInCombat; } set { _isInCombat = value; } }
 
     private void Awake()
     {
@@ -93,17 +91,13 @@ public class AgentAttack : MonoBehaviour
     {
         ProcessCoolDowns();
 
-        if(agent.IsInCombat)
+        if(IsInCombat)
         {
             LookAtTarget();
  
             // follow target if they run away
 
             // stop attack if distance is too far
-            if (Target==null || Vector3.Distance(this.transform.position, Target.transform.position) > AttackDistance)
-            {
-                EndCombat();
-            }
 
             // note, player will end combat when they click away, see PlayerController script
 
@@ -115,12 +109,10 @@ public class AgentAttack : MonoBehaviour
     {
         if (!target.Equals(Target))
         {
+            //Debug.Log(this + " Entered combat with " + target.name);
             Target = target;
-            Target.onDeath += EndCombat;
-            agent.IsInCombat = true;
-
-
-
+            
+            IsInCombat = true;
 
             /*
             // I'll let you pick and choose what to keep and remove
@@ -171,17 +163,14 @@ public class AgentAttack : MonoBehaviour
 
     public void EndCombat()
     {
-        if(agent.IsInCombat)
+        // this is getting called twice
+        if (IsInCombat)
         {
-            if (Target != null)
-            {
-                Target.onDeath -= EndCombat;
-                Target = null;
-            }
-            agent.IsInCombat = false;
-            onAttackEnded?.Invoke();
-            if(cProcessCombatAbilities!=null)
-                StopCoroutine(cProcessCombatAbilities);
+            Target = null;
+            IsInCombat = false;
+            currentAbilityCancelled = true;
+            //onAttackEnded?.Invoke();
+            StopCoroutine(cProcessCombatAbilities);
         }
 
         //resetAnimatorParams();
@@ -224,11 +213,11 @@ public class AgentAttack : MonoBehaviour
     // Delete this comment after you read it
     // Feel free to remove or keep the comments in this function
     IEnumerator ProcessCombatAbilities()
-    {
-        while(agent.IsInCombat)
+    {     
+        while(IsInCombat)
         {
             // Assign the default ability
-            activeCombatAbility = combatAbilitySet.abilities[0];
+            currentCombatAbility = combatAbilitySet.abilities[0];
             currentAbilityCancelled = false;
 
             // If the player pressed any of the special abilities
@@ -237,24 +226,26 @@ public class AgentAttack : MonoBehaviour
                 //ignore all of the combat abilities used by the player accept for the last one pressed
                 // This should prevent any issues with clicking multiple keys at once
                 // not sure if the queque is the best solution for this (or even needed), but it seemed easy
-                activeCombatAbility = combatAbilitesInQueque.Dequeue();
+                currentCombatAbility = combatAbilitesInQueque.Dequeue();
             }
 
-            if(activeCombatAbility.TimeUntilCoolDownEnds <= 0)
+            if(currentCombatAbility.TimeUntilCoolDownEnds <= 0)
             {
-                SetCombatAbilityCoolDown(activeCombatAbility);
+                SetCombatAbilityCoolDown(currentCombatAbility);
 
-                var abilityIndex = combatAbilitySet.abilities.IndexOf(activeCombatAbility);
-                PlayCombatAnimation(abilityIndex);
+                var abilityIndex = combatAbilitySet.abilities.IndexOf(currentCombatAbility);
+                agent.PlayCombatAnimation(abilityIndex);
 
                 //abilitiesIndexInCoolDown.Add(index);
             }
 
             // wait until the combat ability cool down ends or when the player pressed another combat ability
             yield return new WaitUntil(() => {
-                return currentAbilityCancelled || activeCombatAbility.TimeUntilCoolDownEnds <= 0;
+                return currentAbilityCancelled || currentCombatAbility.TimeUntilCoolDownEnds <= 0;
                 });
         }
+
+        //print(this + " coroutine has ended");
     }
 
     private void SetCombatAbilityCoolDown(CombatAbility ability)
@@ -266,9 +257,16 @@ public class AgentAttack : MonoBehaviour
     // Called by animator event
     public void DamageTarget()
     {
-        if(agent.IsInCombat)
+        if(IsInCombat)
         {
-            Target.TakeDamage(this.agent, activeCombatAbility.Damage);
+            Target.TakeDamage(this.agent, currentCombatAbility.Damage);
+            if(playsAudio)
+            {
+                var clip = currentCombatAbility.AUDIO_Hit;
+                var mixer = currentCombatAbility.HitAudioMixer;
+                if (clip != null && mixer != null)
+                    audioPlayer.PlayAudioClip(clip, mixer);
+            }
         }
     }
 
@@ -280,7 +278,6 @@ public class AgentAttack : MonoBehaviour
     // OnEnemyDefeated -> check for nearby enemies -> if no enemies -> do nothing
     //
     // Also, remember that the all agents should be able to use this function
-    // Or you make a PlayerAttack script that inherits from this script
     private void addNearbyEnemiesToList()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -303,6 +300,7 @@ public class AgentAttack : MonoBehaviour
         while (Target.Health > 0 && Target != null)
         {
             //Debug.Log("[" + gameObject.name + "] starting attack");
+            /*
            
             if (Vector3.Distance(this.transform.position, Target.transform.position) > AttackDistance)
             {
@@ -319,7 +317,7 @@ public class AgentAttack : MonoBehaviour
                     break;
                 }
             }
-
+            */
             // TODO: add support for different combat abilites
             //int index = 0;
             if (attackMode >= combatAbilitySet.abilities.Count)
@@ -376,7 +374,7 @@ public class AgentAttack : MonoBehaviour
             }
         }
 
-        EndCombat();
+        //EndCombat();
     }
 
     private void ProcessCoolDowns()
@@ -398,28 +396,6 @@ public class AgentAttack : MonoBehaviour
                 }
             }
 
-        }
-    }
-
-    private void PlayCombatAnimation(int index)
-    {
-        switch (index)
-        {
-            case 0:
-                agent.Animator.SetTrigger("Ability1");
-                break;
-            case 1:
-                agent.Animator.SetTrigger("Ability2");
-                break;
-            case 2:
-                agent.Animator.SetTrigger("Ability3");
-                break;
-            case 3:
-                agent.Animator.SetTrigger("Ability4");
-                break;
-            default:
-                agent.Animator.SetTrigger("Ability1");
-                break;
         }
     }
 

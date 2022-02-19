@@ -8,7 +8,7 @@ public class Objective : MonoBehaviour
     [SerializeField, ReadOnly] protected bool objectiveMet = false;
     [SerializeField, ReadOnly] private bool isTheCurrentObjective = false;
 
-    public void SetAsCurrentObjective()
+    public virtual void SetAsCurrentObjective()
     {
         isTheCurrentObjective = true;
     }

@@ -347,7 +347,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 50, y: 50}
+  m_AnchoredPosition: {x: 69.62, y: 62.8}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &538204868
@@ -2377,7 +2377,6 @@ MonoBehaviour:
   playing: 1
   _name: chapter 1
   transitionsToNextChapter:
-  - {fileID: 0}
   - {fileID: 5953495787127967526}
   inkFile: {fileID: 4900000, guid: 5430d8058d6a29140af717d931cd7dca, type: 3}
   nextChapterTransitionPassed: 0
