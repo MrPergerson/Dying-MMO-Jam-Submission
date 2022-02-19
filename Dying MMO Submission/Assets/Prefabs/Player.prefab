@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 664436815}
   - component: {fileID: 312483449225428569}
   - component: {fileID: 4717734284370358666}
+  - component: {fileID: 2497640410143150323}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -137,7 +138,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: 100
   _healingRate: 10
-  _audioData: {fileID: 11400000, guid: 4d77c3e398b805c4185c5c75e4ac479e, type: 2}
+  isAlive: 1
+  threat: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 1216
@@ -153,9 +155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad6f36055ae819468e9febcde2fadb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playsAudio: 1
-  audioData: {fileID: 0}
-  footstepSpeed: 0.5
   isMoving: 0
 --- !u!114 &6803392250194869389
 MonoBehaviour:
@@ -169,10 +168,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dbbdb52451d198429d894bfe2cf0fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackDistance: 2
   combatAbilitySet: {fileID: 11400000, guid: 4df5336384351ca47915a18460521783, type: 2}
   _target: {fileID: 0}
   playsAudio: 1
+  _isInCombat: 0
 --- !u!136 &6803392250194869382
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -288,6 +287,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2497640410143150323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6803392250194869380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f8956a45a53cb4da8bc59123a482d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6803392250430091271
 GameObject:
   m_ObjectHideFlags: 0

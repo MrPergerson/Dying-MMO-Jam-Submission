@@ -35,6 +35,8 @@ public class TabGroup : MonoBehaviour
     [SerializeField] private Button[] choiceButtons;
     private TextMeshProUGUI[] choiceButtonText;
 
+    private UIAudioMessageBox uiAudioMessageBox;
+
     private void Awake()
     {
         tabButtons = new List<TabSelectButton>();
@@ -118,6 +120,23 @@ public class TabGroup : MonoBehaviour
     public void OnClickChoice(int buttonIndex)
     {
         DialogueManagerAS2.GetInstance().MakeChoice(buttonIndex);
+        string buttonName = "emptyName";
+        switch (buttonIndex)
+        {
+            case 0:
+                buttonName = "name0Test";
+                break;
+            case 1:
+                buttonName = "name1Test";
+                break;
+            case 2:
+                buttonName = "name2Test";
+                break;
+            case 3:
+                buttonName = "name3Test";
+                break;
+        }
+        //uiAudioMessageBox.UIPlayButtonSound(buttonName);
     }
 
     private void ResetTabs()
