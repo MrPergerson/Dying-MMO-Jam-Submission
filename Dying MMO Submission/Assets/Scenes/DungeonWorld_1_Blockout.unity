@@ -87664,7 +87664,7 @@ MonoBehaviour:
     IsBuilt: 0
   backfaces_: 0
   materials:
-  - {fileID: 2100000, guid: f57590384f3123d47be2ca510d885e22, type: 2}
+  - {fileID: 2100000, guid: 658ec3d9657f6104092397894bf6105b, type: 2}
   originalMaterials: []
   editMode: 1
   recalculateTangents: 1
