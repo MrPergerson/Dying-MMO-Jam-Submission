@@ -56,6 +56,9 @@ public class TabGroup : MonoBehaviour
         if (tabContent == null) Debug.LogError(this + ": Could not find TabContent gameobject in children. Was the UI_MessageBox_TabContent tag assigned to it?");
 
         tabDictionary = new Dictionary<string, TabSelectButton>();
+
+        if (!uiAudioMessageBox)
+            Debug.LogError(this + ": UiAudioMessageBox component is missing.");
     }
 
     private void Start()

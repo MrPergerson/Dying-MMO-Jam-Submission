@@ -15,6 +15,8 @@ public class PlayerController : Agent
 
     // Added handleMouseOnUI
     private HandleMouseOnUI handleMouseOnUI;
+    //Added HealthBar
+    private HealthBar healthBar;
     protected override void Awake()
     {
         base.Awake();
@@ -135,6 +137,22 @@ public class PlayerController : Agent
     public override void TakeDamage(Agent threat, float damage)
     {
         Health -= damage;
+        if(healthBar != null)
+        {
+            healthBar.SetHealth(Health);
+        }
+        else
+        {
+            Debug.LogWarning(this + ": HealthBar component is empty");
+        }
+    }
+
+    // Added SetHealthBarComponent
+    public void SetHealthBarComponent(HealthBar hb)
+    {
+        healthBar = hb;
+        healthBar.SetMaxHealth(Health);
+        //print(healthBar + " " + Health);
     }
 
     private void QuitApp(InputAction.CallbackContext context)
@@ -157,6 +175,17 @@ public class PlayerController : Agent
                 if (Health > _maxHealth)
                     Health = _maxHealth;
             }
+            
+            // Added
+            if (healthBar != null)
+            {
+                healthBar.SetHealth(Health);
+            }
+            else
+            {
+                Debug.LogWarning(this + ": HealthBar component is empty");
+            }
+
             yield return new WaitForSeconds(1.0f);
         }
 

@@ -16,6 +16,8 @@ TagManager:
   - UI_OnScreen_Text
   - Selectable
   - UI_LoadingScreen
+  - Ally
+  - UI_HealthBar
   layers:
   - Default
   - TransparentFX
