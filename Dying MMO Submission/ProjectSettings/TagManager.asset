@@ -15,6 +15,7 @@ TagManager:
   - Ground_Stone
   - UI_OnScreen_Text
   - Selectable
+  - UI_LoadingScreen
   layers:
   - Default
   - TransparentFX
