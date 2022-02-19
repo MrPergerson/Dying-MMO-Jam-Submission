@@ -1,7 +1,7 @@
 INCLUDE GlobalVariables.ink
 
 //Meeting with Willow
-//Draft 1.1 | Text Updated 2/9 | Ink File Updated 2/13
+//Draft 1.2 | Text Updated 2/18 | Ink File Updated 2/18
 VAR dungeonDifficulty = 0
 VAR willowRelationship = 0
     //See if this can be connected to Unity/Previous Ink Files for continuity
@@ -30,35 +30,14 @@ Obviously it's the game dying.
 Not us.
 But anyway, last day in the game!
 How do you want to spend it?
-I'd love to revisit some older levels.
-Or maybe take on a dungeon raid.
-Oooh, or we could go to the city and hang out with other players.
-What do you think?
-//  [Explore the World]
-+   [Take on a Dungeon]
-    #s1lverSun
-    I wanted to fight stuff.
-    #w1ll0w_w1sp
-    Right on! Violence! Yeah!
-    Let's end the game with a bang.
-    Need a warm up? Or want to go right into the hard stuff?
-    ++  [Easy]
-        #s1lverSun
-        Let's take it easy.
-        #w1ll0w_w1sp
-        Alright, I'll queue us up for an easy Dungeon.
-        ~ dungeonDifficulty = 1
-    ++  [Hard]
-        #s1lverSun
-        Let's take on the end-game content.
-        I came here for a challenge.
-        #w1ll0w_w1sp
-        That's what I like to hear!
-        Queuing us up for the big one.
-        ~ dungeonDifficulty = 2
-//  [Socialize]
--
+I have a couple of ideas, but you're the one who's been gone for months, so you choose.
+#s1lverSun
+I wanted to fight stuff.
 #w1ll0w_w1sp
+Right on! Violence! Yeah!
+Let's end this game with a bang.
+Ooh, let's do Throne of the Wayward King.
+I'm going to miss that dungeon. Hope we can find something like it in some other game.
 Oh hey, Silk's online too!
 I'll invite them!
 #s1lverSun
@@ -90,6 +69,15 @@ Oh my god you did not.
 -
 #w1ll0w_w1sp
 Alright, now that the puns are out of our system, let's get to it!
+I'll meet you two there.
+#tab: Silk #s1lverSun
+Hey, how do I join a dungeon?
+#silkenscraps
+God, you're hopeless.
+Dungeon Portal's to the west.
+Figure the rest out yourself.
+#s1lverSun
+Gee, thanks.
 ~sceneFinished = true
 ~ scene03Finished = true
 -> END
