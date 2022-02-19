@@ -47,12 +47,13 @@ public class GameManager : Manager
     public override void AwakeManager()
     {
         sceneManager.onLevelLoaded += NotifyAllManagersOfLevelChange;
+        GetInkAndSendToDialogueManager();
     }
 
     public override void OnNewLevelLoaded()
     {
         // when level is loaded//
-        GetInkAndSendToDialogueManager();
+
         SetupAllLevelExits();
         isReadyToChangeScene = false;
     }

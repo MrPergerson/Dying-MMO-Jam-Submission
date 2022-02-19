@@ -37,17 +37,24 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 2f821228c079e9842ab04644892586c9, type: 3}
     - {fileID: 8300000, guid: a01e640ca432e4e448b1566ad60331b9, type: 3}
     - {fileID: 8300000, guid: 012b6ed32a8145442b6d76bb50a56d65, type: 3}
+  aggro: []
   attack:
-  - {fileID: 8300000, guid: 7c3482c3651c3e84e9da4950594b5aa0, type: 3}
-  - {fileID: 8300000, guid: 2f0ea4fa422ad9449ba5efc8c8516ad6, type: 3}
-  - {fileID: 8300000, guid: 33c42b469df68af489a3ae70521c0152, type: 3}
-  - {fileID: 8300000, guid: 80be19450db47454180ef1a1567c1087, type: 3}
-  - {fileID: 8300000, guid: b0d3db736f10070439c5591dd6ce7029, type: 3}
-  - {fileID: 8300000, guid: 81fb2dbb8f3aaf34aa1d7296edff6257, type: 3}
+  - {fileID: 8300000, guid: edff67e0fa357234a8805b38db7d1019, type: 3}
+  - {fileID: 8300000, guid: e0be50b90fc437b4b9e3b05341f408ab, type: 3}
+  - {fileID: 8300000, guid: 37cc19153aecd7948826234b4db19218, type: 3}
+  - {fileID: 8300000, guid: a1e56b70f932ad143a67b2841d0a6b8e, type: 3}
+  - {fileID: 8300000, guid: 4ed6319ebb77da341808d52e35985f0e, type: 3}
+  - {fileID: 8300000, guid: 5a6afd69e6b9c96478853579225bf0f7, type: 3}
+  punch:
+  - {fileID: 8300000, guid: 50d818e1b83e69c459bc5add7020d2fa, type: 3}
+  - {fileID: 8300000, guid: be65896525f20f14aa17e79bdb2c9203, type: 3}
+  - {fileID: 8300000, guid: 8da987f1b743073499c253e6cf336389, type: 3}
   damaged: []
   death: []
   audioMixer: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
   footstepOverride: {fileID: 4995412392367245536, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  aggroOverride: {fileID: 0}
   attackOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+  punchOverride: {fileID: 0}
   damagedOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
   deathOverride: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}

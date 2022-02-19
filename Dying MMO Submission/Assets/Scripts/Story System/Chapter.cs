@@ -13,6 +13,8 @@ public class Chapter : MonoBehaviour
     [SerializeField] private List<StoryCondition> transitionsToNextChapter;
     [SerializeField] private TextAsset inkFile;
 
+    private StoryCondition currentStoryCondition;
+
     public delegate void ChapterStarted();
     public delegate void ChapterEnded();
     public event ChapterStarted onChapterStarted;
@@ -96,14 +98,12 @@ public class Chapter : MonoBehaviour
             if (currentIndex >= transitionsToNextChapter.Count)
                 return true;
 
-            var currentTransition = transitionsToNextChapter[currentIndex];
+            currentStoryCondition = transitionsToNextChapter[currentIndex];
 
-            if (!currentTransition.IsCurrentCondition())
+            if (!currentStoryCondition.IsCurrentCondition())
             {
-                currentTransition.gameObject.SetActive(true);
-                currentTransition.SetAsCurrentCondition(true);
-                currentTransition.InitializeCondition();
-
+                currentStoryCondition.SetAsCurrentCondition(true);
+                InitializeCurrentStoryCondition();
             }
 
             if (transitionsToNextChapter[currentIndex].IsConditionMet())
@@ -118,6 +118,12 @@ public class Chapter : MonoBehaviour
 
         nextChapterTransitionPassed = true;
         
+    }
+
+    public void InitializeCurrentStoryCondition()
+    {
+        currentStoryCondition.gameObject.SetActive(true);
+        currentStoryCondition.InitializeCondition();
     }
 
     /*

@@ -10,7 +10,7 @@ public class PlayerController : Agent
     private PlayerControls controls;
     private PlayerInput playerInput;
 
-    private AgentAttack attack;
+    public AgentAttack attackAbility;
     [SerializeField] LayerMask layerMask;
 
     // Added handleMouseOnUI
@@ -19,7 +19,7 @@ public class PlayerController : Agent
     {
         base.Awake();
         playerInput = GetComponent<PlayerInput>();
-        attack = GetComponent<AgentAttack>();
+        attackAbility = GetComponent<AgentAttack>();
         controls = new PlayerControls();
     }
 
@@ -62,27 +62,36 @@ public class PlayerController : Agent
             if (tag == "Ground" || tag == "Ground_Grass" || tag == "Ground_Stone")
             {
                 move.SetDestination(hit.point, 0);
+                attackAbility.EndCombat();
+                RemoveThreat();
 
             }
             else if (hit.collider.tag == "Enemy")
             {
-
                 if (hit.collider.gameObject.TryGetComponent<EnemyAIBrain>(out EnemyAIBrain enemy))
                 {
-                    AgentMoveToTarget.DestinationToAgentCompleted onDestinationToAgentCompleted = attack.StartAttack;
-                    move.SetDestination(enemy, attack.AttackDistance, onDestinationToAgentCompleted);
+                    AddThreat(enemy);
+
+                    AgentMoveToTarget.DestinationToAgentCompleted onDestinationToAgentCompleted = attackAbility.EnterCombat;
+                    // function requires attack distance, but this is a hack. Cole, remember to look back at this
+                    move.SetDestination(threat, 2, onDestinationToAgentCompleted);
+
+                    threat.onDeath += attackAbility.EndCombat;
+                    threat.onDeath += RemoveThreat;
 
                 }
                 else
                 {
                     Debug.LogError(gameObject.name + " -> PlayerController.cs -> HandlePrimaryCursorInput: Failed to get EnemyAIBrain");
                 }
-
             }
             else if(hit.collider.tag == "Selectable")
             {
                 var obj = hit.collider.gameObject.GetComponent<ISelectable>();
                 obj.Select();
+
+                attackAbility.EndCombat();
+                RemoveThreat();
             }
 
         }
@@ -92,19 +101,19 @@ public class PlayerController : Agent
     {
         if (context.action.Equals(controls.Main.CombatAbility1))
         {
-            attack.PerformCombat(0);
+            attackAbility.PerformCombat(0);
         }
         else if (context.action.Equals(controls.Main.CombatAbility2))
         {
-            attack.PerformCombat(1);
+            attackAbility.PerformCombat(1);
         }
         else if (context.action.Equals(controls.Main.CombatAbility3))
         {
-            attack.PerformCombat(2);
+            attackAbility.PerformCombat(2);
         }
         else if (context.action.Equals(controls.Main.CombatAbility4))
         {
-            attack.PerformCombat(3);
+            attackAbility.PerformCombat(3);
         }
         else
         {
@@ -116,12 +125,7 @@ public class PlayerController : Agent
     public override void Die()
     {
         base.Die();
-        print("player has died");
-    }
-
-    public override void Respawn()
-    {
-        base.Respawn();
+        // scene will need to restart
     }
 
     public override void TakeDamage(Agent threat, float damage)
@@ -136,7 +140,40 @@ public class PlayerController : Agent
 
     public void attackEnemy(Agent target)
     {
-        attack.StartAttack(target);
+        attackAbility.EnterCombat(target);
+    }
+
+    IEnumerator startAutoHeal()
+    {
+        while (Health < _maxHealth && attackAbility.IsInCombat)
+        {
+            Health += _healingRate;
+            if (Health > _maxHealth)
+                Health = _maxHealth;
+            yield return new WaitForSeconds(1.0f);
+        }
+    }
+
+    public override void PlayCombatAnimation(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                Animator.SetTrigger("Ability1");
+                break;
+            case 1:
+                Animator.SetTrigger("Ability2");
+                break;
+            case 2:
+                Animator.SetTrigger("Ability3");
+                break;
+            case 3:
+                Animator.SetTrigger("Ability4");
+                break;
+            default:
+                Animator.SetTrigger("Ability1");
+                break;
+        }
     }
 
 }

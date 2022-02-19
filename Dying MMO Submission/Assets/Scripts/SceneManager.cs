@@ -73,7 +73,6 @@ public class SceneManager : Manager
         CurrentLevel = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
 
         StartCoroutine(LoadLevelAsync(name, CurrentLevel.name));
-        print("Traveling to " + name);
 
     }
 
@@ -81,6 +80,7 @@ public class SceneManager : Manager
     {
         isProcessingLoad = true;
         var scene = UnityEngine.SceneManagement.SceneManager.GetSceneByName(nextLevel);
+        if(loadingCanvas) loadingCanvas.SetActive(true);
 
         GameManager.GetInstance().NotifyAllManagersOfSceneChangeRequest();
 
@@ -108,7 +108,7 @@ public class SceneManager : Manager
 
         var newLevel = UnityEngine.SceneManagement.SceneManager.GetSceneByName(nextLevel);
         UnityEngine.SceneManagement.SceneManager.SetActiveScene(newLevel);
-
+        if (loadingCanvas) loadingCanvas.SetActive(false);
     }
 
     IEnumerator LoadSceneAsync(string name, bool isAdditive = false)
@@ -116,7 +116,7 @@ public class SceneManager : Manager
         var loadMode = isAdditive ? LoadSceneMode.Additive : LoadSceneMode.Single;
 
         AsyncOperation asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(name, loadMode);
-        //loadingCanvas.SetActive(true);
+   
 
         while (!asyncLoad.isDone)
         {
@@ -125,7 +125,6 @@ public class SceneManager : Manager
 
         isProcessingLoad = false;
 
-        //loadingCanvas.SetActive(false); , LoadSceneMode.Additive
     }
 
     IEnumerator UnLoadSceneAsync(string name)

@@ -40,5 +40,8 @@ public class WhenChapterStoryHasEnded : StoryCondition
         conditionMet = false;
     }
 
-
+    public override void DeinitializeCondition()
+    {
+        // nothing
+    }
 }

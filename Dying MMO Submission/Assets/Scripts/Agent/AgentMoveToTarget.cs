@@ -6,20 +6,12 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class AgentMoveToTarget : MonoBehaviour
 {
-    [Header("Audio")]
-    [SerializeField] private bool playsAudio = true;
-    [HideInInspector] public AgentAudioData audioData;
-    [SerializeField] private float footstepSpeed = .2f;
-    private AudioSource audioSource;
-
     [Header("Debug")]
     public bool isMoving;
     NavMeshAgent navAgent;
     Vector3 targetLocation;
 
-
     Agent agent;
-    AgentAudioPlayer audioPlayer;
 
     public delegate void DestinationToAgentCompleted(Agent agent);
 
@@ -27,20 +19,13 @@ public class AgentMoveToTarget : MonoBehaviour
     {
         agent = GetComponent<Agent>();
         navAgent = GetComponent<NavMeshAgent>();
-        audioPlayer = GetComponent<AgentAudioPlayer>();
-
-        if(playsAudio && audioPlayer == null)
-        {
-            Debug.LogWarning(this + " is set to play audio but no AgentAudioComponent was found");
-            playsAudio = false;
-        }
     }
 
     public void SetDestination(Vector3 destination)
     {
         navAgent.SetDestination(destination);
         targetLocation = destination;
-        navAgent.stoppingDistance = 0;
+        navAgent.stoppingDistance = 2f;
         isMoving = true;
         agent.Animator.SetFloat("Vertical", 1);
         StopAllCoroutines();
@@ -50,6 +35,7 @@ public class AgentMoveToTarget : MonoBehaviour
 
     public void SetDestination(Vector3 destination, float stoppingDistance)
     {
+        if (stoppingDistance == 0) stoppingDistance = 0.5f;
         navAgent.SetDestination(destination);
         navAgent.stoppingDistance = stoppingDistance;
         targetLocation = destination;
@@ -63,17 +49,18 @@ public class AgentMoveToTarget : MonoBehaviour
 
     public void SetDestination(Agent targetAgent, float stoppingDistance, DestinationToAgentCompleted OnDestinationCompleted)
     {
-        Debug.Log("setting destination");
+        if (stoppingDistance == 0) stoppingDistance = 0.5f;
+        //Debug.Log("setting destination");
         navAgent.SetDestination(targetAgent.transform.position);
         targetLocation = targetAgent.transform.position;
         //Debug.Log("setting destination-" + targetLocation);
         navAgent.stoppingDistance = stoppingDistance;
         isMoving = true;
         agent.Animator.SetFloat("Vertical", 1);
-        Debug.Log("animating to destination");
+        //Debug.Log("animating to destination");
         StopAllCoroutines();
         //StartCoroutine(PlayWalkingSound());
-        StartCoroutine(CheckForDestinationCompleted(targetAgent, OnDestinationCompleted));
+        StartCoroutine(CheckForDestinationCompleted(targetAgent, stoppingDistance, OnDestinationCompleted));
     }
 
     IEnumerator CheckForDestinationCompleted()
@@ -85,7 +72,7 @@ public class AgentMoveToTarget : MonoBehaviour
         {
             //var remainingDistance = GetPathRemainingDistance(navAgent);
             var remainingDistance = Vector3.Distance(transform.position, targetLocation);
-            //Debug.Log("remaining distance-" + remainingDistance+", "+ navAgent.stoppingDistance);
+            //Debug.Log("["+gameObject.name+"] remaining distance-" + remainingDistance+", "+ navAgent.stoppingDistance);
             if (distanceCheckErrors >= 5)
             {
                 Debug.LogError(gameObject.name + " in AgentMoveToTarget.cs -> CheckForDestinationCompleted(): Too many distanceErrorChecks. " +
@@ -98,12 +85,13 @@ public class AgentMoveToTarget : MonoBehaviour
                 distanceCheckErrors++;
             }
 
-
-            if (remainingDistance < 1)
+            
+            if (remainingDistance < navAgent.stoppingDistance)
             {
                 destinationReached = true;
                 StopMoving();
-                lookAroundAndStartAttack();
+                if(GetComponent<PlayerController>() != null)
+                    lookAroundAndStartAttack();
             }
 
             yield return null;// new WaitForSeconds(.1f);
@@ -112,13 +100,14 @@ public class AgentMoveToTarget : MonoBehaviour
 
     }
 
-    IEnumerator CheckForDestinationCompleted(Agent agent, DestinationToAgentCompleted OnDestinationCompleted)
+    IEnumerator CheckForDestinationCompleted(Agent agent, float stoppingDistance, DestinationToAgentCompleted OnDestinationCompleted)
     {
         var destinationReached = false;
         var distanceCheckErrors = 0;
 
         while(!destinationReached)
         {
+            
             var remainingDistance = Vector3.Distance(transform.position, targetLocation);// GetPathRemainingDistance(navAgent);
 
             if (distanceCheckErrors >= 5)
@@ -133,7 +122,7 @@ public class AgentMoveToTarget : MonoBehaviour
                 distanceCheckErrors++;
             }
 
-            if (remainingDistance < 0.5)
+            if (remainingDistance <= stoppingDistance)
             {
                 if (OnDestinationCompleted != null)
                     OnDestinationCompleted(agent);
@@ -168,7 +157,7 @@ public class AgentMoveToTarget : MonoBehaviour
     }
 
 
-
+    // this gets called repeatedly when stopped
     public void StopMoving()
     {
         isMoving = false;
