@@ -206,6 +206,7 @@ public class GameManager : Manager
         StoryManager.GetInstance().AwakeManager();
         GameManager.Instance.AwakeManager();
         SceneManager.Instance.AwakeManager();
+        ActionBarManager.GetInstance().AwakeManager();
         
         var managers = FindObjectsOfType<Manager>();
 
