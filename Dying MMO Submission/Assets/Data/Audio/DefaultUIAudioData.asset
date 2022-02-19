@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dddf9f05a180d5a4ca4b140f75ff7951, type: 3}
   m_Name: DefaultUIAudioData
   m_EditorClassIdentifier: 
-  _alert: {fileID: 8300000, guid: 548ebc15684c42346a82bc25b1bb9562, type: 3}
+  _alert: {fileID: 8300000, guid: 6f256819a32d7ed46a2b2fbe93f883f6, type: 3}
   _chatPing: {fileID: 8300000, guid: 1683ace8d3a72d543add2486f4b66015, type: 3}
   _buttonAudioSet:
   - {fileID: 8300000, guid: 9ca20f706c13cc54fa60240f736c9b55, type: 3}
   - {fileID: 8300000, guid: 1cd19ab6f45dd2c488cf6f45d2df834a, type: 3}
   - {fileID: 8300000, guid: 1129cbb63339a8a468a50290f659238f, type: 3}
+  _audioMixer: {fileID: 0}
+  _alertOverride: {fileID: 0}
+  _chatPingOverride: {fileID: 0}
+  _buttonAudioSetOverride: {fileID: 0}
