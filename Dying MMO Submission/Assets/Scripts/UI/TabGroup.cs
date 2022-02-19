@@ -304,6 +304,23 @@ public class TabGroup : MonoBehaviour
                 CreateTab(currentTab);
 
             chatObject.GetComponent<TextMeshProUGUI>().text = "["+ currentUserName +"]" + ": " + chatText;
+            if (currentUserName.Contains("s1lverSun"))
+            {
+                chatObject.GetComponent<TextMeshProUGUI>().color = Color.white;
+            }
+            else if (currentUserName.Contains("w1ll0w_w1sp"))
+            {
+                chatObject.GetComponent<TextMeshProUGUI>().color = Color.cyan;
+            }
+            else if (currentUserName.Contains("silkenscraps"))
+            {
+                chatObject.GetComponent<TextMeshProUGUI>().color = Color.gray;
+            }
+            else
+            {
+                chatObject.GetComponent<TextMeshProUGUI>().color = Color.green;
+            }
+
             chatObject.transform.SetParent(GetTabContentTransform(currentTab));
             uiAudioMessageBox.UIPlayAlertSound();
 
