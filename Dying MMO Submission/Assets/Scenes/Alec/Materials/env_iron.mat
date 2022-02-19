@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8340118979448563697
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da692e001514ec24dbc4cca1949ff7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 11
 --- !u!21 &2100000
 Material:
   serializedVersion: 6
@@ -7,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: castleWall_bright_clean
+  m_Name: env_iron
   m_Shader: {fileID: 4800000, guid: 6e4ae4064600d784cac1e41a9e6f2e59, type: 3}
   m_ShaderKeywords: _DISABLE_SSR_TRANSPARENT _MASKMAP _NORMALMAP _NORMALMAP_TANGENT_SPACE
   m_LightmapFlags: 4
@@ -29,9 +42,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseColorMap:
-        m_Texture: {fileID: 2800000, guid: 2c1e99e729ed6834792e47a8c45ee90f, type: 3}
-        m_Scale: {x: 0.3, y: 0.3}
-        m_Offset: {x: 0, y: -0.15}
+        m_Texture: {fileID: 2800000, guid: d4141abaec00cf74a9e0cf082a1e61f2, type: 3}
+        m_Scale: {x: 0.7, y: 0.7}
+        m_Offset: {x: 0, y: 0}
     - _BentNormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -65,15 +78,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 2c1e99e729ed6834792e47a8c45ee90f, type: 3}
+        m_Texture: {fileID: 2800000, guid: d4141abaec00cf74a9e0cf082a1e61f2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
-        m_Texture: {fileID: 2800000, guid: c6768838bf167874291fbc95eb6856c1, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1d189dba8d1ed3f49af88b19d1d63ae7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 60bd1028e23a43b4b8d31bce1dd25e20, type: 3}
+        m_Texture: {fileID: 2800000, guid: dbeac1299012f514eb8f42cf5ebe7a45, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMapOS:
@@ -166,7 +179,7 @@ Material:
     - _HeightPoMAmplitude: 2
     - _HeightTessAmplitude: 2
     - _HeightTessCenter: 0.5
-    - _InvTilingScale: 3.3333333
+    - _InvTilingScale: 1.4285715
     - _Ior: 1.5
     - _IridescenceMask: 1
     - _IridescenceThickness: 1
@@ -176,7 +189,7 @@ Material:
     - _MetallicRemapMax: 1
     - _MetallicRemapMin: 0
     - _NormalMapSpace: 0
-    - _NormalScale: 0.5
+    - _NormalScale: 1
     - _OpaqueCullMode: 2
     - _PPDLodThreshold: 5
     - _PPDMaxSamples: 15
@@ -243,16 +256,3 @@ Material:
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &8052647234127756935
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da692e001514ec24dbc4cca1949ff7e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 11
