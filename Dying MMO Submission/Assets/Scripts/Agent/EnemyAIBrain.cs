@@ -63,8 +63,10 @@ public class EnemyAIBrain : Agent
         waitingToFollow = true;
         yield return new WaitForSeconds(1.0f);
         if (Vector3.Distance(guardPosition, playerController.gameObject.transform.position) < followRadius &&
-            Vector3.Distance(guardPosition, playerController.gameObject.transform.position) > GetComponent<AgentAttack>().AttackDistance)
-                move.SetDestination(playerController.gameObject.transform.position, 0);
+            Vector3.Distance(guardPosition, playerController.gameObject.transform.position) > GetComponent<AgentAttack>().AttackDistance) {
+            AgentMoveToTarget.DestinationToAgentCompleted onDestinationToAgentCompleted = attack.EnterCombat;
+            move.SetDestination(playerController, attack.AttackDistance-0.5f, onDestinationToAgentCompleted);
+        }
         waitingToFollow = false;
     }
 
@@ -76,16 +78,16 @@ public class EnemyAIBrain : Agent
             
             if(Vector3.Distance(playerController.gameObject.transform.position, transform.position) < GetComponent<AgentAttack>().AttackDistance)
             {
-                move.SetDestination(playerController.gameObject.transform.position);
+                //move.SetDestination(playerController.gameObject.transform.position);
                 AddThreat(playerController);
                 cooldownTimeRemaining = 2.0f;
             }
-            /*else if (!waitingToFollow && Vector3.Distance(guardPosition, playerController.gameObject.transform.position) < followRadius)
+            if (!waitingToFollow && Vector3.Distance(guardPosition, playerController.gameObject.transform.position) < followRadius)
             {
                 //move.SetDestination(playerController.gameObject.transform.position, 0);
                 StartCoroutine(waitAndFollow());
-            }*/
-            else
+            }
+            else if(!waitingToFollow && !IsInCombat && Vector3.Distance(transform.position, guardPosition)>1.0f)
             {
                 move.SetDestination(guardPosition, 0);
             }
