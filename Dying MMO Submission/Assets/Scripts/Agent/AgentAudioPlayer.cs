@@ -125,7 +125,8 @@ public class AgentAudioPlayer : MonoBehaviour, IAudioPlayer
     {
         if (agentAudioData != null && agentAudioData.AttackAudio.Count > 0)
         {
-            var attackSound = agentAudioData.AttackAudio[0];
+            int randomIndex = Random.Range(0, agentAudioData.AttackAudio.Count);
+            var attackSound = agentAudioData.AttackAudio[randomIndex];
             var attackMixer = agentAudioData.AttackAudioMixerOverride != null ? agentAudioData.AttackAudioMixerOverride : agentAudioData.AudioMixer;
             if (attackSound != null && attackMixer != null)
             {
@@ -138,7 +139,8 @@ public class AgentAudioPlayer : MonoBehaviour, IAudioPlayer
     {
         if (agentAudioData != null && agentAudioData.PunchAudio.Count > 0)
         {
-            var clip = agentAudioData.PunchAudio[0];
+            int randomIndex = Random.Range(0, agentAudioData.PunchAudio.Count);
+            var clip = agentAudioData.PunchAudio[randomIndex];
             var mixer = agentAudioData.PunchAudioMixerOverride != null ? agentAudioData.PunchAudioMixerOverride : agentAudioData.AudioMixer;
             if (clip != null)
             {
