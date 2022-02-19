@@ -44,4 +44,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Anthony/UIScalingTest.unity
     guid: 3b752953459f05a4282ef38addfeb0e3
+  - enabled: 1
+    path: Assets/Scenes/Anthony/CharacterInfoUI.unity
+    guid: 9df17690e145c9e4b811018907d134cc
   m_configObjects: {}

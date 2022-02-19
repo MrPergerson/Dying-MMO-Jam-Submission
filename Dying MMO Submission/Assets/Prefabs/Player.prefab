@@ -140,6 +140,7 @@ MonoBehaviour:
   _healingRate: 10
   isAlive: 1
   threat: {fileID: 0}
+  attackAbility: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 1216
