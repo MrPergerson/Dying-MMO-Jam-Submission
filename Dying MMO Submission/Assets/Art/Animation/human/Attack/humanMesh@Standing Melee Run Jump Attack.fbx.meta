@@ -38,7 +38,7 @@ ModelImporter:
       name: Standing Melee Run Jump Attack
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 25
+      firstFrame: 16
       lastFrame: 110
       wrapMode: 0
       orientationOffsetY: 0
@@ -59,7 +59,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.40745938
+      - time: 0
+        functionName: PlayCA4_1
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.45776865
         functionName: DamageTarget
         data: 
         objectReferenceParameter: {instanceID: 0}

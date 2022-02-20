@@ -15,7 +15,8 @@ public class WhenObjectiveIsMet : StoryCondition
 
     public override void InitializeCondition()
     {
-        Level.GetInstance().SetCurrentObjective(objectiveID);
+        if(Level.GetInstance() != null)
+            Level.GetInstance().SetCurrentObjective(objectiveID);
 
     }
 

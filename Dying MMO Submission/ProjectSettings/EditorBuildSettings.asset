@@ -38,13 +38,19 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Anthony/Separated Scenes/UI System.unity
     guid: a8707c0be3d407f4e9d36d23844b198f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PersistentGameObjects.unity
     guid: f21470989a5180642a6172a80eaff90f
-  - enabled: 1
-    path: Assets/Scenes/Anthony/UIScalingTest.unity
-    guid: 3b752953459f05a4282ef38addfeb0e3
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Anthony/CharacterInfoUI.unity
-    guid: 9df17690e145c9e4b811018907d134cc
+    guid: 0c84b842e48484e4c8bde0860dc92ec9
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: 229a2a3673dfa4a4587152d96426db4b
   m_configObjects: {}

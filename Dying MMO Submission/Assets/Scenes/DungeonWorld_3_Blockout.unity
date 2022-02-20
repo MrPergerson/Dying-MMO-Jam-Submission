@@ -21551,6 +21551,75 @@ Transform:
   m_Father: {fileID: 2110785010}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1008089175
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1937049860502219304}
+    m_Modifications:
+    - target: {fileID: 1502830042276463372, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: m_Name
+      value: MusicPlayer (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502830042276463372, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502830042276463373, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 50a580d0f52e8b1448ac92804700d03d, type: 3}
+    - target: {fileID: 1502830042276463373, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -691381137282789585, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
+    - target: {fileID: 1502830042276463374, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502830042276463374, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.4941463
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502830042276463374, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5990555
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502830042276463374, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.91662
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502830042276463374, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502830042276463374, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502830042276463374, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502830042276463374, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502830042276463374, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502830042276463374, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1502830042276463374, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dda4fee4b1361e14f9dff7a14047fae2, type: 3}
 --- !u!1 &1036988846
 GameObject:
   m_ObjectHideFlags: 0
@@ -54150,6 +54219,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31cafa5da30cbc743a1d05cea434f5d9, type: 3}
+--- !u!4 &1937049860502219304 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1937049860872072804, guid: 31cafa5da30cbc743a1d05cea434f5d9, type: 3}
+  m_PrefabInstance: {fileID: 1937049860502219303}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8873773139408601211
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54163,7 +54237,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1170679465266101663, guid: f6c95d6c1d773a44591e5d323d2f2555, type: 3}
       propertyPath: _health
-      value: 300
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 5826751692587114720, guid: f6c95d6c1d773a44591e5d323d2f2555, type: 3}
       propertyPath: m_AnchorMax.x

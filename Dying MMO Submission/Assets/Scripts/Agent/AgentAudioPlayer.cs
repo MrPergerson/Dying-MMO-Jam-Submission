@@ -149,4 +149,64 @@ public class AgentAudioPlayer : MonoBehaviour, IAudioPlayer
         }
     }
 
+    public void PlayCA2_1()
+    {
+        var clip = agentAudioData.ca2_1;
+        var mixer = agentAudioData.AudioMixer;
+        if (clip != null)
+        {
+            PlayAudioClip(clip, mixer);
+        }
+    }
+
+    public void PlayCA2_2()
+    {
+        var clip = agentAudioData.ca2_2;
+        var mixer = agentAudioData.AudioMixer;
+        if (clip != null)
+        {
+            PlayAudioClip(clip, mixer);
+        }
+    }
+
+    public void PlayCA2_3()
+    {
+        var clip = agentAudioData.ca2_3;
+        var mixer = agentAudioData.AudioMixer;
+        if (clip != null)
+        {
+            PlayAudioClip(clip, mixer);
+        }
+    }
+
+    public void PlayCA3_1()
+    {
+        var clip = agentAudioData.ca3_1;
+        var mixer = agentAudioData.AudioMixer;
+        if (clip != null)
+        {
+            PlayAudioClip(clip, mixer);
+        }
+    }
+
+    public void PlayCA3_2()
+    {
+        var clip = agentAudioData.ca3_2;
+        var mixer = agentAudioData.AudioMixer;
+        if (clip != null)
+        {
+            PlayAudioClip(clip, mixer);
+        }
+    }
+
+    public void PlayCA4_1()
+    {
+        var clip = agentAudioData.ca4_1;
+        var mixer = agentAudioData.AudioMixer;
+        if (clip != null)
+        {
+            PlayAudioClip(clip, mixer);
+        }
+    }
+
 }
