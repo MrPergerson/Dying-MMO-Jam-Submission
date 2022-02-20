@@ -27,15 +27,20 @@ public class ActionBarManager : Manager
         instance = this;
         controls = new PlayerControls();
     }
+
+    private void Start()
+    {
+        controls.Main.CombatAbility1.performed += PassAbilityCooldownNumbers;
+        controls.Main.CombatAbility2.performed += PassAbilityCooldownNumbers;
+        controls.Main.CombatAbility3.performed += PassAbilityCooldownNumbers;
+        controls.Main.CombatAbility4.performed += PassAbilityCooldownNumbers;
+    }
+
     public static ActionBarManager GetInstance() { return instance; }
 
     public override void AwakeManager()
     {
-        controls = new PlayerControls();
-        controls.Main.CombatAbility1.started += PassAbilityCooldownNumbers;
-        controls.Main.CombatAbility2.started += PassAbilityCooldownNumbers;
-        controls.Main.CombatAbility3.started += PassAbilityCooldownNumbers;
-        controls.Main.CombatAbility4.started += PassAbilityCooldownNumbers;
+        //
     }
 
     public override bool IsReadyToChangeScene()
@@ -45,11 +50,6 @@ public class ActionBarManager : Manager
 
     public override void OnNewLevelLoaded()
     {
-        controls = new PlayerControls();
-        controls.Main.CombatAbility1.performed += PassAbilityCooldownNumbers;
-        controls.Main.CombatAbility2.performed += PassAbilityCooldownNumbers;
-        controls.Main.CombatAbility3.performed += PassAbilityCooldownNumbers;
-        controls.Main.CombatAbility4.performed += PassAbilityCooldownNumbers;
         if (!healthBar) { Debug.LogError(this + ": healthBar component is missing!"); }
         playerController = FindObjectOfType<PlayerController>();
         playerController.SetHealthBarComponent(healthBar);
