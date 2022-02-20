@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Red Attack
   _description: 
-  _damage: 50
+  _damage: 80
   _coolDown: 3
   _canHitMultipleEnemies: 1
   _attackRange: 1

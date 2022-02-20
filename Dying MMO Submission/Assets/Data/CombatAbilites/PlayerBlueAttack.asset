@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Blue Attack
   _description: 
-  _damage: 50
+  _damage: 15
   _coolDown: 3
   _canHitMultipleEnemies: 0
   _attackRange: 1
