@@ -21,6 +21,19 @@ public class AgentAudioData : ScriptableObject
     [SerializeField] private List<AudioClip> punch;
     [SerializeField] private List<AudioClip> damaged;
     [SerializeField] private List<AudioClip> death;
+
+    [Title("CombatAbility 2")]
+    [SerializeField] public AudioClip ca2_1;
+    [SerializeField] public AudioClip ca2_2;
+    [SerializeField] public AudioClip ca2_3;
+
+    [Title("CombatAbility 3")]
+    [SerializeField] public AudioClip ca3_1;
+    [SerializeField] public AudioClip ca3_2;
+
+    [Title("CombatAbility 4")]
+    [SerializeField] public AudioClip ca4_1;
+
     [Title("Audio Mixers", "Tie all sounds to one audio mixer. Use the overrides to target specific sounds.", bold: true)]
     [SerializeField] private AudioMixerGroup audioMixer;
     [SerializeField] private AudioMixerGroup footstepOverride;
