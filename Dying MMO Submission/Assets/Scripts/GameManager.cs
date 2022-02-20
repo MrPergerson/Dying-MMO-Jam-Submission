@@ -81,8 +81,6 @@ public class GameManager : Manager
             inkfile = storySystem.GetCurrentChapterInkFile();
             SendInkToDialogueManager();
         }
-
-
     }
 
     public StorySystem GetStorySystemReferenceFromGameManager()

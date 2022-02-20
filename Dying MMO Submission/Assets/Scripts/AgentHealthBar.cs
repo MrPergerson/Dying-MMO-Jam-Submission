@@ -28,6 +28,9 @@ public class AgentHealthBar : MonoBehaviour
     public void Update()
     {
         // rotates canvas to camera, but it doesn't look good
+        if (camera == null)
+            camera = Camera.main;
+
         canvas.transform.LookAt(transform.position + camera.transform.rotation * Vector3.forward, camera.transform.rotation * Vector3.up);
     }
 

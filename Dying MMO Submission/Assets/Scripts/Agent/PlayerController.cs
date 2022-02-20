@@ -35,7 +35,7 @@ public class PlayerController : Agent
         controls.Main.CombatAbility2.performed += PerformCombatAbility;
         controls.Main.CombatAbility3.performed += PerformCombatAbility;
         controls.Main.CombatAbility4.performed += PerformCombatAbility;
-        controls.Main.EndGame.performed += QuitApp;
+        //controls.Main.EndGame.performed += QuitApp;
 
         handleMouseOnUI = GetComponent<HandleMouseOnUI>();// Added
 
@@ -155,10 +155,10 @@ public class PlayerController : Agent
         //print(healthBar + " " + Health);
     }
 
-    private void QuitApp(InputAction.CallbackContext context)
+    /*private void QuitApp(InputAction.CallbackContext context)
     {
         Application.Quit();
-    }
+    }*/
 
     public void attackEnemy(Agent target)
     {
