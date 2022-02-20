@@ -4032,6 +4032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0ec8094c6dd1a428b3be4967ea2218, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combatAbilitySet: {fileID: 11400000, guid: 4df5336384351ca47915a18460521783, type: 2}
   healthBar: {fileID: 1425776030}
   abilitiesUI:
   - {fileID: 434865879}

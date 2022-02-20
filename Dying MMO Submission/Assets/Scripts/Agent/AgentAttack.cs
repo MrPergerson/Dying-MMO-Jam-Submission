@@ -252,6 +252,7 @@ public class AgentAttack : MonoBehaviour
     {
         ability.TimeUntilCoolDownEnds = ability.CoolDown;
         abilitiesInCoolDown.Add(ability);
+        //print(ability.Name);
     }
 
     // Called by animator event
@@ -440,6 +441,11 @@ public class AgentAttack : MonoBehaviour
 
         vfxPool.Clear();
         */
+    }
+
+    public CombatAbilitySet GetCombatAbilitySet()
+    {
+        return combatAbilitySet;
     }
 
     #region Animation Events

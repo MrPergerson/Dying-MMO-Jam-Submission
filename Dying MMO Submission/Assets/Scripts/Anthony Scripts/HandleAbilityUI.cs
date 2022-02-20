@@ -13,13 +13,18 @@ public class HandleAbilityUI : MonoBehaviour
     void Start()
     {
         HideCooldownNumber();
-        StartCoroutine(CooldownCountdown());
     }
 
-    IEnumerator CooldownCountdown()
+    private void Update()
+    {
+        CooldownCountdown();
+    }
+
+    private void CooldownCountdown()
     {
         if (cooldownNumber > 0)
         {
+            print(cooldownNumber);
             SetCooldownText(cooldownNumber);
             if(!cooldownObject.activeSelf) 
                 RevealCooldownNumber();
@@ -35,7 +40,7 @@ public class HandleAbilityUI : MonoBehaviour
                 HideCooldownNumber();
         }
 
-        yield return new WaitForSeconds(1.0f);
+        //yield return new WaitForSeconds(1.0f);
     }
 
     public void SetCooldownNumber(float num)
