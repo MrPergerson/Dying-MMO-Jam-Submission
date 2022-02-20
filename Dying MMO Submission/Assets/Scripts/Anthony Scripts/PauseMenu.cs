@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,9 +11,10 @@ public class PauseMenu : MonoBehaviour
     private bool isPaused = false;
 
     public GameObject pauseMenu;
-    public AudioMixer audioMixerMaster;
+    public AudioMixer audioMixer;
 
     private PlayerControls controls;
+    [SerializeField] private List<Slider> sliders = new List<Slider>();
 
     private void Awake()
     {
@@ -40,6 +42,33 @@ public class PauseMenu : MonoBehaviour
     private void Start()
     {
         controls.Main.EndGame.performed += Pause;
+        foreach (Slider slider in sliders)
+        {
+            if (slider.name.Contains("Master"))
+            {
+                float val = 0;
+                audioMixer.GetFloat("MasterVolume", out val);
+                slider.value = val;
+            }
+            else if (slider.name.Contains("Music"))
+            {
+                float val = 0;
+                audioMixer.SetFloat("MusicVolume", val);
+                slider.value = val;
+            }
+            else if (slider.name.Contains("Ambience"))
+            {
+                float val = 0;
+                audioMixer.SetFloat("AMBVolume", val);
+                slider.value = val;
+            }
+            else if (slider.name.Contains("SFX"))
+            {
+                float val = 0;
+                audioMixer.SetFloat("SFXVolume", val);
+                slider.value = val;
+            }
+        }
     }
 
     private void OnEnable()
@@ -102,21 +131,21 @@ public class PauseMenu : MonoBehaviour
 
     public void SetMasterVolume(float volume)
     {
-        audioMixerMaster.SetFloat("MasterVolume", volume);
+        audioMixer.SetFloat("MasterVolume", volume);
     }
 
     public void SetAMBVolume(float volume)
     {
-        audioMixerMaster.SetFloat("AMBVolume", volume);
+        audioMixer.SetFloat("AMBVolume", volume);
     }
 
     public void SetMusicVolume(float volume)
     {
-        audioMixerMaster.SetFloat("MusicVolume", volume);
+        audioMixer.SetFloat("MusicVolume", volume);
     }
 
     public void SetSFXVolume(float volume)
     {
-        audioMixerMaster.SetFloat("SFXVolume", volume);
+        audioMixer.SetFloat("SFXVolume", volume);
     }
 }
