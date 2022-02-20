@@ -1,13 +1,14 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PartySystem : MonoBehaviour
+public class PartySystem : Manager
 {
-    [SerializeField]
-    private GameObject allyPrefab;
+    public static PartySystem Instance;
 
-    private GameObject[] generatedAllies;
+    [SerializeField, ReadOnly] private List<GameObject> currentParty;
+    private List<GameObject> instantiatedAllies;
 
     float timer = 0.0f;
 
@@ -15,42 +16,107 @@ public class PartySystem : MonoBehaviour
     bool partyFollowing = false;
     bool partyStopped = false;
 
-    public void createParty(int numAlliesToCreate, Vector3 spawnLocation)
+    Transform allySpawnPoint;
+
+
+    bool isReadyToChangeScene = true;
+
+    private void Awake()
     {
-        generatedAllies=new GameObject[numAlliesToCreate];
-        for (int i = 0; i < numAlliesToCreate; i++)
+        if(Instance == null)
         {
-            generatedAllies[i] = Instantiate(allyPrefab);
-            generatedAllies[i].transform.position =spawnLocation+ new Vector3(Random.Range(-5,5), 0, Random.Range(-5, 5));
-            generatedAllies[i].GetComponent<Ally>().followPlayer = false;
+            Instance = this;
         }
+        else
+        {
+            Destroy(this);
+        }
+
+        instantiatedAllies = new List<GameObject>();
+    }
+
+    public override void AwakeManager()
+    {
+        //
+    }
+
+    public void spawnParty()
+    {
+        var allySpawnPointObj = GameObject.FindGameObjectWithTag("PartySystem_AllySpawn");
+        if (allySpawnPointObj != null)
+        {
+
+            allySpawnPoint = allySpawnPointObj.transform;
+
+            for (int i = 0; i < currentParty.Count; i++)
+            {
+                var spawnedAlly = currentParty[i];
+                spawnedAlly.transform.position = allySpawnPoint.position + new Vector3(Random.Range(-2,2), 0, Random.Range(-2, 2));
+                instantiatedAllies.Add(Instantiate(spawnedAlly));
+            }
+
+            startFollowing();    
+        
+        }
+    }
+
+    public override bool IsReadyToChangeScene()
+    {
+        return isReadyToChangeScene;
+    }
+
+    public override void OnNewLevelLoaded()
+    {
+        if(currentParty.Count > 0)
+        {
+            spawnParty();
+        }
+
+    }
+
+    public override void OnSceneChangeRequested()
+    {
+        if(instantiatedAllies.Count > 0)
+        {
+
+           foreach(var ally in instantiatedAllies)
+            {
+                Destroy(ally);
+            }
+            instantiatedAllies.Clear();
+        }
+
+        isReadyToChangeScene = true;
     }
 
     public void startFollowing()
     {
-        for (int i = 0; i < generatedAllies.Length; i++)
+        for (int i = 0; i < instantiatedAllies.Count; i++)
         {
-            generatedAllies[i].GetComponent<Ally>().followPlayer = true;
+            instantiatedAllies[i].GetComponent<Ally>().followPlayer = true;
         }
     }
 
     public void stopFollowing()
     {
-        for (int i = 0; i < generatedAllies.Length; i++)
+        for (int i = 0; i < instantiatedAllies.Count; i++)
         {
-            generatedAllies[i].GetComponent<Ally>().followPlayer = false;
+            instantiatedAllies[i].GetComponent<Ally>().followPlayer = false;
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    [Button()]
+    public void AddAllyToParty(GameObject ally)
     {
-        
+        if(ally != null)
+            currentParty.Add(ally);
+        print("adding");
     }
 
-    // Update is called once per frame
-    void Update()
+    [Button()]
+    public void RemoveAllyToParty(GameObject ally)
     {
-        
+        if (currentParty.Contains(ally))
+            currentParty.Remove(ally);
     }
 }

@@ -36,8 +36,7 @@ public class PlayerController : Agent
         controls.Main.CombatAbility3.performed += PerformCombatAbility;
         controls.Main.CombatAbility4.performed += PerformCombatAbility;
         controls.Main.EndGame.performed += QuitApp;
-        //StartCoroutine(lookForEnemies());
-
+        StartCoroutine(lookForEnemies());
         handleMouseOnUI = GetComponent<HandleMouseOnUI>();// Added
 
         StartCoroutine(startAutoHeal());
@@ -154,13 +153,13 @@ public class PlayerController : Agent
     {
         healthBar = hb;
         healthBar.SetMaxHealth(Health);
-        print(healthBar + " " + Health);
+        //print(healthBar + " " + Health);
     }
 
-    private void QuitApp(InputAction.CallbackContext context)
+    /*private void QuitApp(InputAction.CallbackContext context)
     {
         Application.Quit();
-    }
+    }*/
 
     public void attackEnemy(Agent target)
     {

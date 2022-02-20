@@ -21,7 +21,7 @@ public class WhenChapterStoryHasEnded : StoryCondition
 
     public override bool IsConditionMet()
     {
-
+        
         if (DialogueManagerAS2.GetInstance() != null)
         {
             // does this code continue after the parent chapter object is deactive?
@@ -31,6 +31,8 @@ public class WhenChapterStoryHasEnded : StoryCondition
         {
             conditionMet = ((Ink.Runtime.BoolValue)DialogueManagerAS2.GetInstance().GetVariable(globalVarName)).value;
         }
+
+        if (conditionMet) onConditionMet.Invoke(); print("called");
 
         return conditionMet == true;
     }
