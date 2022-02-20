@@ -140,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3604936764937099209, guid: 2f7b3eeee4131b04a8e2789f587cc997, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3604936764937099212, guid: 2f7b3eeee4131b04a8e2789f587cc997, type: 3}
       propertyPath: m_Pivot.x
@@ -4032,6 +4032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0ec8094c6dd1a428b3be4967ea2218, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  combatAbilitySet: {fileID: 11400000, guid: 4df5336384351ca47915a18460521783, type: 2}
   healthBar: {fileID: 1425776030}
   abilitiesUI:
   - {fileID: 434865879}

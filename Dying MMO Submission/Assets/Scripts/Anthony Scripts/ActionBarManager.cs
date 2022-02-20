@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ActionBarManager : Manager
 {
+    [Header("Combat Abilities")]
+    [SerializeField] CombatAbilitySet combatAbilitySet;
+
     private static ActionBarManager instance;
     public HealthBar healthBar;
     private PlayerController playerController;
@@ -24,9 +27,7 @@ public class ActionBarManager : Manager
 
     public override void AwakeManager()
     {
-        if(!healthBar) { Debug.LogError(this + ": healthBar component is missing!"); }
-        playerController = FindObjectOfType<PlayerController>();
-        playerController.SetHealthBarComponent(healthBar);
+        StartCoroutine(PassAbilityCooldownNumbers());
     }
 
     public override bool IsReadyToChangeScene()
@@ -36,7 +37,10 @@ public class ActionBarManager : Manager
 
     public override void OnNewLevelLoaded()
     {
-        //
+        if (!healthBar) { Debug.LogError(this + ": healthBar component is missing!"); }
+        playerController = FindObjectOfType<PlayerController>();
+        playerController.SetHealthBarComponent(healthBar);
+        SetCombatAbility(playerController.GetComponent<AgentAttack>().GetCombatAbilitySet());
     }
 
     public override void OnSceneChangeRequested()
@@ -44,12 +48,46 @@ public class ActionBarManager : Manager
         //
     }
 
-    public void DisplayAbilityCooldown(int abilityNum, float cooldonwNum)
+    /*public void DisplayAbilityCooldown(int abilityNum, float cooldownNum)
     {
         if (abilityNum <= 0 || abilityNum > 4)
         {
             Debug.LogError(this + ": Ability Number out of range.");
         }
-        abilitiesUI[abilityNum-1].SetCooldownNumber(cooldonwNum);
+        abilitiesUI[abilityNum-1].SetCooldownNumber(cooldownNum);
+    }*/
+
+    public void SetCombatAbility(CombatAbilitySet abilitySet)
+    {
+        combatAbilitySet = abilitySet;
+    }
+
+    IEnumerator PassAbilityCooldownNumbers()
+    {
+        foreach (CombatAbility ability in combatAbilitySet.abilities)
+        {
+            string abilityName = ability.name;
+            float cooldownNum = ability.TimeUntilCoolDownEnds;
+            switch (abilityName)
+            {
+                case "BasicAttack_d20":
+                    abilitiesUI[0].SetCooldownNumber(cooldownNum);
+                    break;
+                case "PlayerBlueAttack":
+                    abilitiesUI[1].SetCooldownNumber(cooldownNum);
+                    break;
+                case "PlayerGreenAttack":
+                    abilitiesUI[2].SetCooldownNumber(cooldownNum);
+                    break;
+                case "PlayerRedAttack":
+                    abilitiesUI[3].SetCooldownNumber(cooldownNum);
+                    break;
+                case null:
+                    Debug.LogError(this + ": could not find ability name.");
+                    break;
+            }
+        }
+
+        yield return new WaitForSeconds(0.1f);
     }
 }

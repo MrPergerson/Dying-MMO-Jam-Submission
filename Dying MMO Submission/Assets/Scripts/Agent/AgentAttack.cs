@@ -442,6 +442,11 @@ public class AgentAttack : MonoBehaviour
         */
     }
 
+    public CombatAbilitySet GetCombatAbilitySet()
+    {
+        return combatAbilitySet;
+    }
+
     #region Animation Events
 
     private void PlayHitVFX()
