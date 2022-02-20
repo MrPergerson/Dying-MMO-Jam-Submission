@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Dying MMO Submission/Assets/Art/UI.meta
+guid: c8351d305c97684479ac24eac9de8422
+folderAsset: yes
+DefaultImporter:
+=======
 guid: bc84c75a81d673c46a605f33453e7f82
 PrefabImporter:
+>>>>>>> Alec:Dying MMO Submission/Assets/Scenes/Alec/Prefabs/Torch (3).prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
