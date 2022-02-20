@@ -27,17 +27,17 @@ Where is the Usual Spot?
 It's past the town gate, then south of town.
 #s1lverSun
 Wow, that was surprisingly helpful of you.
-#silk
+#silkenscraps
 Look, you're a total stranger and a mssive loser.
 #you
 There it is.
-#silk
+#silkenscraps
 But you've done right by me and Willow.
 So, thank you.
 Can I tell you something?
-#you
+#s1lverSun
 I've been a captive audience up to now, what the hell, go for it.
-#silk
+#silkenscraps
 Seeing you on that account almost makes it feel like Sunny's still there.
 Just a message away.
 I miss him so much.
@@ -47,22 +47,22 @@ Don't be late.
 ~sceneFinished = true
 -> END
 = Rude
-#silk
+#silkenscraps
 Wouldn't you like to know.
-#you
+#s1lverSun
 Yes! That's why I'm asking!
 You want me to pretend to be Sunny, you're going to need to help me a little here.
-#silk
+#silkenscraps
 It's past the portal south of town.
-#you
+#s1lverSun
 Finally, thank you!
-#silk
+#silkenscraps
 I can't wait for today to end.
 I never want to deal with you again.
 You're an insult to Sunny's memory in every way.
-#you
+#s1lverSun
 I didn't sign up to deal with all his baggage.
-#silk
+#silkenscraps
 Willow will be waiting for you.
 Don't disappoint them.
 A\*****e.
