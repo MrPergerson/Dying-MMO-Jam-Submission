@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-<<<<<<< HEAD:Dying MMO Submission/Assets/Prefabs/UI/Pause Menu Main.prefab.meta
-guid: 0ae47e6dcddd526409c0843acaea5461
-PrefabImporter:
-=======
+<<<<<<< HEAD:Dying MMO Submission/Assets/Scenes/Alec/Prefabs.meta
 guid: e52ad25d8056d8c4f94e45a121b62ba2
 folderAsset: yes
 DefaultImporter:
->>>>>>> Alec:Dying MMO Submission/Assets/Scenes/Alec/Prefabs.meta
+=======
+guid: ac6825ec91f8b12458c8ffa046620546
+PrefabImporter:
+>>>>>>> main:Dying MMO Submission/Assets/Prefabs/UI/Pause Menu Main.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
