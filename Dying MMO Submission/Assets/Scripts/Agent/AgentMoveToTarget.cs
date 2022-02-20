@@ -163,6 +163,7 @@ public class AgentMoveToTarget : MonoBehaviour
         isMoving = false;
         navAgent.destination = transform.position;
         agent.Animator.SetFloat("Vertical", 0);
+        Debug.Log("[" + gameObject.name + "] stopping");
     }
 
     public void lookAroundAndStartAttack()
