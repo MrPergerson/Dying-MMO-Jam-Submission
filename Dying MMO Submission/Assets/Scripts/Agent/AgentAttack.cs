@@ -166,6 +166,7 @@ public class AgentAttack : MonoBehaviour
         // this is getting called twice
         if (IsInCombat)
         {
+            //Debug.Log("ending combat");
             Target = null;
             IsInCombat = false;
             currentAbilityCancelled = true;
@@ -235,8 +236,8 @@ public class AgentAttack : MonoBehaviour
                 SetCombatAbilityCoolDown(currentCombatAbility);
 
                 agent.PlayCombatAnimation(abilityIndex);
-
-                if (Target.Health <= 0)
+                if (Target.Health <= 0 || 
+                    (GetComponent<EnemyAIBrain>()!=null && Vector3.Distance(transform.position, Target.transform.position)<GetComponent<EnemyAIBrain>().attackRange))
                 {
                     EndCombat();
                     break;
