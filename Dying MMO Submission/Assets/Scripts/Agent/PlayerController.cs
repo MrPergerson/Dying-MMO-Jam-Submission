@@ -41,6 +41,7 @@ public class PlayerController : Agent
         handleMouseOnUI = GetComponent<HandleMouseOnUI>();// Added
 
         StartCoroutine(startAutoHeal());
+        StartCoroutine(lookForEnemies());
     }
 
     private void OnEnable()
@@ -216,15 +217,16 @@ public class PlayerController : Agent
 
     IEnumerator lookForEnemies()
     {
-        EnemyAIBrain[] enemies=GameObject.FindObjectsOfType<EnemyAIBrain>();
+        EnemyAIBrain[] enemies = GameObject.FindObjectsOfType<EnemyAIBrain>();
         while (true)
         {
-            if (!IsInCombat)
+            if (!GetComponent<AgentAttack>().IsInCombat)
             {
                 for (int i = 0; i < enemies.Length; i++)
                 {
-                    if (enemies[i].isActiveAndEnabled && Vector3.Distance(transform.position, enemies[i].transform.position) <= attack.AttackDistance)
+                    if (enemies[i].isActiveAndEnabled && enemies[i].Health>=0 && Vector3.Distance(transform.position, enemies[i].transform.position) <= 2.0f)
                     {
+                        Debug.Log("[player] attacking");
                         attackEnemy(enemies[i]);
                         break;
                     }
@@ -234,5 +236,4 @@ public class PlayerController : Agent
             yield return new WaitForSeconds(1);
         }
     }
-
 }

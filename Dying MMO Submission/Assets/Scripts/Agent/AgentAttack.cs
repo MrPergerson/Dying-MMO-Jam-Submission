@@ -236,6 +236,12 @@ public class AgentAttack : MonoBehaviour
                 var abilityIndex = combatAbilitySet.abilities.IndexOf(currentCombatAbility);
                 agent.PlayCombatAnimation(abilityIndex);
 
+                if (Target.Health <= 0)
+                {
+                    EndCombat();
+                    break;
+                }
+
                 //abilitiesIndexInCoolDown.Add(index);
             }
 
