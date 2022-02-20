@@ -229,19 +229,19 @@ public class AgentAttack : MonoBehaviour
                 currentCombatAbility = combatAbilitesInQueque.Dequeue();
             }
 
+            var abilityIndex = combatAbilitySet.abilities.IndexOf(currentCombatAbility);
             if(currentCombatAbility.TimeUntilCoolDownEnds <= 0)
             {
                 SetCombatAbilityCoolDown(currentCombatAbility);
 
-                var abilityIndex = combatAbilitySet.abilities.IndexOf(currentCombatAbility);
                 agent.PlayCombatAnimation(abilityIndex);
 
                 //abilitiesIndexInCoolDown.Add(index);
             }
 
-            // wait until the combat ability cool down ends or when the player pressed another combat ability
+
             yield return new WaitUntil(() => {
-                return currentAbilityCancelled || currentCombatAbility.TimeUntilCoolDownEnds <= 0;
+                return (currentAbilityCancelled) || currentCombatAbility.TimeUntilCoolDownEnds <= 0;
                 });
         }
 

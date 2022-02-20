@@ -719,7 +719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9eaccdb23a24094eae30692883f8855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentChapter: 3
+  _currentChapter: 1
   currentChapterName: 
   CurrentStoryState: 0
   chapters:
