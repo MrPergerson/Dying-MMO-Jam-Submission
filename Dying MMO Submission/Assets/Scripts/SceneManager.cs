@@ -42,7 +42,6 @@ public class SceneManager : Manager
         {
             Destroy(gameObject);
         }
-        
     }
 
     public override void AwakeManager()
