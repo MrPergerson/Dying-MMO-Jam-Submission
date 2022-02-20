@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ActionBarManager : Manager
 {
@@ -13,6 +14,8 @@ public class ActionBarManager : Manager
 
     [SerializeField] private List<HandleAbilityUI> abilitiesUI = new List<HandleAbilityUI>();
 
+    private PlayerControls controls;
+
     private void Awake()
     {
         // Check that there is only one Dialogue Manager in scene
@@ -22,12 +25,17 @@ public class ActionBarManager : Manager
 
         }
         instance = this;
+        controls = new PlayerControls();
     }
     public static ActionBarManager GetInstance() { return instance; }
 
     public override void AwakeManager()
     {
-        StartCoroutine(PassAbilityCooldownNumbers());
+        controls = new PlayerControls();
+        controls.Main.CombatAbility1.started += PassAbilityCooldownNumbers;
+        controls.Main.CombatAbility2.started += PassAbilityCooldownNumbers;
+        controls.Main.CombatAbility3.started += PassAbilityCooldownNumbers;
+        controls.Main.CombatAbility4.started += PassAbilityCooldownNumbers;
     }
 
     public override bool IsReadyToChangeScene()
@@ -37,15 +45,32 @@ public class ActionBarManager : Manager
 
     public override void OnNewLevelLoaded()
     {
+        controls = new PlayerControls();
+        controls.Main.CombatAbility1.performed += PassAbilityCooldownNumbers;
+        controls.Main.CombatAbility2.performed += PassAbilityCooldownNumbers;
+        controls.Main.CombatAbility3.performed += PassAbilityCooldownNumbers;
+        controls.Main.CombatAbility4.performed += PassAbilityCooldownNumbers;
         if (!healthBar) { Debug.LogError(this + ": healthBar component is missing!"); }
         playerController = FindObjectOfType<PlayerController>();
         playerController.SetHealthBarComponent(healthBar);
         SetCombatAbility(playerController.GetComponent<AgentAttack>().GetCombatAbilitySet());
+        print(combatAbilitySet.abilities[0].Name);
+        //StartCoroutine(PassAbilityCooldownNumbers());
     }
 
     public override void OnSceneChangeRequested()
     {
         //
+    }
+
+    private void OnEnable()
+    {
+        controls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls.Disable();
     }
 
     /*public void DisplayAbilityCooldown(int abilityNum, float cooldownNum)
@@ -62,24 +87,25 @@ public class ActionBarManager : Manager
         combatAbilitySet = abilitySet;
     }
 
-    IEnumerator PassAbilityCooldownNumbers()
+    private void PassAbilityCooldownNumbers(InputAction.CallbackContext context)
     {
+        print("passing abilites");
         foreach (CombatAbility ability in combatAbilitySet.abilities)
         {
-            string abilityName = ability.name;
+            string abilityName = ability.Name;
             float cooldownNum = ability.TimeUntilCoolDownEnds;
             switch (abilityName)
             {
-                case "BasicAttack_d20":
+                case "Basic Attack":
                     abilitiesUI[0].SetCooldownNumber(cooldownNum);
                     break;
-                case "PlayerBlueAttack":
+                case "Red Attack":
                     abilitiesUI[1].SetCooldownNumber(cooldownNum);
                     break;
-                case "PlayerGreenAttack":
+                case "Green Attack":
                     abilitiesUI[2].SetCooldownNumber(cooldownNum);
                     break;
-                case "PlayerRedAttack":
+                case "Blue Attack":
                     abilitiesUI[3].SetCooldownNumber(cooldownNum);
                     break;
                 case null:
@@ -88,6 +114,6 @@ public class ActionBarManager : Manager
             }
         }
 
-        yield return new WaitForSeconds(0.1f);
+        //yield return new WaitForSeconds(0.1f);
     }
 }
