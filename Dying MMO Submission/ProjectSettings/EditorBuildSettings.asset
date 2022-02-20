@@ -29,7 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DungeonWorld_3_Blockout.unity
     guid: 661bd7c062a90bc4d97aa5b5618069e1
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Anthony/InGameStoryDialogueTest.unity
     guid: 11c6dbbeb8cfdef40b54b80aa383182d
   - enabled: 0
