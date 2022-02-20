@@ -53,4 +53,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: 229a2a3673dfa4a4587152d96426db4b
+  - enabled: 1
+    path: Assets/Scenes/HiddenIsland.unity
+    guid: c5d2c09f89dc81d479f3528e1faa9ff4
   m_configObjects: {}
