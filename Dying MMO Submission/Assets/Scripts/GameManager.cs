@@ -169,12 +169,6 @@ public class GameManager : Manager
 
     }
 
-    public void QuitGame()
-    {
-        Debug.LogWarning(this + ": cannot quit game in editor. Must build and run game to test Quit.");
-        Application.Quit();
-    }
-
     [Button()]
     public void GoToMainMenu()
     {
