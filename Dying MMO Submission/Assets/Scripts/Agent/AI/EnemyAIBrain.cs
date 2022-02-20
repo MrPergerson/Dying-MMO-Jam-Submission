@@ -35,14 +35,15 @@ public class EnemyAIBrain : NPC
 
     IEnumerator waitAndFollow()
     {
-        /*
         waitingToFollow = true;
         yield return new WaitForSeconds(1.0f);
         if (Vector3.Distance(guardPosition, playerController.gameObject.transform.position) < followRadius &&
-            Vector3.Distance(guardPosition, playerController.gameObject.transform.position) > GetComponent<AgentAttack>().AttackDistance)
-                move.SetDestination(playerController.gameObject.transform.position, 0);
+            Vector3.Distance(guardPosition, playerController.gameObject.transform.position) > attackRange)
+        {
+            AgentMoveToTarget.DestinationToAgentCompleted onDestinationToAgentCompleted = GetComponent<AgentAttack>().EnterCombat;
+            move.SetDestination(playerController, attackRange - 0.5f, onDestinationToAgentCompleted);
+    }
         waitingToFollow = false;
-        */
         yield return null;
     }
 
@@ -50,30 +51,30 @@ public class EnemyAIBrain : NPC
     {
 
         base.Update();
-        /*
         //check if player is around
         if (playerController != null && GetComponent<AgentAttack>()!= null && cooldownTimeRemaining <= 0.0f)
         {
             
-            if(Vector3.Distance(playerController.gameObject.transform.position, transform.position) < GetComponent<AgentAttack>().AttackDistance)
+            if(Vector3.Distance(playerController.gameObject.transform.position, transform.position) < attackRange)
             {
-                move.SetDestination(playerController.gameObject.transform.position);
+                //move.SetDestination(playerController.gameObject.transform.position);
                 AddThreat(playerController);
                 cooldownTimeRemaining = 2.0f;
             }
+//            if (!waitingToFollow && Vector3.Distance(guardPosition, playerController.gameObject.transform.position) < followRadius)
+//            else if(!waitingToFollow && !IsInCombat && Vector3.Distance(transform.position, guardPosition)>1.0f)
             else if (!waitingToFollow && Vector3.Distance(guardPosition, playerController.gameObject.transform.position) < followRadius)
             {
                 //move.SetDestination(playerController.gameObject.transform.position, 0);
                 StartCoroutine(waitAndFollow());
             }
-            else
+            else if (!waitingToFollow && !GetComponent<AgentAttack>().IsInCombat && Vector3.Distance(transform.position, guardPosition) > 1.0f)
             {
                 move.SetDestination(guardPosition, 0);
             }
         }
         if(cooldownTimeRemaining>0.0f)
             cooldownTimeRemaining -= Time.deltaTime;
-         */
     }
 
     void OnDrawGizmosSelected()
