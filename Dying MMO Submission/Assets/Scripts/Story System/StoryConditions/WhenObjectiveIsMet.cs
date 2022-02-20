@@ -21,6 +21,10 @@ public class WhenObjectiveIsMet : StoryCondition
 
     public override bool IsConditionMet()
     {
-       return Level.GetInstance().CurrentObjectiveMet();
+       var conditionMet = Level.GetInstance().CurrentObjectiveMet();
+
+        if (conditionMet) onConditionMet.Invoke();
+
+        return conditionMet;
     }
 }

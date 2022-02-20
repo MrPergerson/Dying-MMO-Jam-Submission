@@ -308,7 +308,31 @@ MonoBehaviour:
       m_Calls: []
   onConditionMet:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PartySystem, Assembly-CSharp
+        m_MethodName: RemoveAllyToParty
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 631545864658572008, guid: 5752bc1e3a3c6ec43b3fcb9afaf00c83, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PartySystem, Assembly-CSharp
+        m_MethodName: RemoveAllyToParty
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 2216527005214442824, guid: 64a22b721187ef446a96b7f487012e58, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   objectiveID: ch03_obj01
   objective: {fileID: 0}
 --- !u!1 &7245798547735997662
@@ -620,7 +644,31 @@ MonoBehaviour:
       m_Calls: []
   onConditionMet:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PartySystem, Assembly-CSharp
+        m_MethodName: AddAllyToParty
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 2216527005214442824, guid: 64a22b721187ef446a96b7f487012e58, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PartySystem, Assembly-CSharp
+        m_MethodName: AddAllyToParty
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 631545864658572008, guid: 5752bc1e3a3c6ec43b3fcb9afaf00c83, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   globalVarName: scene03Finished
 --- !u!1 &7245798548422573010
 GameObject:
@@ -671,7 +719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9eaccdb23a24094eae30692883f8855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentChapter: 1
+  _currentChapter: 3
   currentChapterName: 
   CurrentStoryState: 0
   chapters:

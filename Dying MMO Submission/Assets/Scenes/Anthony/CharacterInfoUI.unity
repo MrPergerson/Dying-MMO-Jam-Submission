@@ -543,6 +543,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7245798547616915227, guid: 23a23949c356e2c4289da0fb7ac65f92, type: 3}
+      propertyPath: onConditionMet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 535728438}
+    - target: {fileID: 7245798547616915227, guid: 23a23949c356e2c4289da0fb7ac65f92, type: 3}
+      propertyPath: onConditionMet.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 535728438}
+    - target: {fileID: 7245798548403103947, guid: 23a23949c356e2c4289da0fb7ac65f92, type: 3}
+      propertyPath: onConditionMet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 535728438}
+    - target: {fileID: 7245798548403103947, guid: 23a23949c356e2c4289da0fb7ac65f92, type: 3}
+      propertyPath: onConditionMet.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 535728438}
     - target: {fileID: 7245798548422573008, guid: 23a23949c356e2c4289da0fb7ac65f92, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -1669,6 +1685,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ef68da6d36038c4ba4e8d60883781a0, type: 3}
+--- !u!114 &535728438 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5811500464928291804, guid: 2ef68da6d36038c4ba4e8d60883781a0, type: 3}
+  m_PrefabInstance: {fileID: 535728437}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 681518db431403c469d1293c3b8a4d8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &553314352
 GameObject:
   m_ObjectHideFlags: 0

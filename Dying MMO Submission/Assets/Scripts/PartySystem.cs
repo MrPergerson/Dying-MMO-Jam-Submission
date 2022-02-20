@@ -110,6 +110,7 @@ public class PartySystem : Manager
     {
         if(ally != null)
             currentParty.Add(ally);
+        print("adding");
     }
 
     [Button()]
