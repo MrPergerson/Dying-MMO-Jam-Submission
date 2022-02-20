@@ -25,8 +25,7 @@ public class ActionBarManager : Manager
     public override void AwakeManager()
     {
         if(!healthBar) { Debug.LogError(this + ": healthBar component is missing!"); }
-        playerController = FindObjectOfType<PlayerController>();
-        playerController.SetHealthBarComponent(healthBar);
+
     }
 
     public override bool IsReadyToChangeScene()
@@ -36,7 +35,8 @@ public class ActionBarManager : Manager
 
     public override void OnNewLevelLoaded()
     {
-        //
+        playerController = FindObjectOfType<PlayerController>();
+        playerController.SetHealthBarComponent(healthBar);
     }
 
     public override void OnSceneChangeRequested()
