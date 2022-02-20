@@ -51,6 +51,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8da987f1b743073499c253e6cf336389, type: 3}
   damaged: []
   death: []
+  ca2_1: {fileID: 8300000, guid: 313afc7c791a1014fbd4b15428cf9407, type: 3}
+  ca2_2: {fileID: 8300000, guid: 34308c95f2d2c6c4fa7f04c355f6f8bf, type: 3}
+  ca2_3: {fileID: 8300000, guid: 0656e8e836327d6439e2316d90eeae5d, type: 3}
+  ca3_1: {fileID: 8300000, guid: ad1c35457cbf7ed42a57b4e5a20406db, type: 3}
+  ca3_2: {fileID: 8300000, guid: f162c22efa348704a9688b3891b03b1c, type: 3}
+  ca4_1: {fileID: 8300000, guid: e4a7a1d5ac9aa5545a26fd611dd8d363, type: 3}
   audioMixer: {fileID: -9008720435302025174, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
   footstepOverride: {fileID: 4995412392367245536, guid: b0e2ff9271001604fbd68a17bff58d4d, type: 2}
   aggroOverride: {fileID: 0}

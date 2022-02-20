@@ -67,7 +67,7 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0.4596067
-        functionName: PlayAttackSound
+        functionName: PlayCA3_2
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -81,7 +81,7 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0.15096952
-        functionName: PlayPunchSound
+        functionName: PlayCA3_1
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
