@@ -35,7 +35,6 @@ public class PlayerController : Agent
         controls.Main.CombatAbility2.performed += PerformCombatAbility;
         controls.Main.CombatAbility3.performed += PerformCombatAbility;
         controls.Main.CombatAbility4.performed += PerformCombatAbility;
-        controls.Main.EndGame.performed += QuitApp;
         StartCoroutine(lookForEnemies());
         handleMouseOnUI = GetComponent<HandleMouseOnUI>();// Added
 
