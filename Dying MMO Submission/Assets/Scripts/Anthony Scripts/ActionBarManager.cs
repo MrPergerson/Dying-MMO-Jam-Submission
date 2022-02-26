@@ -54,7 +54,7 @@ public class ActionBarManager : Manager
         playerController = FindObjectOfType<PlayerController>();
         playerController.SetHealthBarComponent(healthBar);
         SetCombatAbility(playerController.GetComponent<AgentAttack>().GetCombatAbilitySet());
-        print(combatAbilitySet.abilities[0].Name);
+        //print(combatAbilitySet.abilities[0].Name);
         //StartCoroutine(PassAbilityCooldownNumbers());
     }
 
@@ -89,7 +89,7 @@ public class ActionBarManager : Manager
 
     private void PassAbilityCooldownNumbers(InputAction.CallbackContext context)
     {
-        print("passing abilites");
+        //print("passing abilites");
         foreach (CombatAbility ability in combatAbilitySet.abilities)
         {
             string abilityName = ability.Name;

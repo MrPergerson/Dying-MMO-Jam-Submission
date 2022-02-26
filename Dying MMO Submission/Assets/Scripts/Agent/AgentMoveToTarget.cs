@@ -10,6 +10,8 @@ public class AgentMoveToTarget : MonoBehaviour
     public bool isMoving;
     NavMeshAgent navAgent;
     Vector3 targetLocation;
+    Rigidbody rb;
+    public float speed = 5;
 
     Agent agent;
 
@@ -19,10 +21,43 @@ public class AgentMoveToTarget : MonoBehaviour
     {
         agent = GetComponent<Agent>();
         navAgent = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        navAgent.speed = speed;
+    }
+
+    public void WalkToDirection(Vector3 direction)
+    {
+        //print("walking");
+        rb.isKinematic = false; 
+        rb.MovePosition(rb.position + new Vector3(direction.x * speed, rb.velocity.y, direction.y * speed) * Time.fixedDeltaTime);
+
+
+        var dir = new Vector3(direction.x, 0, direction.y);
+
+        var RotateTo = Vector3.RotateTowards(transform.forward, dir, 5 * Time.fixedDeltaTime, 0f);
+        transform.rotation = Quaternion.LookRotation(RotateTo);
+        /*
+        var ray = Camera.main.ScreenPointToRay(direction);
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        float rayDistance;
+        //print(direction);
+        if(groundPlane.Raycast(ray, out rayDistance))
+        {
+            var pointOnGround = ray.GetPoint(rayDistance);
+            var correctedPoint = new Vector3(pointOnGround.x, rb.position.y, pointOnGround.z);
+            print(correctedPoint);
+            transform.LookAt(correctedPoint);
+        }
+        */
     }
 
     public void SetDestination(Vector3 destination)
     {
+        rb.isKinematic = true;
         navAgent.SetDestination(destination);
         targetLocation = destination;
         navAgent.stoppingDistance = 2f;
@@ -35,6 +70,7 @@ public class AgentMoveToTarget : MonoBehaviour
 
     public void SetDestination(Vector3 destination, float stoppingDistance)
     {
+        rb.isKinematic = true;
         if (stoppingDistance == 0) stoppingDistance = 0.5f;
         navAgent.SetDestination(destination);
         navAgent.stoppingDistance = stoppingDistance;
@@ -49,6 +85,7 @@ public class AgentMoveToTarget : MonoBehaviour
 
     public void SetDestination(Agent targetAgent, float stoppingDistance, DestinationToAgentCompleted OnDestinationCompleted)
     {
+        rb.isKinematic = true;
         if (stoppingDistance == 0) stoppingDistance = 0.5f;
         //Debug.Log("setting destination");
         navAgent.SetDestination(targetAgent.transform.position);
@@ -163,7 +200,7 @@ public class AgentMoveToTarget : MonoBehaviour
         isMoving = false;
         navAgent.destination = transform.position;
         agent.Animator.SetFloat("Vertical", 0);
-        Debug.Log("[" + gameObject.name + "] stopping");
+       // Debug.Log("[" + gameObject.name + "] stopping");
     }
 
     public void lookAroundAndStartAttack()

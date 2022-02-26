@@ -23,6 +23,7 @@ public class PlayerController : Agent
         playerInput = GetComponent<PlayerInput>();
         attackAbility = GetComponent<AgentAttack>();
         controls = new PlayerControls();
+        handleMouseOnUI = GetComponent<HandleMouseOnUI>();
     }
 
     protected override void Start()
@@ -31,15 +32,16 @@ public class PlayerController : Agent
 
         if (playerInput.actions == null) playerInput.actions = controls.asset;
         controls.Main.CursorPrimaryClick.performed += HandlePrimaryCursorInput;
+
         controls.Main.CombatAbility1.performed += PerformCombatAbility;
         controls.Main.CombatAbility2.performed += PerformCombatAbility;
         controls.Main.CombatAbility3.performed += PerformCombatAbility;
         controls.Main.CombatAbility4.performed += PerformCombatAbility;
-        StartCoroutine(lookForEnemies());
-        handleMouseOnUI = GetComponent<HandleMouseOnUI>();// Added
+        //StartCoroutine(lookForEnemies());
+
 
         StartCoroutine(startAutoHeal());
-        StartCoroutine(lookForEnemies());
+        //StartCoroutine(lookForEnemies());
     }
 
     private void OnEnable()
@@ -50,6 +52,20 @@ public class PlayerController : Agent
     private void OnDisable()
     {
         controls.Disable();
+    }
+
+    void FixedUpdate()
+    {
+        HandleMoveInput();
+    }
+
+    public void HandleMoveInput()
+    {
+        var direction = controls.Main.Move.ReadValue<Vector2>();
+        if(direction.x != 0 || direction.y != 0)
+        {
+            move.WalkToDirection(direction);
+        }
     }
 
     public void HandlePrimaryCursorInput(InputAction.CallbackContext context)
@@ -65,7 +81,7 @@ public class PlayerController : Agent
             var tag = hit.collider.tag;
             if (tag == "Ground" || tag == "Ground_Grass" || tag == "Ground_Stone")
             {
-                move.SetDestination(hit.point, 0);
+                //move.SetDestination(hit.point, 0);
                 attackAbility.EndCombat();
                 RemoveThreat();
 

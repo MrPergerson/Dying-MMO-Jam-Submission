@@ -32,7 +32,7 @@ public class WhenChapterStoryHasEnded : StoryCondition
             conditionMet = ((Ink.Runtime.BoolValue)DialogueManagerAS2.GetInstance().GetVariable(globalVarName)).value;
         }
 
-        if (conditionMet) onConditionMet.Invoke(); print("called");
+        if (conditionMet) onConditionMet.Invoke();// print("called");
 
         return conditionMet == true;
     }
