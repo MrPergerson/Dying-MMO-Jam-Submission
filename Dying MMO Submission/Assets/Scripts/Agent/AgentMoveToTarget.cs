@@ -8,14 +8,14 @@ public class AgentMoveToTarget : MonoBehaviour
 {
     [Header("Debug")]
     public bool isMoving;
-    NavMeshAgent navAgent;
+    public NavMeshAgent navAgent;
     Vector3 targetLocation;
     Rigidbody rb;
     public float speed = 5;
 
     Agent agent;
 
-    public delegate void DestinationToAgentCompleted(Agent agent);
+    public delegate void DestinationToThreatCompleted(Agent agent);
 
     private void Awake()
     {
@@ -31,6 +31,9 @@ public class AgentMoveToTarget : MonoBehaviour
 
     public void WalkToDirection(Vector3 direction)
     {
+        navAgent.isStopped = true;
+
+        //isControllingMovement = true;
         //print("walking");
         rb.isKinematic = false; 
         rb.MovePosition(rb.position + new Vector3(direction.x * speed, rb.velocity.y, direction.y * speed) * Time.fixedDeltaTime);
@@ -38,7 +41,7 @@ public class AgentMoveToTarget : MonoBehaviour
 
         var dir = new Vector3(direction.x, 0, direction.y);
 
-        var RotateTo = Vector3.RotateTowards(transform.forward, dir, 5 * Time.fixedDeltaTime, 0f);
+        var RotateTo = Vector3.RotateTowards(transform.forward, dir, 4 * Time.fixedDeltaTime, 0f);
         transform.rotation = Quaternion.LookRotation(RotateTo);
         /*
         var ray = Camera.main.ScreenPointToRay(direction);
@@ -83,13 +86,13 @@ public class AgentMoveToTarget : MonoBehaviour
         StartCoroutine(CheckForDestinationCompleted());
     }
 
-    public void SetDestination(Agent targetAgent, float stoppingDistance, DestinationToAgentCompleted OnDestinationCompleted)
+    public void SetDestination(Vector3 destination, float stoppingDistance, DestinationToThreatCompleted OnDestinationCompleted)
     {
         rb.isKinematic = true;
         if (stoppingDistance == 0) stoppingDistance = 0.5f;
         //Debug.Log("setting destination");
-        navAgent.SetDestination(targetAgent.transform.position);
-        targetLocation = targetAgent.transform.position;
+        navAgent.SetDestination(destination);
+        targetLocation = destination;
         //Debug.Log("setting destination-" + targetLocation);
         navAgent.stoppingDistance = stoppingDistance;
         isMoving = true;
@@ -97,7 +100,7 @@ public class AgentMoveToTarget : MonoBehaviour
         //Debug.Log("animating to destination");
         StopAllCoroutines();
         //StartCoroutine(PlayWalkingSound());
-        StartCoroutine(CheckForDestinationCompleted(targetAgent, stoppingDistance, OnDestinationCompleted));
+        StartCoroutine(CheckForDestinationToThreatCompleted(stoppingDistance, OnDestinationCompleted));
     }
 
     IEnumerator CheckForDestinationCompleted()
@@ -137,7 +140,8 @@ public class AgentMoveToTarget : MonoBehaviour
 
     }
 
-    IEnumerator CheckForDestinationCompleted(Agent agent, float stoppingDistance, DestinationToAgentCompleted OnDestinationCompleted)
+    // this needs to cancelled. State system for this component?
+    IEnumerator CheckForDestinationToThreatCompleted(float stoppingDistance, DestinationToThreatCompleted OnDestinationCompleted)
     {
         var destinationReached = false;
         var distanceCheckErrors = 0;
@@ -162,7 +166,7 @@ public class AgentMoveToTarget : MonoBehaviour
             if (remainingDistance <= stoppingDistance)
             {
                 if (OnDestinationCompleted != null)
-                    OnDestinationCompleted(agent);
+                    OnDestinationCompleted(agent.threat);
                 else
                     Debug.LogError(gameObject.name + " in AgentMoveToTarget.cs -> CheckForDestinationCompleted(): Callback is null");
 

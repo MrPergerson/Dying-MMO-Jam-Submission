@@ -40,7 +40,7 @@ public class EnemyAIBrain : NPC
         if (Vector3.Distance(guardPosition, playerController.gameObject.transform.position) < followRadius &&
             Vector3.Distance(guardPosition, playerController.gameObject.transform.position) > attackRange)
         {
-            AgentMoveToTarget.DestinationToAgentCompleted onDestinationToAgentCompleted = GetComponent<AgentAttack>().EnterCombat;
+            AgentMoveToTarget.DestinationToThreatCompleted onDestinationToAgentCompleted = GetComponent<AgentAttack>().EnterCombat;
             move.SetDestination(playerController, attackRange - 0.5f, onDestinationToAgentCompleted);
     }
         waitingToFollow = false;

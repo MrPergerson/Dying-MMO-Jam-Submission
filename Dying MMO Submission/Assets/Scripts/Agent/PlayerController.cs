@@ -17,6 +17,11 @@ public class PlayerController : Agent
     private HandleMouseOnUI handleMouseOnUI;
     //Added HealthBar
     private HealthBar healthBar;
+
+
+    public enum PlayerState { Idle, ControlledMove, NavMove, Attacking }
+    public PlayerState currentPlayerState;
+
     protected override void Awake()
     {
         base.Awake();
@@ -54,9 +59,32 @@ public class PlayerController : Agent
         controls.Disable();
     }
 
+
+    protected override void Update()
+    {
+        base.Update();
+
+        switch (currentPlayerState)
+        {
+            case PlayerState.Idle:
+                break;
+            case PlayerState.NavMove:
+                break;
+            case PlayerState.Attacking:
+                break;
+        }
+    }
+
+
     void FixedUpdate()
     {
-        HandleMoveInput();
+        switch (currentPlayerState)
+        {
+            case PlayerState.ControlledMove:
+                HandleMoveInput();
+                break;
+        }
+        
     }
 
     public void HandleMoveInput()
@@ -70,35 +98,31 @@ public class PlayerController : Agent
 
     public void HandlePrimaryCursorInput(InputAction.CallbackContext context)
     {
-        // move, attack, or interact?
         var mousePosition = controls.Main.CursorPosition.ReadValue<Vector2>();
         var ray = Camera.main.ScreenPointToRay(mousePosition);
         RaycastHit hit;
 
-        // Added && !handleMouseOnUI.IsMouseOnUI() to check if mouse is NOT on UI
         if (Physics.Raycast(ray, out hit, layerMask) && !handleMouseOnUI.IsMouseOnUI())
         {
             var tag = hit.collider.tag;
             if (tag == "Ground" || tag == "Ground_Grass" || tag == "Ground_Stone")
             {
-                //move.SetDestination(hit.point, 0);
-                attackAbility.EndCombat();
-                RemoveThreat();
-
+                SwitchToNavMove(hit.point);
             }
             else if (hit.collider.tag == "Enemy")
             {
                 if (hit.collider.gameObject.TryGetComponent<EnemyAIBrain>(out EnemyAIBrain enemy))
                 {
-                    AddThreat(enemy);
-
-                    AgentMoveToTarget.DestinationToAgentCompleted onDestinationToAgentCompleted = attackAbility.EnterCombat;
-                    // function requires attack distance, but this is a hack. Cole, remember to look back at this
-                    move.SetDestination(threat, 1, onDestinationToAgentCompleted);
-
-                    threat.onDeath += attackAbility.EndCombat;
-                    threat.onDeath += RemoveThreat;
-
+                    var heading = enemy.transform.position - this.transform.position;
+                    if(heading.sqrMagnitude >= 1) // needs an attack range
+                    {
+                        AgentMoveToTarget.DestinationToThreatCompleted onDestinationToAgentCompleted = SwitchToAttacking;
+                        SwitchToNavMove(threat.transform.position, onDestinationToAgentCompleted);                     
+                    }
+                    else
+                    {
+                        SwitchToAttacking(enemy);
+                    }
                 }
                 else
                 {
@@ -110,8 +134,7 @@ public class PlayerController : Agent
                 var obj = hit.collider.gameObject.GetComponent<ISelectable>();
                 obj.Select();
 
-                attackAbility.EndCombat();
-                RemoveThreat();
+                SwitchToIdle();
             }
 
         }
@@ -249,5 +272,42 @@ public class PlayerController : Agent
 
             yield return new WaitForSeconds(1);
         }
+    }
+
+    private void SwitchToIdle()
+    {
+        move.navAgent.isStopped = true;
+        attackAbility.EndCombat();
+        RemoveThreat();
+    }
+
+    private void SwitchToControlledMove()
+    {
+        move.navAgent.isStopped = true;
+        attackAbility.EndCombat();
+        RemoveThreat();
+
+    }
+
+    private void SwitchToNavMove(Vector3 destination, AgentMoveToTarget.DestinationToThreatCompleted callback = null)
+    {
+        move.navAgent.isStopped = false;
+        attackAbility.EndCombat();
+        RemoveThreat();
+
+        if (callback != null)
+            move.SetDestination(destination, 1, callback);
+        else
+            move.SetDestination(destination, 0);
+    }
+
+    private void SwitchToAttacking(Agent enemy)
+    {
+        move.navAgent.isStopped = true;
+        AddThreat(enemy);
+
+        threat.onDeath += attackAbility.EndCombat;
+        threat.onDeath += RemoveThreat;
+        attackAbility.EnterCombat(enemy);
     }
 }

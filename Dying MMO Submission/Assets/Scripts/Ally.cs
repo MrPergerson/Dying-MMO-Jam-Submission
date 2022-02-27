@@ -66,7 +66,7 @@ public class Ally : Agent
                     if (target != null)
                     {
                         
-                        AgentMoveToTarget.DestinationToAgentCompleted onDestinationToAgentCompleted = attackAbility.EnterCombat;
+                        AgentMoveToTarget.DestinationToThreatCompleted onDestinationToAgentCompleted = attackAbility.EnterCombat;
                         move.SetDestination(target, 2, onDestinationToAgentCompleted);
                         target.onDeath += attackAbility.EndCombat;
                     }
